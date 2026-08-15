@@ -106,7 +106,11 @@ export default function ResearchChat({ studyId }: { studyId: string }) {
             </ol>
           )}
           {response.basedOn && <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 16 }}>{response.basedOn}</p>}
-          {response.sources.length > 0 && (
+          {/* Sources are known before the answer even starts streaming (retrieval
+              happens up front), but we deliberately hold off rendering them until
+              the analysis has finished — they should read as "here's what backs
+              the answer you just read," not appear mid-stream above unfinished text. */}
+          {!streaming && response.sources.length > 0 && (
             <>
               <hr className="divider" style={{ margin: '12px 0' }} />
               <div className="section-title" style={{ marginBottom: 8 }}>Sources</div>

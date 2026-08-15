@@ -365,10 +365,7 @@ def _diagnosis_cohort_answer(display: str, pids: set[str]) -> dict:
     }
 
 
-def _detect_trial_cohort_query(question: str) -> str | None:
-    ql = question.lower()
-    if not any(t in ql for t in _ELIGIBILITY_TRIGGER_WORDS):
-        return None
+def _find_trial_id_in_text(ql: str) -> str | None:
     for trial in _RAW_TRIALS:  # match by internal id, e.g. "T101"
         if trial["id"].lower() in ql:
             return trial["id"]
@@ -377,6 +374,141 @@ def _detect_trial_cohort_query(question: str) -> str | None:
         if title_code and title_code in ql:
             return trial["id"]
     return None
+
+
+def _detect_trial_cohort_query(question: str) -> str | None:
+    ql = question.lower()
+    if not any(t in ql for t in _ELIGIBILITY_TRIGGER_WORDS):
+        return None
+    return _find_trial_id_in_text(ql)
+
+
+_PATIENT_ID_PATTERN = re.compile(r"\bP-\d{3,5}\b", re.IGNORECASE)
+
+
+def _detect_single_match_query(question: str) -> tuple[str, str] | None:
+    """A question naming BOTH a specific patient and a specific trial (e.g.
+    'why is P-1024 eligible for T101', 'what is P-1024's status for DIAB-2027')
+    is asking for one patient's full evidence ledger against one trial — more
+    specific than the cohort-level _trial_cohort_answer, so this is checked
+    first. No trigger words required: naming both a real patient ID and a
+    real trial ID/code in the same question is already an unambiguous signal."""
+    m = _PATIENT_ID_PATTERN.search(question)
+    if not m:
+        return None
+    pid = m.group(0).upper()
+    if pid not in {p["id"].upper() for p in _RAW_PATIENTS}:
+        return None
+    trial_id = _find_trial_id_in_text(question.lower())
+    if not trial_id:
+        return None
+    return pid, trial_id
+
+
+def _single_match_answer(patient_id: str, trial_id: str) -> dict:
+    """Deterministic — the full CriterionResult ledger from
+    matching_engine.match_patient_to_trial, the same evidence a researcher
+    sees on the Matching page, just surfaced through chat."""
+    patient_raw = next(p for p in _RAW_PATIENTS if p["id"] == patient_id)
+    trial_raw = _TRIAL_BY_ID[trial_id]
+    result = match_patient_to_trial(Patient(**patient_raw), Trial(**trial_raw))
+
+    points = []
+    for c in result.criteria_results:
+        line = f"[{c.category}] {c.criterion}: {c.status} — patient value: {c.patient_value}; requires: {c.requirement}"
+        if c.reason:
+            line += f" ({c.reason})"
+        points.append(line)
+
+    return {
+        "answer": f"{patient_id} is {result.overall_status} for {trial_id} ({trial_raw.get('title', '')}). {result.summary}",
+        "points": points,
+        "basedOn": f"Based on the deterministic eligibility rule engine (matching_engine.match_patient_to_trial) "
+                   f"evaluating all {len(result.criteria_results)} criteria for {patient_id} against {trial_id} "
+                   f"— the same result /api/match returns, not an LLM guess.",
+        "sources": [
+            {"id": patient_id, "label": f"Patient {patient_id}", "type": "record"},
+            {"id": trial_id, "label": f"Trial {trial_id}", "type": "document"},
+        ],
+    }
+
+
+def _detect_patient_lookup_query(question: str) -> str | None:
+    """A question naming a specific KNOWN patient with no trial attached
+    ('who is P-1004', 'tell me about P-1004') is a direct identity lookup —
+    answered from the full patient roster, deliberately bypassing whatever
+    study_id the chat happens to be scoped to. Scoping to 'patients enrolled
+    in the currently selected study' makes sense for cohort/aggregate
+    questions, but not for 'who is this specific, named patient' — that
+    patient is real and in the database whether or not they're enrolled in
+    whichever study tab is currently open, and the previous behavior (silently
+    filtering the search corpus down to only enrolled participants) made a
+    real patient look nonexistent, which is worse than not scoping at all."""
+    m = _PATIENT_ID_PATTERN.search(question)
+    if not m:
+        return None
+    pid = m.group(0).upper()
+    if pid not in {p["id"].upper() for p in _RAW_PATIENTS}:
+        return None
+    if _find_trial_id_in_text(question.lower()):
+        return None  # a trial WAS also named — _detect_single_match_query handles that
+    return pid
+
+
+def _patient_lookup_answer(patient_id: str) -> dict:
+    p = next(pt for pt in _RAW_PATIENTS if pt["id"] == patient_id)
+    dg = p.get("demographics", {})
+    diagnoses = [d["display"] for d in p.get("diagnoses", [])]
+    active_meds = [m["display"] for m in p.get("medications", []) if m.get("status") == "active"]
+    labs = sorted(p.get("labs", []), key=lambda l: l.get("date", ""), reverse=True)
+
+    points = []
+    if diagnoses:
+        points.append("Diagnoses: " + "; ".join(diagnoses))
+    if active_meds:
+        points.append("Active medications: " + "; ".join(active_meds))
+    if labs:
+        points.append("Most recent labs: " + "; ".join(
+            f"{l['display']} {l['value']} {l['unit']} ({l['date']})" for l in labs[:5]
+        ))
+    sh = p.get("social_history", {})
+    if sh:
+        points.append(f"Social history: smoking {sh.get('smoking_status', 'unknown')}, alcohol {sh.get('alcohol_use', 'unknown')}")
+
+    age, sex = dg.get("age"), dg.get("sex", "")
+    return {
+        "answer": f"{patient_id} is a {age}-year-old {sex.lower()} patient with {len(diagnoses)} recorded diagnosis(es) and {len(labs)} lab result(s) on file.",
+        "points": points,
+        "basedOn": f"Based on the patient record for {patient_id} (direct lookup against the full patient roster — "
+                   f"not filtered by the current study/cohort context, not LLM-estimated).",
+        "sources": [{"id": patient_id, "label": f"Patient {patient_id}", "type": "record"}],
+    }
+
+
+def _patient_all_trials_answer(patient_id: str) -> dict:
+    """The other direction of _trial_cohort_answer: for ONE patient, evaluate
+    against EVERY trial and summarize which they match, don't, or need review
+    for — deterministic, reuses the same rule engine as /api/match."""
+    patient = Patient(**next(p for p in _RAW_PATIENTS if p["id"] == patient_id))
+    rows = [(t["id"], t.get("title", ""), match_patient_to_trial(patient, Trial(**t))) for t in _RAW_TRIALS]
+
+    eligible = [(tid, title, r) for tid, title, r in rows if r.overall_status == "ELIGIBLE"]
+    review = [(tid, title, r) for tid, title, r in rows if r.overall_status == "NEEDS_REVIEW"]
+
+    points = [f"{tid} ({title}) — ELIGIBLE: {r.summary}" for tid, title, r in eligible]
+    points += [f"{tid} ({title}) — NEEDS REVIEW: {r.summary}" for tid, title, r in review]
+
+    return {
+        "answer": f"{patient_id} is ELIGIBLE for {len(eligible)} trial(s) and NEEDS REVIEW for {len(review)} more, "
+                  f"out of {len(rows)} screened.",
+        "points": points or ["Not currently ELIGIBLE or NEEDS_REVIEW for any trial in the registry."],
+        "basedOn": f"Based on the deterministic eligibility rule engine (matching_engine.match_patient_to_trial) "
+                   f"run for {patient_id} against all {len(rows)} trials — the same rules used by /api/match, not an LLM guess.",
+        "sources": (
+            [{"id": patient_id, "label": f"Patient {patient_id}", "type": "record"}]
+            + [{"id": tid, "label": f"Trial {tid}", "type": "document"} for tid, _, _ in (eligible + review)[:9]]
+        ),
+    }
 
 
 def _trial_cohort_answer(trial_id: str) -> dict:
@@ -697,6 +829,7 @@ def _synthesize_ollama(question: str, evidence: str) -> tuple[str | None, list[s
         resp = client.chat.completions.create(
             model=get_llm_model(),
             temperature=0,
+            extra_body={"reasoning_effort": "low"},  # gpt-oss defaults to heavy chain-of-thought; this task doesn't need it — ~2x faster with no quality loss observed
             messages=[
                 {"role": "system", "content": _SYNTH_SYSTEM_PROMPT},
                 {"role": "user", "content": f"Question: {question}\n\nEvidence:\n{evidence}"},
@@ -730,22 +863,26 @@ def _synthesize_anthropic(question: str, evidence: str) -> tuple[str | None, lis
 
 _STREAM_SYSTEM_PROMPT = (
     "You are a clinical research assistant supporting authorized researchers. "
-    "Answer ONLY using the numbered evidence snippets provided — never invent "
-    "values not present in them. You must never diagnose, prescribe, or make an "
-    "eligibility determination; you are summarizing existing research data for "
-    "human review. Write a concise, plain-prose answer (2-4 sentences). No "
+    "Answer ONLY using the evidence provided — never invent values not present "
+    "in it. You must never diagnose, prescribe, or make an eligibility "
+    "determination yourself; the evidence already reflects a deterministic "
+    "eligibility computation where relevant — you are narrating it, not "
+    "recomputing it. Write a concise, plain-prose answer (2-4 sentences). No "
     "markdown, no JSON, no bullet points — plain sentences only."
 )
 
 
-def stream_llm_answer(question: str, hits: list[dict]):
-    """Yields answer text chunks as they're generated, for a live-typing UI.
-    Same provider order as _synthesize (Ollama -> Anthropic -> extractive),
-    but falls through to the next provider only if the current one produced
-    no output at all — once a provider has started streaming text, the
-    response commits to it rather than restarting mid-stream."""
-    evidence = "\n".join(f"[{i + 1}] ({h['type']} {h['id']}) {h['text']}" for i, h in enumerate(hits))
+def build_evidence_text(hits: list[dict]) -> str:
+    return "\n".join(f"[{i + 1}] ({h['type']} {h['id']}) {h['text']}" for i, h in enumerate(hits))
 
+
+def stream_llm_answer(question: str, evidence: str, fallback: str):
+    """Yields answer text chunks as they're generated, for a live-typing UI.
+    Same provider order as _synthesize (Ollama -> Anthropic -> fallback), but
+    falls through to the next provider only if the current one produced no
+    output at all — once a provider has started streaming text, the response
+    commits to it rather than restarting mid-stream. `fallback` is yielded
+    whole if no LLM is reachable at all (never left blank)."""
     try:
         from utils.llm_provider import resolve_provider, get_llm_client, get_llm_model
 
@@ -755,6 +892,7 @@ def stream_llm_answer(question: str, hits: list[dict]):
                 model=get_llm_model(),
                 temperature=0,
                 stream=True,
+                extra_body={"reasoning_effort": "low"},
                 messages=[
                     {"role": "system", "content": _STREAM_SYSTEM_PROMPT},
                     {"role": "user", "content": f"Question: {question}\n\nEvidence:\n{evidence}"},
@@ -790,10 +928,9 @@ def stream_llm_answer(question: str, hits: list[dict]):
                 if got_any:
                     return
         except Exception as e:
-            print(f"[research_assistant] Anthropic streaming failed, using extractive fallback: {e}")
+            print(f"[research_assistant] Anthropic streaming failed, using fallback text: {e}")
 
-    answer, _points = _extractive_summary(hits)
-    yield answer
+    yield fallback
 
 
 def _synthesize(question: str, hits: list[dict]) -> dict:
@@ -805,7 +942,7 @@ def _synthesize(question: str, hits: list[dict]) -> dict:
             "sources": [],
         }
 
-    evidence = "\n".join(f"[{i + 1}] ({h['type']} {h['id']}) {h['text']}" for i, h in enumerate(hits))
+    evidence = build_evidence_text(hits)
 
     provider_used = None
     answer, points = _synthesize_ollama(question, evidence)
@@ -830,17 +967,221 @@ def _synthesize(question: str, hits: list[dict]) -> dict:
 
 
 # ---------------------------------------------------------------------------
+# Tool catalog — the deterministic computations above, exposed for an LLM to
+# choose from. This replaces routing questions by hand-written trigger-word
+# detection (see try_structured_answer below, now kept only as the fully
+# offline fallback) with the LLM actually reading the question and picking
+# the right computation — the same way any tool-using agent would, and the
+# only way to add a new question SHAPE without hand-writing a new regex for
+# it every time. The tools themselves stay 100% deterministic — the LLM
+# never computes eligibility, it only chooses which deterministic function
+# answers the question and then narrates that function's output.
+# ---------------------------------------------------------------------------
+def _known_patient(patient_id: str) -> bool:
+    return str(patient_id).upper() in {p["id"].upper() for p in _RAW_PATIENTS}
+
+
+def _tool_lookup_patient(args: dict, study_id: str | None) -> dict | None:
+    pid = str(args.get("patient_id", "")).upper()
+    return _patient_lookup_answer(pid) if _known_patient(pid) else None
+
+
+def _tool_check_eligibility(args: dict, study_id: str | None) -> dict | None:
+    pid = str(args.get("patient_id", "")).upper()
+    tid = str(args.get("trial_id", "")).upper()
+    if not _known_patient(pid) or tid not in _TRIAL_BY_ID:
+        return None
+    return _single_match_answer(pid, tid)
+
+
+def _tool_list_patient_trial_matches(args: dict, study_id: str | None) -> dict | None:
+    pid = str(args.get("patient_id", "")).upper()
+    return _patient_all_trials_answer(pid) if _known_patient(pid) else None
+
+
+def _tool_list_eligible_patients(args: dict, study_id: str | None) -> dict | None:
+    tid = str(args.get("trial_id", "")).upper()
+    return _trial_cohort_answer(tid) if tid in _TRIAL_BY_ID else None
+
+
+def _tool_list_patients_by_diagnosis(args: dict, study_id: str | None) -> dict | None:
+    query = str(args.get("diagnosis", "")).lower().strip()
+    if not query:
+        return None
+    for display in _DIAGNOSIS_DISPLAYS_BY_LEN:  # longest first = most specific match wins
+        if display in query or query in display:
+            return _diagnosis_cohort_answer(display, _DIAGNOSIS_INDEX[display])
+    return None
+
+
+def _tool_global_eligibility_overview(args: dict, study_id: str | None) -> dict | None:
+    return _global_eligibility_answer()
+
+
+def _tool_lab_statistics(args: dict, study_id: str | None) -> dict | None:
+    lab_code = _find_lab_code(str(args.get("lab_name", "")))
+    return _structured_lab_answer(lab_code, study_id) if lab_code else None
+
+
+def _tool_study_roster(args: dict, study_id: str | None) -> dict | None:
+    return _study_participants_answer(study_id) if study_id and study_id in _STUDY_BY_ID else None
+
+
+def _tool_study_latest_reports(args: dict, study_id: str | None) -> dict | None:
+    return _study_reports_today_answer(study_id) if study_id and study_id in _STUDY_BY_ID else None
+
+
+TOOLS: dict[str, dict] = {
+    "lookup_patient": {
+        "description": "Look up ONE specific patient's demographics, diagnoses, medications, labs, and social "
+                        "history by patient ID. Use for 'who is patient X' / 'tell me about patient X' with no trial named.",
+        "params": {"patient_id": "string, e.g. 'P-1024'"},
+        "fn": _tool_lookup_patient,
+    },
+    "check_eligibility": {
+        "description": "Check whether ONE specific patient is eligible for ONE specific trial, with full "
+                        "PASS/FAIL/REVIEW reasoning per criterion. Use when both a patient AND one specific trial are named.",
+        "params": {"patient_id": "string", "trial_id": "string, e.g. 'T101'"},
+        "fn": _tool_check_eligibility,
+    },
+    "list_patient_trial_matches": {
+        "description": "For ONE specific patient, check eligibility against EVERY trial and summarize which they "
+                        "match, don't, or need review for, and why. Use for 'what trials does patient X match/qualify "
+                        "for' with NO single trial named.",
+        "params": {"patient_id": "string"},
+        "fn": _tool_list_patient_trial_matches,
+    },
+    "list_eligible_patients": {
+        "description": "For ONE specific trial, list every patient who is ELIGIBLE or NEEDS_REVIEW. Use for 'which "
+                        "patients qualify/are eligible for trial X' where X is a specific named trial.",
+        "params": {"trial_id": "string, e.g. 'T101'"},
+        "fn": _tool_list_eligible_patients,
+    },
+    "list_patients_by_diagnosis": {
+        "description": "List every patient with a given diagnosis. Use for 'which patients have <diagnosis>' with "
+                        "no specific trial named.",
+        "params": {"diagnosis": "string, the clinical term as stated in the question"},
+        "fn": _tool_list_patients_by_diagnosis,
+    },
+    "global_eligibility_overview": {
+        "description": "Overview of which trials currently have at least one eligible patient, across the whole "
+                        "registry. Use for 'which patients are ready for which trial' / 'what trials have eligible "
+                        "candidates' with NO specific patient or trial named.",
+        "params": {},
+        "fn": _tool_global_eligibility_overview,
+    },
+    "lab_statistics": {
+        "description": "Compute mean/min/max for a lab test (e.g. HbA1c, eGFR, LDL, creatinine) across patients, "
+                        "scoped to the current study if one is selected. Use for 'average/distribution/range of <lab>'.",
+        "params": {"lab_name": "string, e.g. 'HbA1c'"},
+        "fn": _tool_lab_statistics,
+    },
+    "study_roster": {
+        "description": "List the active participants currently enrolled in the study the chat is scoped to, and "
+                        "which trial they're in. Only usable if a study is selected.",
+        "params": {},
+        "fn": _tool_study_roster,
+    },
+    "study_latest_reports": {
+        "description": "The most recent day's daily reports (vitals, fatigue, adverse events) for the current "
+                        "study's active participants. Only usable if a study is selected.",
+        "params": {},
+        "fn": _tool_study_latest_reports,
+    },
+    "search_evidence": {
+        "description": "Open-ended semantic search over patient records, trial protocols, and daily reports. Use "
+                        "for qualitative questions that don't fit any other tool — adverse event summaries, symptom "
+                        "trends, narrative questions — or as the default when nothing else clearly fits.",
+        "params": {"query": "string, the search query"},
+        "fn": None,  # handled specially in the orchestrator — needs raw hits, not a pre-baked facts dict
+    },
+}
+
+
+def _tool_catalog_text() -> str:
+    return "\n".join(f"- {name}: {spec['description']} Params: {spec['params']}" for name, spec in TOOLS.items())
+
+
+_PLANNER_SYSTEM_PROMPT = """You are the routing layer for a clinical research assistant. Read the researcher's \
+question and choose the ONE tool that would answer it, extracting any arguments from the question text. Respond \
+with strict JSON only, no markdown fences, no other text: {{"tool": "<name>", "args": {{...}}}}
+
+Available tools:
+{catalog}
+
+Rules:
+- If the question is open-ended/qualitative (symptoms, trends, notes, "summarize...") or doesn't clearly match \
+any specific tool, use "search_evidence" with "query" set to the original question.
+- Never invent a patient or trial ID that wasn't mentioned in the question — extract only what's actually there.
+- {context}"""
+
+
+def _parse_plan(raw: str) -> tuple[str, dict] | None:
+    raw = re.sub(r"^```(json)?|```$", "", raw.strip(), flags=re.MULTILINE).strip()
+    parsed = json.loads(raw)
+    tool = parsed.get("tool")
+    if tool not in TOOLS:
+        return None
+    return tool, (parsed.get("args") or {})
+
+
+def _plan_tool_call(question: str, study_id: str | None) -> tuple[str, dict] | None:
+    """Asks an LLM which tool answers this question — the 'understand the
+    question first' step. Returns None if no LLM is reachable or the plan is
+    unusable, so the caller can fall back to the offline keyword cascade."""
+    context = f"A study is currently selected: {study_id}." if study_id else "No study is currently selected."
+    system = _PLANNER_SYSTEM_PROMPT.format(catalog=_tool_catalog_text(), context=context)
+
+    try:
+        from utils.llm_provider import resolve_provider, get_llm_client, get_llm_model
+
+        if resolve_provider() == "ollama":
+            client = get_llm_client()
+            resp = client.chat.completions.create(
+                model=get_llm_model(), temperature=0,
+                extra_body={"reasoning_effort": "low"},  # tool selection is a quick classification, not deep reasoning
+                messages=[{"role": "system", "content": system}, {"role": "user", "content": question}],
+            )
+            plan = _parse_plan(resp.choices[0].message.content)
+            if plan:
+                return plan
+    except Exception as e:
+        print(f"[research_assistant] Ollama tool planning failed, trying next provider: {e}")
+
+    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    if api_key:
+        try:
+            import anthropic
+
+            client = anthropic.Anthropic()
+            resp = client.messages.create(
+                model="claude-sonnet-4-6", max_tokens=200, system=system,
+                messages=[{"role": "user", "content": question}],
+            )
+            plan = _parse_plan(resp.content[0].text)
+            if plan:
+                return plan
+        except Exception as e:
+            print(f"[research_assistant] Anthropic tool planning failed: {e}")
+
+    return None
+
+
+def _facts_to_evidence(facts: dict) -> str:
+    evidence = facts["answer"]
+    if facts["points"]:
+        evidence += "\n" + "\n".join(f"- {p}" for p in facts["points"])
+    return evidence
+
+
+# ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
 def try_structured_answer(question: str, study_id: str | None = None) -> dict | None:
-    """Checks every deterministic short-circuit (lab stats, diagnosis cohort,
-    trial-eligibility cohort) in priority order. Returns a complete answer
-    dict if one matched, else None — meaning this genuinely needs semantic
-    retrieval + LLM synthesis. Shared by both the sync and streaming entry
-    points so they can never drift out of sync on which questions get
-    answered deterministically vs. via RAG."""
-    ensure_index_built()
-
+    """The offline fallback cascade — hand-written trigger-word detection.
+    Used ONLY when no LLM is reachable at all (so _plan_tool_call returned
+    None), or when a chosen tool turns out inapplicable (e.g. a fabricated
+    ID). NOT the primary path anymore; see answer_research_question."""
     study_meta = _detect_study_meta_query(question, study_id)
     if study_meta == "participants":
         return _study_participants_answer(study_id)
@@ -850,6 +1191,14 @@ def try_structured_answer(question: str, study_id: str | None = None) -> dict | 
     lab_code = _detect_structured_lab_query(question)
     if lab_code:
         return _structured_lab_answer(lab_code, study_id)
+
+    single_match = _detect_single_match_query(question)
+    if single_match:
+        return _single_match_answer(*single_match)
+
+    patient_lookup = _detect_patient_lookup_query(question)
+    if patient_lookup:
+        return _patient_lookup_answer(patient_lookup)
 
     trial_id = _detect_trial_cohort_query(question)
     if trial_id:
@@ -866,9 +1215,108 @@ def try_structured_answer(question: str, study_id: str | None = None) -> dict | 
 
 
 def answer_research_question(question: str, study_id: str | None = None) -> dict:
+    """Primary path: ask an LLM which tool answers this question, run that
+    tool deterministically, then have an LLM narrate the result — so the
+    answer is always genuinely LLM-generated (never a raw template string),
+    while the facts underneath (and `sources`) stay 100% deterministic.
+    Falls back to the offline keyword cascade, then plain semantic
+    retrieval, only if no LLM is reachable or the chosen tool doesn't apply."""
+    ensure_index_built()
+
+    plan = _plan_tool_call(question, study_id)
+    if plan:
+        tool_name, args = plan
+        if tool_name == "search_evidence":
+            hits = _retrieve(str(args.get("query") or question), study_id)
+            return _synthesize(question, hits)
+
+        facts = TOOLS[tool_name]["fn"](args, study_id)
+        if facts is not None:
+            evidence = _facts_to_evidence(facts)
+            answer, points = _synthesize_ollama(question, evidence)
+            if answer is None:
+                answer, points = _synthesize_anthropic(question, evidence)
+            if answer is None or points is None:
+                answer, points = facts["answer"], facts["points"]
+            return {"answer": answer, "points": points, "basedOn": facts["basedOn"], "sources": facts["sources"]}
+
     structured = try_structured_answer(question, study_id)
     if structured is not None:
         return structured
 
     hits = _retrieve(question, study_id)
     return _synthesize(question, hits)
+
+
+def stream_research_answer(question: str, study_id: str | None = None):
+    """Streaming counterpart of answer_research_question. Yields
+    ('sources', sources, basedOn) once, then ('token', text) repeatedly as
+    the narration streams, then ('done', points) once. Sources are always
+    known before narration starts (the tool/retrieval step is fast and
+    doesn't depend on the LLM); the narration text is always a live LLM
+    stream, never a pre-baked string, except in the fully-offline fallback
+    where there's no LLM to stream from at all."""
+    ensure_index_built()
+
+    plan = _plan_tool_call(question, study_id)
+    if plan:
+        tool_name, args = plan
+
+        if tool_name == "search_evidence":
+            hits = _retrieve(str(args.get("query") or question), study_id)
+            if hits:
+                sources = [{"id": h["id"], "label": format_source_label(h), "type": h["type"]} for h in hits]
+                yield ("sources", sources, f"Based on {len(hits)} matching record(s)/document(s) from the current "
+                                            f"dataset (semantic retrieval + streamed LLM synthesis).")
+                evidence = build_evidence_text(hits)
+                fallback = _extractive_summary(hits)[0]
+                chunks = []
+                for chunk in stream_llm_answer(question, evidence, fallback):
+                    chunks.append(chunk)
+                    yield ("token", chunk)
+                answer = "".join(chunks).strip()
+                points = [s.strip() for s in re.split(r"(?<=[.!?])\s+", answer) if s.strip()][:3]
+                yield ("done", points)
+                return
+            # empty hits falls through to the no-evidence response at the bottom
+
+        else:
+            facts = TOOLS[tool_name]["fn"](args, study_id)
+            if facts is not None:
+                yield ("sources", facts["sources"], facts["basedOn"])
+                evidence = _facts_to_evidence(facts)
+                chunks = []
+                for chunk in stream_llm_answer(question, evidence, facts["answer"]):
+                    chunks.append(chunk)
+                    yield ("token", chunk)
+                answer = "".join(chunks).strip()
+                points = facts["points"] or [s.strip() for s in re.split(r"(?<=[.!?])\s+", answer) if s.strip()][:3]
+                yield ("done", points)
+                return
+
+    structured = try_structured_answer(question, study_id)
+    if structured is not None:
+        yield ("sources", structured["sources"], structured["basedOn"])
+        yield ("token", structured["answer"])
+        yield ("done", structured["points"])
+        return
+
+    hits = _retrieve(question, study_id)
+    if not hits:
+        yield ("sources", [], "Based on 0 matching records.")
+        yield ("token", "No matching records or trial documents were found for this question in the current dataset.")
+        yield ("done", [])
+        return
+
+    sources = [{"id": h["id"], "label": format_source_label(h), "type": h["type"]} for h in hits]
+    yield ("sources", sources, f"Based on {len(hits)} matching record(s)/document(s) from the current dataset "
+                                f"(semantic retrieval + streamed LLM synthesis).")
+    evidence = build_evidence_text(hits)
+    fallback = _extractive_summary(hits)[0]
+    chunks = []
+    for chunk in stream_llm_answer(question, evidence, fallback):
+        chunks.append(chunk)
+        yield ("token", chunk)
+    answer = "".join(chunks).strip()
+    points = [s.strip() for s in re.split(r"(?<=[.!?])\s+", answer) if s.strip()][:3]
+    yield ("done", points)

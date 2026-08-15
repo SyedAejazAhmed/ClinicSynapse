@@ -25,7 +25,6 @@ Endpoints:
 """
 
 import json
-import re
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
@@ -35,14 +34,7 @@ from fastapi.staticfiles import StaticFiles
 
 from models import Account, MatchRequest, MatchResult, Patient, ResearchQuery, ResearchResponse, Study, Trial
 from matching_engine import match_patient_to_trial
-from research_assistant import (
-    _retrieve,
-    answer_research_question,
-    ensure_index_built,
-    format_source_label,
-    stream_llm_answer,
-    try_structured_answer,
-)
+from research_assistant import answer_research_question, ensure_index_built, stream_research_answer
 
 APP_DIR = Path(__file__).parent
 DATA_DIR = APP_DIR / "data"
@@ -230,42 +222,24 @@ def _sse(event: str, data: dict) -> str:
 @app.post("/api/research/query/stream")
 def research_query_stream(req: ResearchQuery):
     """Same answer as /api/research/query, but streamed as Server-Sent Events
-    so the frontend can render tokens live instead of waiting ~10-20s for the
-    full LLM response. Event sequence: one `sources` event (retrieval is fast
-    and doesn't depend on the LLM), then one or more `token` events as the
-    answer streams in, then one `done` event with the closing bullet points."""
+    so the frontend can render tokens live instead of waiting for the full
+    LLM response. Event sequence: one `sources` event (the tool/retrieval
+    step is fast and doesn't depend on the LLM), then one or more `token`
+    events as the narration streams in, then one `done` event with the
+    closing bullet points. See research_assistant.stream_research_answer for
+    the actual LLM-tool-planning -> deterministic-execution -> LLM-narration
+    pipeline this wraps."""
     study_id = req.study_id or None
 
     def gen():
-        structured = try_structured_answer(req.question, study_id)
-        if structured is not None:
-            yield _sse("sources", {"sources": structured["sources"], "basedOn": structured["basedOn"]})
-            yield _sse("token", {"text": structured["answer"]})
-            yield _sse("done", {"points": structured["points"]})
-            return
-
-        hits = _retrieve(req.question, study_id)
-        if not hits:
-            yield _sse("sources", {"sources": [], "basedOn": "Based on 0 matching records."})
-            yield _sse("token", {"text": "No matching records or trial documents were found for this question in the current dataset."})
-            yield _sse("done", {"points": []})
-            return
-
-        sources = [{"id": h["id"], "label": format_source_label(h), "type": h["type"]} for h in hits]
-        yield _sse("sources", {
-            "sources": sources,
-            "basedOn": f"Based on {len(hits)} matching record(s)/document(s) from the current dataset "
-                       f"(semantic retrieval + streamed LLM synthesis).",
-        })
-
-        chunks: list[str] = []
-        for chunk in stream_llm_answer(req.question, hits):
-            chunks.append(chunk)
-            yield _sse("token", {"text": chunk})
-
-        answer = "".join(chunks).strip()
-        points = [s.strip() for s in re.split(r"(?<=[.!?])\s+", answer) if s.strip()][:3]
-        yield _sse("done", {"points": points})
+        for kind, *payload in stream_research_answer(req.question, study_id):
+            if kind == "sources":
+                sources, based_on = payload
+                yield _sse("sources", {"sources": sources, "basedOn": based_on})
+            elif kind == "token":
+                yield _sse("token", {"text": payload[0]})
+            elif kind == "done":
+                yield _sse("done", {"points": payload[0]})
 
     return StreamingResponse(gen(), media_type="text/event-stream")
 
