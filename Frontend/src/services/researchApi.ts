@@ -17,6 +17,7 @@ export interface StreamCallbacks {
   onSources?: (sources: SourceCitation[], basedOn: string) => void;
   onToken?: (text: string) => void;
   onDone?: (points: string[]) => void;
+  onFollowUps?: (followUps: string[]) => void;
   onError?: (err: unknown) => void;
 }
 
@@ -59,6 +60,7 @@ export const streamResearchAssistant = async (query: ResearchQuery, cb: StreamCa
         if (event === 'sources') cb.onSources?.(data.sources, data.basedOn);
         else if (event === 'token') cb.onToken?.(data.text);
         else if (event === 'done') cb.onDone?.(data.points);
+        else if (event === 'followups') cb.onFollowUps?.(data.followUps);
       }
     }
   } catch (err) {

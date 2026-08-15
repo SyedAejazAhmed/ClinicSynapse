@@ -240,6 +240,8 @@ def research_query_stream(req: ResearchQuery):
                 yield _sse("token", {"text": payload[0]})
             elif kind == "done":
                 yield _sse("done", {"points": payload[0]})
+            elif kind == "followups":
+                yield _sse("followups", {"followUps": payload[0]})
 
     return StreamingResponse(gen(), media_type="text/event-stream")
 

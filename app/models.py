@@ -267,3 +267,4 @@ class ResearchResponse(BaseModel):
     points: list[str] = Field(default_factory=list)
     basedOn: str
     sources: list[SourceCitation] = Field(default_factory=list)
+    followUps: list[str] = Field(default_factory=list)

@@ -14,4 +14,5 @@ export interface ResearchResponse {
   points: string[];
   basedOn: string;
   sources: SourceCitation[];
+  followUps?: string[];
 }

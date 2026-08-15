@@ -1214,7 +1214,71 @@ def try_structured_answer(question: str, study_id: str | None = None) -> dict | 
     return None
 
 
-def answer_research_question(question: str, study_id: str | None = None) -> dict:
+_FOLLOWUP_SYSTEM_PROMPT_TEMPLATE = """Given a researcher's question and the answer they just received from a \
+clinical trial matching system, suggest up to 3 short, natural follow-up questions they might ask next — \
+specific to what was just discussed (reuse the same patient/trial IDs if any were involved; don't repeat the \
+question just asked).
+
+This system is a trial-matching and cohort-lookup tool, NOT a clinical decision-support system — it can only \
+answer questions its own tools can compute, listed below. Do not suggest clinical management questions \
+(dosage changes, treatment recommendations, medication switches) — it has no way to answer those and \
+suggesting them sets a false expectation.
+
+TOOLS THIS SYSTEM CAN ACTUALLY ANSWER FROM:
+{catalog}
+
+Respond with strict JSON only, no markdown fences, no other text: \
+{{"follow_ups": ["<question 1>", "<question 2>", "<question 3>"]}}"""
+
+
+def _generate_follow_ups(question: str, answer: str) -> list[str]:
+    """A small, fast LLM call (same reasoning_effort=low pattern) run after
+    the main answer is already shown — never blocks the visible answer, and
+    degrades to no suggestions (not an error) if no LLM is reachable."""
+    system_prompt = _FOLLOWUP_SYSTEM_PROMPT_TEMPLATE.format(catalog=_tool_catalog_text())
+    user = f"Previous question: {question}\nAnswer given: {answer}"
+
+    try:
+        from utils.llm_provider import resolve_provider, get_llm_client, get_llm_model
+
+        if resolve_provider() == "ollama":
+            client = get_llm_client()
+            resp = client.chat.completions.create(
+                model=get_llm_model(), temperature=0.4,
+                extra_body={"reasoning_effort": "low"},
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user},
+                ],
+            )
+            raw = re.sub(r"^```(json)?|```$", "", resp.choices[0].message.content.strip(), flags=re.MULTILINE).strip()
+            follow_ups = json.loads(raw).get("follow_ups")
+            if follow_ups:
+                return [str(f) for f in follow_ups][:3]
+    except Exception as e:
+        print(f"[research_assistant] follow-up generation failed, trying next provider: {e}")
+
+    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    if api_key:
+        try:
+            import anthropic
+
+            client = anthropic.Anthropic()
+            resp = client.messages.create(
+                model="claude-sonnet-4-6", max_tokens=150, system=system_prompt,
+                messages=[{"role": "user", "content": user}],
+            )
+            raw = re.sub(r"^```(json)?|```$", "", resp.content[0].text.strip(), flags=re.MULTILINE).strip()
+            follow_ups = json.loads(raw).get("follow_ups")
+            if follow_ups:
+                return [str(f) for f in follow_ups][:3]
+        except Exception as e:
+            print(f"[research_assistant] follow-up generation failed: {e}")
+
+    return []
+
+
+def _compute_answer(question: str, study_id: str | None) -> dict:
     """Primary path: ask an LLM which tool answers this question, run that
     tool deterministically, then have an LLM narrate the result — so the
     answer is always genuinely LLM-generated (never a raw template string),
@@ -1248,14 +1312,19 @@ def answer_research_question(question: str, study_id: str | None = None) -> dict
     return _synthesize(question, hits)
 
 
-def stream_research_answer(question: str, study_id: str | None = None):
-    """Streaming counterpart of answer_research_question. Yields
-    ('sources', sources, basedOn) once, then ('token', text) repeatedly as
-    the narration streams, then ('done', points) once. Sources are always
-    known before narration starts (the tool/retrieval step is fast and
-    doesn't depend on the LLM); the narration text is always a live LLM
-    stream, never a pre-baked string, except in the fully-offline fallback
-    where there's no LLM to stream from at all."""
+def answer_research_question(question: str, study_id: str | None = None) -> dict:
+    result = _compute_answer(question, study_id)
+    result["followUps"] = _generate_follow_ups(question, result["answer"]) if result["answer"] else []
+    return result
+
+
+def _stream_answer_events(question: str, study_id: str | None = None):
+    """Yields ('sources', sources, basedOn) once, then ('token', text)
+    repeatedly as the narration streams, then ('done', points) once. Sources
+    are always known before narration starts (the tool/retrieval step is
+    fast and doesn't depend on the LLM); the narration text is always a live
+    LLM stream, never a pre-baked string, except in the fully-offline
+    fallback where there's no LLM to stream from at all."""
     ensure_index_built()
 
     plan = _plan_tool_call(question, study_id)
@@ -1320,3 +1389,20 @@ def stream_research_answer(question: str, study_id: str | None = None):
     answer = "".join(chunks).strip()
     points = [s.strip() for s in re.split(r"(?<=[.!?])\s+", answer) if s.strip()][:3]
     yield ("done", points)
+
+
+def stream_research_answer(question: str, study_id: str | None = None):
+    """Public streaming entry point. Re-yields every event from
+    _stream_answer_events unchanged, then — once the answer has fully
+    streamed and the user already has something to read — makes one more
+    small, fast LLM call for contextual follow-up suggestions and yields
+    ('followups', [...]). Kept as a separate trailing event rather than
+    baked into 'done' so the main answer is never held up waiting on it."""
+    answer_chunks: list[str] = []
+    for event in _stream_answer_events(question, study_id):
+        if event[0] == "token":
+            answer_chunks.append(event[1])
+        yield event
+
+    full_answer = "".join(answer_chunks).strip()
+    yield ("followups", _generate_follow_ups(question, full_answer) if full_answer else [])
