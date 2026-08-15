@@ -1,0 +1,3392 @@
+[
+  {
+    "id": "P-1001",
+    "demographics": {
+      "age": 29,
+      "sex": "Female",
+      "race": "Black or African American",
+      "ethnicity": "Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2023-02-02"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 6.9,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 78,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 1.13,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "Occasional"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-02-10"
+    },
+    "data_completeness": {
+      "score": 0.85,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1002",
+    "demographics": {
+      "age": 36,
+      "sex": "Male",
+      "race": "White",
+      "ethnicity": "Not reported"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2024-03-03"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 7.2,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 64,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 1.38,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "Moderate"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-03-10"
+    },
+    "data_completeness": {
+      "score": 0.73,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1003",
+    "demographics": {
+      "age": 43,
+      "sex": "Female",
+      "race": "Not reported",
+      "ethnicity": "Not Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2025-04-04"
+      },
+      {
+        "code": "I10",
+        "display": "Essential (primary) hypertension",
+        "system": "ICD-10",
+        "recorded_date": "2023-05-14"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 7.8,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 58,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 1.52,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      },
+      {
+        "code": "314077",
+        "display": "Lisinopril 10 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-06-01",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "None"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-04-10"
+    },
+    "data_completeness": {
+      "score": 0.86,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1004",
+    "demographics": {
+      "age": 50,
+      "sex": "Male",
+      "race": "Asian",
+      "ethnicity": "Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2022-05-05"
+      },
+      {
+        "code": "E78.5",
+        "display": "Hyperlipidemia, unspecified",
+        "system": "ICD-10",
+        "recorded_date": "2024-02-18"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 8.4,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 46,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 1.91,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      },
+      {
+        "code": "617311",
+        "display": "Atorvastatin 20 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2024-11-10",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "Occasional"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-05-10"
+    },
+    "data_completeness": {
+      "score": 0.74,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1005",
+    "demographics": {
+      "age": 57,
+      "sex": "Female",
+      "race": "Black or African American",
+      "ethnicity": "Not reported"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2023-06-06"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 9.1,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 38,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 2.32,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Former smoker",
+      "alcohol_use": "Moderate"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-06-10"
+    },
+    "data_completeness": {
+      "score": 0.87,
+      "missing_sections": [
+        "family_history"
+      ]
+    }
+  },
+  {
+    "id": "P-1006",
+    "demographics": {
+      "age": 64,
+      "sex": "Male",
+      "race": "White",
+      "ethnicity": "Not Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2024-07-07"
+      },
+      {
+        "code": "I10",
+        "display": "Essential (primary) hypertension",
+        "system": "ICD-10",
+        "recorded_date": "2023-05-14"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 6.4,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 92,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 0.96,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      },
+      {
+        "code": "314077",
+        "display": "Lisinopril 10 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-06-01",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Current smoker",
+      "alcohol_use": "None"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-01-10"
+    },
+    "data_completeness": {
+      "score": 0.75,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1007",
+    "demographics": {
+      "age": 71,
+      "sex": "Female",
+      "race": "Not reported",
+      "ethnicity": "Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2025-08-08"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 6.9,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 78,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 1.13,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "Occasional"
+    },
+    "consent": {
+      "trial_interest": false,
+      "data_use_consent": true,
+      "last_updated": "2026-02-10"
+    },
+    "data_completeness": {
+      "score": 0.88,
+      "missing_sections": [
+        "diagnosis_onset_date"
+      ]
+    }
+  },
+  {
+    "id": "P-1008",
+    "demographics": {
+      "age": 23,
+      "sex": "Male",
+      "race": "Asian",
+      "ethnicity": "Not reported"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2022-09-09"
+      },
+      {
+        "code": "E78.5",
+        "display": "Hyperlipidemia, unspecified",
+        "system": "ICD-10",
+        "recorded_date": "2024-02-18"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 7.2,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 64,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 1.38,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      },
+      {
+        "code": "617311",
+        "display": "Atorvastatin 20 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2024-11-10",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "Moderate"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-03-10"
+    },
+    "data_completeness": {
+      "score": 0.76,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1009",
+    "demographics": {
+      "age": 30,
+      "sex": "Female",
+      "race": "Black or African American",
+      "ethnicity": "Not Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2023-01-10"
+      },
+      {
+        "code": "I10",
+        "display": "Essential (primary) hypertension",
+        "system": "ICD-10",
+        "recorded_date": "2023-05-14"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 7.8,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 58,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 1.52,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      },
+      {
+        "code": "314077",
+        "display": "Lisinopril 10 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-06-01",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [
+      {
+        "substance": "Penicillin",
+        "reaction": "Rash",
+        "status": "active"
+      }
+    ],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "None"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-04-10"
+    },
+    "data_completeness": {
+      "score": 0.89,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1010",
+    "demographics": {
+      "age": 37,
+      "sex": "Male",
+      "race": "White",
+      "ethnicity": "Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2024-02-11"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 8.4,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 46,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 1.91,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Former smoker",
+      "alcohol_use": "Occasional"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-05-10"
+    },
+    "data_completeness": {
+      "score": 0.77,
+      "missing_sections": [
+        "family_history"
+      ]
+    }
+  },
+  {
+    "id": "P-1011",
+    "demographics": {
+      "age": 44,
+      "sex": "Female",
+      "race": "Not reported",
+      "ethnicity": "Not reported"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2025-03-12"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 9.1,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 38,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 2.32,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "Moderate"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": false,
+      "last_updated": "2026-06-10"
+    },
+    "data_completeness": {
+      "score": 0.9,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1012",
+    "demographics": {
+      "age": 51,
+      "sex": "Male",
+      "race": "Asian",
+      "ethnicity": "Not Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2022-04-13"
+      },
+      {
+        "code": "I10",
+        "display": "Essential (primary) hypertension",
+        "system": "ICD-10",
+        "recorded_date": "2023-05-14"
+      },
+      {
+        "code": "E78.5",
+        "display": "Hyperlipidemia, unspecified",
+        "system": "ICD-10",
+        "recorded_date": "2024-02-18"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 6.4,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 92,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 0.96,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      },
+      {
+        "code": "314077",
+        "display": "Lisinopril 10 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-06-01",
+        "end_date": null,
+        "status": "active"
+      },
+      {
+        "code": "617311",
+        "display": "Atorvastatin 20 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2024-11-10",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "None"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-01-10"
+    },
+    "data_completeness": {
+      "score": 0.78,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1013",
+    "demographics": {
+      "age": 58,
+      "sex": "Female",
+      "race": "Black or African American",
+      "ethnicity": "Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2023-05-14"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 6.9,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 78,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 1.13,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Current smoker",
+      "alcohol_use": "Occasional"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-02-10"
+    },
+    "data_completeness": {
+      "score": 0.91,
+      "missing_sections": [
+        "renal_history",
+        "family_history"
+      ]
+    }
+  },
+  {
+    "id": "P-1014",
+    "demographics": {
+      "age": 65,
+      "sex": "Male",
+      "race": "White",
+      "ethnicity": "Not reported"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2024-06-15"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 7.2,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 64,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 1.38,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "Moderate"
+    },
+    "consent": {
+      "trial_interest": false,
+      "data_use_consent": true,
+      "last_updated": "2026-03-10"
+    },
+    "data_completeness": {
+      "score": 0.79,
+      "missing_sections": [
+        "diagnosis_onset_date"
+      ]
+    }
+  },
+  {
+    "id": "P-1015",
+    "demographics": {
+      "age": 72,
+      "sex": "Female",
+      "race": "Not reported",
+      "ethnicity": "Not Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2025-07-16"
+      },
+      {
+        "code": "I10",
+        "display": "Essential (primary) hypertension",
+        "system": "ICD-10",
+        "recorded_date": "2023-05-14"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 7.8,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 58,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 1.52,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      },
+      {
+        "code": "314077",
+        "display": "Lisinopril 10 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-06-01",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Former smoker",
+      "alcohol_use": "None"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-04-10"
+    },
+    "data_completeness": {
+      "score": 0.92,
+      "missing_sections": [
+        "family_history"
+      ]
+    }
+  },
+  {
+    "id": "P-1016",
+    "demographics": {
+      "age": 24,
+      "sex": "Male",
+      "race": "Asian",
+      "ethnicity": "Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2022-08-17"
+      },
+      {
+        "code": "E78.5",
+        "display": "Hyperlipidemia, unspecified",
+        "system": "ICD-10",
+        "recorded_date": "2024-02-18"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 8.4,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 46,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 1.91,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      },
+      {
+        "code": "617311",
+        "display": "Atorvastatin 20 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2024-11-10",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "Occasional"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-05-10"
+    },
+    "data_completeness": {
+      "score": 0.8,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1017",
+    "demographics": {
+      "age": 31,
+      "sex": "Female",
+      "race": "Black or African American",
+      "ethnicity": "Not reported"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2023-09-18"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 9.1,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 38,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 2.32,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "Moderate"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-06-10"
+    },
+    "data_completeness": {
+      "score": 0.93,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1018",
+    "demographics": {
+      "age": 38,
+      "sex": "Male",
+      "race": "White",
+      "ethnicity": "Not Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2024-01-19"
+      },
+      {
+        "code": "I10",
+        "display": "Essential (primary) hypertension",
+        "system": "ICD-10",
+        "recorded_date": "2023-05-14"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 6.4,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 92,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 0.96,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      },
+      {
+        "code": "314077",
+        "display": "Lisinopril 10 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-06-01",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [
+      {
+        "substance": "Penicillin",
+        "reaction": "Rash",
+        "status": "active"
+      }
+    ],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "None"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-01-10"
+    },
+    "data_completeness": {
+      "score": 0.81,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1019",
+    "demographics": {
+      "age": 45,
+      "sex": "Female",
+      "race": "Not reported",
+      "ethnicity": "Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2025-02-20"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 6.9,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 78,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 1.13,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Current smoker",
+      "alcohol_use": "Occasional"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-02-10"
+    },
+    "data_completeness": {
+      "score": 0.94,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1020",
+    "demographics": {
+      "age": 52,
+      "sex": "Male",
+      "race": "Asian",
+      "ethnicity": "Not reported"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2022-03-21"
+      },
+      {
+        "code": "E78.5",
+        "display": "Hyperlipidemia, unspecified",
+        "system": "ICD-10",
+        "recorded_date": "2024-02-18"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 7.2,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 64,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 1.38,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      },
+      {
+        "code": "617311",
+        "display": "Atorvastatin 20 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2024-11-10",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Former smoker",
+      "alcohol_use": "Moderate"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-03-10"
+    },
+    "data_completeness": {
+      "score": 0.82,
+      "missing_sections": [
+        "family_history"
+      ]
+    }
+  },
+  {
+    "id": "P-1021",
+    "demographics": {
+      "age": 59,
+      "sex": "Female",
+      "race": "Black or African American",
+      "ethnicity": "Not Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2023-04-22"
+      },
+      {
+        "code": "I10",
+        "display": "Essential (primary) hypertension",
+        "system": "ICD-10",
+        "recorded_date": "2023-05-14"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 7.8,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 58,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 1.52,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      },
+      {
+        "code": "314077",
+        "display": "Lisinopril 10 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-06-01",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "None"
+    },
+    "consent": {
+      "trial_interest": false,
+      "data_use_consent": true,
+      "last_updated": "2026-04-10"
+    },
+    "data_completeness": {
+      "score": 0.95,
+      "missing_sections": [
+        "diagnosis_onset_date"
+      ]
+    }
+  },
+  {
+    "id": "P-1022",
+    "demographics": {
+      "age": 66,
+      "sex": "Male",
+      "race": "White",
+      "ethnicity": "Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2024-05-23"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 8.4,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 46,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 1.91,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "Occasional"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": false,
+      "last_updated": "2026-05-10"
+    },
+    "data_completeness": {
+      "score": 0.83,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1023",
+    "demographics": {
+      "age": 73,
+      "sex": "Female",
+      "race": "Not reported",
+      "ethnicity": "Not reported"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2025-06-24"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 9.1,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 38,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 2.32,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "Moderate"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-06-10"
+    },
+    "data_completeness": {
+      "score": 0.96,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1024",
+    "demographics": {
+      "age": 25,
+      "sex": "Male",
+      "race": "Asian",
+      "ethnicity": "Not Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2022-07-25"
+      },
+      {
+        "code": "I10",
+        "display": "Essential (primary) hypertension",
+        "system": "ICD-10",
+        "recorded_date": "2023-05-14"
+      },
+      {
+        "code": "E78.5",
+        "display": "Hyperlipidemia, unspecified",
+        "system": "ICD-10",
+        "recorded_date": "2024-02-18"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 6.4,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 92,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 0.96,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      },
+      {
+        "code": "314077",
+        "display": "Lisinopril 10 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-06-01",
+        "end_date": null,
+        "status": "active"
+      },
+      {
+        "code": "617311",
+        "display": "Atorvastatin 20 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2024-11-10",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "None"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-01-10"
+    },
+    "data_completeness": {
+      "score": 0.84,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1025",
+    "demographics": {
+      "age": 32,
+      "sex": "Female",
+      "race": "Black or African American",
+      "ethnicity": "Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2023-08-01"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 6.9,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 78,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 1.13,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Former smoker",
+      "alcohol_use": "Occasional"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-02-10"
+    },
+    "data_completeness": {
+      "score": 0.72,
+      "missing_sections": [
+        "family_history"
+      ]
+    }
+  },
+  {
+    "id": "P-1026",
+    "demographics": {
+      "age": 39,
+      "sex": "Male",
+      "race": "White",
+      "ethnicity": "Not reported"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2024-09-02"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 7.2,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 64,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 1.38,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "Moderate"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-03-10"
+    },
+    "data_completeness": {
+      "score": 0.85,
+      "missing_sections": [
+        "renal_history",
+        "family_history"
+      ]
+    }
+  },
+  {
+    "id": "P-1027",
+    "demographics": {
+      "age": 46,
+      "sex": "Female",
+      "race": "Not reported",
+      "ethnicity": "Not Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2025-01-03"
+      },
+      {
+        "code": "I10",
+        "display": "Essential (primary) hypertension",
+        "system": "ICD-10",
+        "recorded_date": "2023-05-14"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 7.8,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 58,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 1.52,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      },
+      {
+        "code": "314077",
+        "display": "Lisinopril 10 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-06-01",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [
+      {
+        "substance": "Penicillin",
+        "reaction": "Rash",
+        "status": "active"
+      }
+    ],
+    "social_history": {
+      "smoking_status": "Current smoker",
+      "alcohol_use": "None"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-04-10"
+    },
+    "data_completeness": {
+      "score": 0.73,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1028",
+    "demographics": {
+      "age": 53,
+      "sex": "Male",
+      "race": "Asian",
+      "ethnicity": "Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2022-02-04"
+      },
+      {
+        "code": "E78.5",
+        "display": "Hyperlipidemia, unspecified",
+        "system": "ICD-10",
+        "recorded_date": "2024-02-18"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 8.4,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 46,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 1.91,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      },
+      {
+        "code": "617311",
+        "display": "Atorvastatin 20 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2024-11-10",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "Occasional"
+    },
+    "consent": {
+      "trial_interest": false,
+      "data_use_consent": true,
+      "last_updated": "2026-05-10"
+    },
+    "data_completeness": {
+      "score": 0.86,
+      "missing_sections": [
+        "diagnosis_onset_date"
+      ]
+    }
+  },
+  {
+    "id": "P-1029",
+    "demographics": {
+      "age": 60,
+      "sex": "Female",
+      "race": "Black or African American",
+      "ethnicity": "Not reported"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2023-03-05"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 9.1,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 38,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 2.32,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "Moderate"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-06-10"
+    },
+    "data_completeness": {
+      "score": 0.74,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1030",
+    "demographics": {
+      "age": 67,
+      "sex": "Male",
+      "race": "White",
+      "ethnicity": "Not Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2024-04-06"
+      },
+      {
+        "code": "I10",
+        "display": "Essential (primary) hypertension",
+        "system": "ICD-10",
+        "recorded_date": "2023-05-14"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 6.4,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 92,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 0.96,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      },
+      {
+        "code": "314077",
+        "display": "Lisinopril 10 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-06-01",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Former smoker",
+      "alcohol_use": "None"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-01-10"
+    },
+    "data_completeness": {
+      "score": 0.87,
+      "missing_sections": [
+        "family_history"
+      ]
+    }
+  },
+  {
+    "id": "P-1031",
+    "demographics": {
+      "age": 74,
+      "sex": "Female",
+      "race": "Not reported",
+      "ethnicity": "Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2025-05-07"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 6.9,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 78,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 1.13,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "Occasional"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-02-10"
+    },
+    "data_completeness": {
+      "score": 0.75,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1032",
+    "demographics": {
+      "age": 26,
+      "sex": "Male",
+      "race": "Asian",
+      "ethnicity": "Not reported"
+    },
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "display": "Type 2 diabetes mellitus without complications",
+        "system": "ICD-10",
+        "recorded_date": "2022-06-08"
+      },
+      {
+        "code": "E78.5",
+        "display": "Hyperlipidemia, unspecified",
+        "system": "ICD-10",
+        "recorded_date": "2024-02-18"
+      }
+    ],
+    "labs": [
+      {
+        "code": "4548-4",
+        "display": "Hemoglobin A1c",
+        "system": "LOINC",
+        "value": 7.2,
+        "unit": "%",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "33914-3",
+        "display": "Glomerular filtration rate/1.73 sq M.predicted",
+        "system": "LOINC",
+        "value": 64,
+        "unit": "mL/min/1.73m2",
+        "date": "2026-07-12"
+      },
+      {
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 1.38,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "860975",
+        "display": "Metformin 500 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2025-01-15",
+        "end_date": null,
+        "status": "active"
+      },
+      {
+        "code": "617311",
+        "display": "Atorvastatin 20 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2024-11-10",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "Moderate"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-03-10"
+    },
+    "data_completeness": {
+      "score": 0.88,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1033",
+    "demographics": {
+      "age": 33,
+      "sex": "Female",
+      "race": "Black or African American",
+      "ethnicity": "Not Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "C34.90",
+        "display": "Malignant neoplasm of unspecified part of unspecified bronchus or lung",
+        "system": "ICD-10",
+        "recorded_date": "2025-08-12"
+      }
+    ],
+    "labs": [
+      {
+        "code": "89247-1",
+        "display": "ECOG Performance Status",
+        "system": "LOINC",
+        "value": 1,
+        "unit": "score",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "308135",
+        "display": "Amlodipine 5 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2024-04-20",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "None"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": false,
+      "last_updated": "2026-04-10"
+    },
+    "data_completeness": {
+      "score": 0.76,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1034",
+    "demographics": {
+      "age": 40,
+      "sex": "Male",
+      "race": "White",
+      "ethnicity": "Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "C34.90",
+        "display": "Malignant neoplasm of unspecified part of unspecified bronchus or lung",
+        "system": "ICD-10",
+        "recorded_date": "2025-08-12"
+      },
+      {
+        "code": "I10",
+        "display": "Essential (primary) hypertension",
+        "system": "ICD-10",
+        "recorded_date": "2023-06-20"
+      }
+    ],
+    "labs": [
+      {
+        "code": "89247-1",
+        "display": "ECOG Performance Status",
+        "system": "LOINC",
+        "value": 2,
+        "unit": "score",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [],
+    "procedures": [
+      {
+        "code": "CHEMO-SYN",
+        "display": "Prior systemic chemotherapy (synthetic)",
+        "system": "Synthetic",
+        "date": "2025-11-18"
+      }
+    ],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "Occasional"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-05-10"
+    },
+    "data_completeness": {
+      "score": 0.89,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1035",
+    "demographics": {
+      "age": 47,
+      "sex": "Female",
+      "race": "Not reported",
+      "ethnicity": "Not reported"
+    },
+    "diagnoses": [
+      {
+        "code": "C34.90",
+        "display": "Malignant neoplasm of unspecified part of unspecified bronchus or lung",
+        "system": "ICD-10",
+        "recorded_date": "2025-08-12"
+      }
+    ],
+    "labs": [
+      {
+        "code": "89247-1",
+        "display": "ECOG Performance Status",
+        "system": "LOINC",
+        "value": 3,
+        "unit": "score",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Current smoker",
+      "alcohol_use": "Moderate"
+    },
+    "consent": {
+      "trial_interest": false,
+      "data_use_consent": true,
+      "last_updated": "2026-06-10"
+    },
+    "data_completeness": {
+      "score": 0.77,
+      "missing_sections": [
+        "family_history"
+      ]
+    }
+  },
+  {
+    "id": "P-1036",
+    "demographics": {
+      "age": 54,
+      "sex": "Male",
+      "race": "Asian",
+      "ethnicity": "Not Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "C34.90",
+        "display": "Malignant neoplasm of unspecified part of unspecified bronchus or lung",
+        "system": "ICD-10",
+        "recorded_date": "2025-08-12"
+      },
+      {
+        "code": "I10",
+        "display": "Essential (primary) hypertension",
+        "system": "ICD-10",
+        "recorded_date": "2023-06-20"
+      }
+    ],
+    "labs": [
+      {
+        "code": "89247-1",
+        "display": "ECOG Performance Status",
+        "system": "LOINC",
+        "value": 0,
+        "unit": "score",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "308135",
+        "display": "Amlodipine 5 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2024-04-20",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [
+      {
+        "code": "CHEMO-SYN",
+        "display": "Prior systemic chemotherapy (synthetic)",
+        "system": "Synthetic",
+        "date": "2025-11-18"
+      }
+    ],
+    "allergies": [
+      {
+        "substance": "Penicillin",
+        "reaction": "Rash",
+        "status": "active"
+      }
+    ],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "None"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-01-10"
+    },
+    "data_completeness": {
+      "score": 0.9,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1037",
+    "demographics": {
+      "age": 61,
+      "sex": "Female",
+      "race": "Black or African American",
+      "ethnicity": "Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "C34.90",
+        "display": "Malignant neoplasm of unspecified part of unspecified bronchus or lung",
+        "system": "ICD-10",
+        "recorded_date": "2025-08-12"
+      }
+    ],
+    "labs": [
+      {
+        "code": "89247-1",
+        "display": "ECOG Performance Status",
+        "system": "LOINC",
+        "value": 1,
+        "unit": "score",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "Occasional"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-02-10"
+    },
+    "data_completeness": {
+      "score": 0.78,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1038",
+    "demographics": {
+      "age": 68,
+      "sex": "Male",
+      "race": "White",
+      "ethnicity": "Not reported"
+    },
+    "diagnoses": [
+      {
+        "code": "C34.90",
+        "display": "Malignant neoplasm of unspecified part of unspecified bronchus or lung",
+        "system": "ICD-10",
+        "recorded_date": "2025-08-12"
+      },
+      {
+        "code": "I10",
+        "display": "Essential (primary) hypertension",
+        "system": "ICD-10",
+        "recorded_date": "2023-06-20"
+      }
+    ],
+    "labs": [
+      {
+        "code": "89247-1",
+        "display": "ECOG Performance Status",
+        "system": "LOINC",
+        "value": 2,
+        "unit": "score",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [],
+    "procedures": [
+      {
+        "code": "CHEMO-SYN",
+        "display": "Prior systemic chemotherapy (synthetic)",
+        "system": "Synthetic",
+        "date": "2025-11-18"
+      }
+    ],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "Moderate"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-03-10"
+    },
+    "data_completeness": {
+      "score": 0.91,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1039",
+    "demographics": {
+      "age": 75,
+      "sex": "Female",
+      "race": "Not reported",
+      "ethnicity": "Not Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "C34.90",
+        "display": "Malignant neoplasm of unspecified part of unspecified bronchus or lung",
+        "system": "ICD-10",
+        "recorded_date": "2025-08-12"
+      }
+    ],
+    "labs": [
+      {
+        "code": "89247-1",
+        "display": "ECOG Performance Status",
+        "system": "LOINC",
+        "value": 3,
+        "unit": "score",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "308135",
+        "display": "Amlodipine 5 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2024-04-20",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "None"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-04-10"
+    },
+    "data_completeness": {
+      "score": 0.79,
+      "missing_sections": [
+        "renal_history",
+        "family_history"
+      ]
+    }
+  },
+  {
+    "id": "P-1040",
+    "demographics": {
+      "age": 27,
+      "sex": "Male",
+      "race": "Asian",
+      "ethnicity": "Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "C34.90",
+        "display": "Malignant neoplasm of unspecified part of unspecified bronchus or lung",
+        "system": "ICD-10",
+        "recorded_date": "2025-08-12"
+      },
+      {
+        "code": "I10",
+        "display": "Essential (primary) hypertension",
+        "system": "ICD-10",
+        "recorded_date": "2023-06-20"
+      }
+    ],
+    "labs": [
+      {
+        "code": "89247-1",
+        "display": "ECOG Performance Status",
+        "system": "LOINC",
+        "value": 0,
+        "unit": "score",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [],
+    "procedures": [
+      {
+        "code": "CHEMO-SYN",
+        "display": "Prior systemic chemotherapy (synthetic)",
+        "system": "Synthetic",
+        "date": "2025-11-18"
+      }
+    ],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Former smoker",
+      "alcohol_use": "Occasional"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-05-10"
+    },
+    "data_completeness": {
+      "score": 0.92,
+      "missing_sections": [
+        "family_history"
+      ]
+    }
+  },
+  {
+    "id": "P-1041",
+    "demographics": {
+      "age": 34,
+      "sex": "Female",
+      "race": "Black or African American",
+      "ethnicity": "Not reported"
+    },
+    "diagnoses": [
+      {
+        "code": "I25.10",
+        "display": "Atherosclerotic heart disease of native coronary artery",
+        "system": "ICD-10",
+        "recorded_date": "2024-01-22"
+      }
+    ],
+    "labs": [
+      {
+        "code": "13457-7",
+        "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 98,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "617311",
+        "display": "Atorvastatin 20 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2024-03-01",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "Moderate"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-06-10"
+    },
+    "data_completeness": {
+      "score": 0.8,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1042",
+    "demographics": {
+      "age": 41,
+      "sex": "Male",
+      "race": "White",
+      "ethnicity": "Not Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "I25.10",
+        "display": "Atherosclerotic heart disease of native coronary artery",
+        "system": "ICD-10",
+        "recorded_date": "2024-01-22"
+      },
+      {
+        "code": "I10",
+        "display": "Essential (primary) hypertension",
+        "system": "ICD-10",
+        "recorded_date": "2022-09-15"
+      }
+    ],
+    "labs": [
+      {
+        "code": "13457-7",
+        "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 121,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "617311",
+        "display": "Atorvastatin 20 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2024-03-01",
+        "end_date": null,
+        "status": "active"
+      },
+      {
+        "code": "314077",
+        "display": "Lisinopril 10 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2024-08-15",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Current smoker",
+      "alcohol_use": "None"
+    },
+    "consent": {
+      "trial_interest": false,
+      "data_use_consent": true,
+      "last_updated": "2026-01-10"
+    },
+    "data_completeness": {
+      "score": 0.93,
+      "missing_sections": [
+        "diagnosis_onset_date"
+      ]
+    }
+  },
+  {
+    "id": "P-1043",
+    "demographics": {
+      "age": 48,
+      "sex": "Female",
+      "race": "Not reported",
+      "ethnicity": "Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "I25.10",
+        "display": "Atherosclerotic heart disease of native coronary artery",
+        "system": "ICD-10",
+        "recorded_date": "2024-01-22"
+      }
+    ],
+    "labs": [
+      {
+        "code": "13457-7",
+        "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 158,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "617311",
+        "display": "Atorvastatin 20 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2024-03-01",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "Occasional"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-02-10"
+    },
+    "data_completeness": {
+      "score": 0.81,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1044",
+    "demographics": {
+      "age": 55,
+      "sex": "Male",
+      "race": "Asian",
+      "ethnicity": "Not reported"
+    },
+    "diagnoses": [
+      {
+        "code": "I25.10",
+        "display": "Atherosclerotic heart disease of native coronary artery",
+        "system": "ICD-10",
+        "recorded_date": "2024-01-22"
+      },
+      {
+        "code": "I10",
+        "display": "Essential (primary) hypertension",
+        "system": "ICD-10",
+        "recorded_date": "2022-09-15"
+      }
+    ],
+    "labs": [
+      {
+        "code": "13457-7",
+        "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 72,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "617311",
+        "display": "Atorvastatin 20 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2024-03-01",
+        "end_date": null,
+        "status": "active"
+      },
+      {
+        "code": "314077",
+        "display": "Lisinopril 10 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2024-08-15",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "Moderate"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": false,
+      "last_updated": "2026-03-10"
+    },
+    "data_completeness": {
+      "score": 0.94,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1045",
+    "demographics": {
+      "age": 62,
+      "sex": "Female",
+      "race": "Black or African American",
+      "ethnicity": "Not Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "I25.10",
+        "display": "Atherosclerotic heart disease of native coronary artery",
+        "system": "ICD-10",
+        "recorded_date": "2024-01-22"
+      }
+    ],
+    "labs": [
+      {
+        "code": "13457-7",
+        "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 98,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "617311",
+        "display": "Atorvastatin 20 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2024-03-01",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [
+      {
+        "substance": "Penicillin",
+        "reaction": "Rash",
+        "status": "active"
+      }
+    ],
+    "social_history": {
+      "smoking_status": "Former smoker",
+      "alcohol_use": "None"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-04-10"
+    },
+    "data_completeness": {
+      "score": 0.82,
+      "missing_sections": [
+        "family_history"
+      ]
+    }
+  },
+  {
+    "id": "P-1046",
+    "demographics": {
+      "age": 69,
+      "sex": "Male",
+      "race": "White",
+      "ethnicity": "Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "I25.10",
+        "display": "Atherosclerotic heart disease of native coronary artery",
+        "system": "ICD-10",
+        "recorded_date": "2024-01-22"
+      },
+      {
+        "code": "I10",
+        "display": "Essential (primary) hypertension",
+        "system": "ICD-10",
+        "recorded_date": "2022-09-15"
+      }
+    ],
+    "labs": [
+      {
+        "code": "13457-7",
+        "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 121,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "617311",
+        "display": "Atorvastatin 20 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2024-03-01",
+        "end_date": null,
+        "status": "active"
+      },
+      {
+        "code": "314077",
+        "display": "Lisinopril 10 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2024-08-15",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "Occasional"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-05-10"
+    },
+    "data_completeness": {
+      "score": 0.95,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1047",
+    "demographics": {
+      "age": 76,
+      "sex": "Female",
+      "race": "Not reported",
+      "ethnicity": "Not reported"
+    },
+    "diagnoses": [
+      {
+        "code": "I25.10",
+        "display": "Atherosclerotic heart disease of native coronary artery",
+        "system": "ICD-10",
+        "recorded_date": "2024-01-22"
+      }
+    ],
+    "labs": [
+      {
+        "code": "13457-7",
+        "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 158,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "617311",
+        "display": "Atorvastatin 20 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2024-03-01",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "Moderate"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-06-10"
+    },
+    "data_completeness": {
+      "score": 0.83,
+      "missing_sections": []
+    }
+  },
+  {
+    "id": "P-1048",
+    "demographics": {
+      "age": 28,
+      "sex": "Male",
+      "race": "Asian",
+      "ethnicity": "Not Hispanic or Latino"
+    },
+    "diagnoses": [
+      {
+        "code": "I25.10",
+        "display": "Atherosclerotic heart disease of native coronary artery",
+        "system": "ICD-10",
+        "recorded_date": "2024-01-22"
+      },
+      {
+        "code": "I10",
+        "display": "Essential (primary) hypertension",
+        "system": "ICD-10",
+        "recorded_date": "2022-09-15"
+      }
+    ],
+    "labs": [
+      {
+        "code": "13457-7",
+        "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma",
+        "system": "LOINC",
+        "value": 72,
+        "unit": "mg/dL",
+        "date": "2026-07-12"
+      }
+    ],
+    "medications": [
+      {
+        "code": "617311",
+        "display": "Atorvastatin 20 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2024-03-01",
+        "end_date": null,
+        "status": "active"
+      },
+      {
+        "code": "314077",
+        "display": "Lisinopril 10 MG Oral Tablet",
+        "system": "RxNorm",
+        "start_date": "2024-08-15",
+        "end_date": null,
+        "status": "active"
+      }
+    ],
+    "procedures": [],
+    "allergies": [],
+    "social_history": {
+      "smoking_status": "Never smoker",
+      "alcohol_use": "None"
+    },
+    "consent": {
+      "trial_interest": true,
+      "data_use_consent": true,
+      "last_updated": "2026-01-10"
+    },
+    "data_completeness": {
+      "score": 0.96,
+      "missing_sections": []
+    }
+  }
+]

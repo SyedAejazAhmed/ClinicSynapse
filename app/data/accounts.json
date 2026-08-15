@@ -1,0 +1,30 @@
+[
+  {
+    "id": "admin",
+    "name": "Admin",
+    "role": "ADMIN",
+    "initials": "AD",
+    "assigned_trial_ids": []
+  },
+  {
+    "id": "dr-meera-nair",
+    "name": "Dr. Meera Nair",
+    "role": "DOCTOR",
+    "initials": "MN",
+    "assigned_trial_ids": ["T101", "T102", "T201", "T301"]
+  },
+  {
+    "id": "dr-arjun-sharma",
+    "name": "Dr. Arjun Sharma",
+    "role": "DOCTOR",
+    "initials": "AS",
+    "assigned_trial_ids": ["T103", "T104", "T202", "T302"]
+  },
+  {
+    "id": "dr-priya-menon",
+    "name": "Dr. Priya Menon",
+    "role": "DOCTOR",
+    "initials": "PM",
+    "assigned_trial_ids": ["T203", "T303", "T401", "T402"]
+  }
+]

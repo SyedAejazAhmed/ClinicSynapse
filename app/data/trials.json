@@ -1,0 +1,1318 @@
+[
+  {
+    "id": "T101",
+    "title": "DIAB-2027: Study of Investigational Therapy in Type 2 Diabetes",
+    "phase": "Phase 3",
+    "condition": [
+      "Type 2 diabetes mellitus"
+    ],
+    "intervention": [
+      "Investigational Diabetes Agent A"
+    ],
+    "eligibility": {
+      "inclusion": [
+        {
+          "id": "INC-1",
+          "category": "demographics",
+          "text": "Age 18 to 65 years, inclusive.",
+          "structured": {
+            "type": "age_range",
+            "min": 18,
+            "max": 65
+          }
+        },
+        {
+          "id": "INC-2",
+          "category": "diagnosis",
+          "text": "Diagnosis of Type 2 diabetes mellitus at least 6 months prior to screening.",
+          "structured": {
+            "type": "diagnosis_required",
+            "codes": [
+              "E11.9"
+            ],
+            "systems": [
+              "ICD-10"
+            ],
+            "min_duration_months": 6
+          }
+        },
+        {
+          "id": "INC-3",
+          "category": "lab",
+          "text": "HbA1c ≥ 7.0% at screening.",
+          "structured": {
+            "type": "lab_threshold",
+            "code": "4548-4",
+            "display": "Hemoglobin A1c",
+            "operator": ">=",
+            "value": 7.0,
+            "unit": "%"
+          }
+        },
+        {
+          "id": "INC-4",
+          "category": "lab",
+          "text": "eGFR ≥ 60 mL/min/1.73m².",
+          "structured": {
+            "type": "lab_threshold",
+            "code": "33914-3",
+            "display": "Glomerular filtration rate/1.73 sq M.predicted",
+            "operator": ">=",
+            "value": 60,
+            "unit": "mL/min/1.73m2"
+          }
+        },
+        {
+          "id": "INC-5",
+          "category": "medication",
+          "text": "On stable metformin therapy for at least 3 months.",
+          "structured": {
+            "type": "medication_required",
+            "codes": [
+              "860975"
+            ],
+            "systems": [
+              "RxNorm"
+            ],
+            "min_duration_months": 3
+          }
+        }
+      ],
+      "exclusion": [
+        {
+          "id": "EXC-1",
+          "category": "lab",
+          "text": "eGFR < 45 mL/min/1.73m².",
+          "structured": {
+            "type": "lab_threshold",
+            "code": "33914-3",
+            "display": "Glomerular filtration rate/1.73 sq M.predicted",
+            "operator": "<",
+            "value": 45,
+            "unit": "mL/min/1.73m2"
+          }
+        },
+        {
+          "id": "EXC-2",
+          "category": "condition",
+          "text": "History of severe renal disease requiring dialysis.",
+          "structured": {
+            "type": "condition_forbidden",
+            "keywords": [
+              "dialysis",
+              "severe renal disease"
+            ],
+            "systems": [
+              "ICD-10"
+            ]
+          }
+        },
+        {
+          "id": "EXC-3",
+          "category": "social_history",
+          "text": "Current smoker.",
+          "structured": {
+            "type": "smoking_forbidden",
+            "forbidden_statuses": [
+              "Current smoker"
+            ]
+          }
+        }
+      ]
+    },
+    "consent_required": true,
+    "source": {
+      "clinicaltrials_gov_id": "NCT10000101",
+      "protocol_pdf_url": "trials/T101-protocol.pdf"
+    },
+    "status": "RECRUITING",
+    "sponsor": "ICMR / AIIMS Delhi",
+    "locations": [
+      "Delhi",
+      "Tamil Nadu",
+      "Karnataka"
+    ],
+    "start_date": "2026-01-15"
+  },
+  {
+    "id": "T102",
+    "title": "DIAB-2028: Study of Investigational Therapy in Type 2 Diabetes",
+    "phase": "Phase 2",
+    "condition": [
+      "Type 2 diabetes mellitus"
+    ],
+    "intervention": [
+      "Investigational Diabetes Agent B"
+    ],
+    "eligibility": {
+      "inclusion": [
+        {
+          "id": "INC-1",
+          "category": "demographics",
+          "text": "Age 30 to 75 years, inclusive.",
+          "structured": {
+            "type": "age_range",
+            "min": 30,
+            "max": 75
+          }
+        },
+        {
+          "id": "INC-2",
+          "category": "diagnosis",
+          "text": "Diagnosis of Type 2 diabetes mellitus at least 6 months prior to screening.",
+          "structured": {
+            "type": "diagnosis_required",
+            "codes": [
+              "E11.9"
+            ],
+            "systems": [
+              "ICD-10"
+            ],
+            "min_duration_months": 6
+          }
+        },
+        {
+          "id": "INC-3",
+          "category": "lab",
+          "text": "HbA1c ≥ 6.5% at screening.",
+          "structured": {
+            "type": "lab_threshold",
+            "code": "4548-4",
+            "display": "Hemoglobin A1c",
+            "operator": ">=",
+            "value": 6.5,
+            "unit": "%"
+          }
+        },
+        {
+          "id": "INC-4",
+          "category": "lab",
+          "text": "eGFR ≥ 45 mL/min/1.73m².",
+          "structured": {
+            "type": "lab_threshold",
+            "code": "33914-3",
+            "display": "Glomerular filtration rate/1.73 sq M.predicted",
+            "operator": ">=",
+            "value": 45,
+            "unit": "mL/min/1.73m2"
+          }
+        },
+        {
+          "id": "INC-5",
+          "category": "medication",
+          "text": "On stable metformin therapy for at least 3 months.",
+          "structured": {
+            "type": "medication_required",
+            "codes": [
+              "860975"
+            ],
+            "systems": [
+              "RxNorm"
+            ],
+            "min_duration_months": 3
+          }
+        }
+      ],
+      "exclusion": [
+        {
+          "id": "EXC-1",
+          "category": "lab",
+          "text": "eGFR < 30 mL/min/1.73m².",
+          "structured": {
+            "type": "lab_threshold",
+            "code": "33914-3",
+            "display": "Glomerular filtration rate/1.73 sq M.predicted",
+            "operator": "<",
+            "value": 30,
+            "unit": "mL/min/1.73m2"
+          }
+        },
+        {
+          "id": "EXC-2",
+          "category": "condition",
+          "text": "History of severe renal disease requiring dialysis.",
+          "structured": {
+            "type": "condition_forbidden",
+            "keywords": [
+              "dialysis",
+              "severe renal disease"
+            ],
+            "systems": [
+              "ICD-10"
+            ]
+          }
+        },
+        {
+          "id": "EXC-3",
+          "category": "social_history",
+          "text": "Current smoker.",
+          "structured": {
+            "type": "smoking_forbidden",
+            "forbidden_statuses": [
+              "Current smoker"
+            ]
+          }
+        }
+      ]
+    },
+    "consent_required": true,
+    "source": {
+      "clinicaltrials_gov_id": "NCT10000102",
+      "protocol_pdf_url": "trials/T102-protocol.pdf"
+    },
+    "status": "RECRUITING",
+    "sponsor": "Sun Pharma Advanced Research",
+    "locations": [
+      "Maharashtra",
+      "Gujarat"
+    ],
+    "start_date": "2026-02-10"
+  },
+  {
+    "id": "T103",
+    "title": "DIAB-2029: Study of Investigational Therapy in Type 2 Diabetes",
+    "phase": "Phase 3",
+    "condition": [
+      "Type 2 diabetes mellitus"
+    ],
+    "intervention": [
+      "Investigational Diabetes Agent C"
+    ],
+    "eligibility": {
+      "inclusion": [
+        {
+          "id": "INC-1",
+          "category": "demographics",
+          "text": "Age 21 to 70 years, inclusive.",
+          "structured": {
+            "type": "age_range",
+            "min": 21,
+            "max": 70
+          }
+        },
+        {
+          "id": "INC-2",
+          "category": "diagnosis",
+          "text": "Diagnosis of Type 2 diabetes mellitus at least 6 months prior to screening.",
+          "structured": {
+            "type": "diagnosis_required",
+            "codes": [
+              "E11.9"
+            ],
+            "systems": [
+              "ICD-10"
+            ],
+            "min_duration_months": 6
+          }
+        },
+        {
+          "id": "INC-3",
+          "category": "lab",
+          "text": "HbA1c ≥ 7.5% at screening.",
+          "structured": {
+            "type": "lab_threshold",
+            "code": "4548-4",
+            "display": "Hemoglobin A1c",
+            "operator": ">=",
+            "value": 7.5,
+            "unit": "%"
+          }
+        },
+        {
+          "id": "INC-4",
+          "category": "lab",
+          "text": "eGFR ≥ 30 mL/min/1.73m².",
+          "structured": {
+            "type": "lab_threshold",
+            "code": "33914-3",
+            "display": "Glomerular filtration rate/1.73 sq M.predicted",
+            "operator": ">=",
+            "value": 30,
+            "unit": "mL/min/1.73m2"
+          }
+        },
+        {
+          "id": "INC-5",
+          "category": "medication",
+          "text": "On stable metformin therapy for at least 3 months.",
+          "structured": {
+            "type": "medication_required",
+            "codes": [
+              "860975"
+            ],
+            "systems": [
+              "RxNorm"
+            ],
+            "min_duration_months": 3
+          }
+        }
+      ],
+      "exclusion": [
+        {
+          "id": "EXC-1",
+          "category": "lab",
+          "text": "eGFR < 25 mL/min/1.73m².",
+          "structured": {
+            "type": "lab_threshold",
+            "code": "33914-3",
+            "display": "Glomerular filtration rate/1.73 sq M.predicted",
+            "operator": "<",
+            "value": 25,
+            "unit": "mL/min/1.73m2"
+          }
+        },
+        {
+          "id": "EXC-2",
+          "category": "condition",
+          "text": "History of severe renal disease requiring dialysis.",
+          "structured": {
+            "type": "condition_forbidden",
+            "keywords": [
+              "dialysis",
+              "severe renal disease"
+            ],
+            "systems": [
+              "ICD-10"
+            ]
+          }
+        },
+        {
+          "id": "EXC-3",
+          "category": "social_history",
+          "text": "Current smoker.",
+          "structured": {
+            "type": "smoking_forbidden",
+            "forbidden_statuses": [
+              "Current smoker"
+            ]
+          }
+        }
+      ]
+    },
+    "consent_required": true,
+    "source": {
+      "clinicaltrials_gov_id": "NCT10000103",
+      "protocol_pdf_url": "trials/T103-protocol.pdf"
+    },
+    "status": "NOT_YET_RECRUITING",
+    "sponsor": "Cipla Research Foundation",
+    "locations": [
+      "Telangana",
+      "Andhra Pradesh"
+    ],
+    "start_date": "2026-05-01"
+  },
+  {
+    "id": "T104",
+    "title": "DIAB-2030: Study of Investigational Therapy in Type 2 Diabetes",
+    "phase": "Phase 2",
+    "condition": [
+      "Type 2 diabetes mellitus"
+    ],
+    "intervention": [
+      "Investigational Diabetes Agent D"
+    ],
+    "eligibility": {
+      "inclusion": [
+        {
+          "id": "INC-1",
+          "category": "demographics",
+          "text": "Age 40 to 80 years, inclusive.",
+          "structured": {
+            "type": "age_range",
+            "min": 40,
+            "max": 80
+          }
+        },
+        {
+          "id": "INC-2",
+          "category": "diagnosis",
+          "text": "Diagnosis of Type 2 diabetes mellitus at least 6 months prior to screening.",
+          "structured": {
+            "type": "diagnosis_required",
+            "codes": [
+              "E11.9"
+            ],
+            "systems": [
+              "ICD-10"
+            ],
+            "min_duration_months": 6
+          }
+        },
+        {
+          "id": "INC-3",
+          "category": "lab",
+          "text": "HbA1c ≥ 8.0% at screening.",
+          "structured": {
+            "type": "lab_threshold",
+            "code": "4548-4",
+            "display": "Hemoglobin A1c",
+            "operator": ">=",
+            "value": 8.0,
+            "unit": "%"
+          }
+        },
+        {
+          "id": "INC-4",
+          "category": "lab",
+          "text": "eGFR ≥ 50 mL/min/1.73m².",
+          "structured": {
+            "type": "lab_threshold",
+            "code": "33914-3",
+            "display": "Glomerular filtration rate/1.73 sq M.predicted",
+            "operator": ">=",
+            "value": 50,
+            "unit": "mL/min/1.73m2"
+          }
+        },
+        {
+          "id": "INC-5",
+          "category": "medication",
+          "text": "On stable metformin therapy for at least 3 months.",
+          "structured": {
+            "type": "medication_required",
+            "codes": [
+              "860975"
+            ],
+            "systems": [
+              "RxNorm"
+            ],
+            "min_duration_months": 3
+          }
+        }
+      ],
+      "exclusion": [
+        {
+          "id": "EXC-1",
+          "category": "lab",
+          "text": "eGFR < 35 mL/min/1.73m².",
+          "structured": {
+            "type": "lab_threshold",
+            "code": "33914-3",
+            "display": "Glomerular filtration rate/1.73 sq M.predicted",
+            "operator": "<",
+            "value": 35,
+            "unit": "mL/min/1.73m2"
+          }
+        },
+        {
+          "id": "EXC-2",
+          "category": "condition",
+          "text": "History of severe renal disease requiring dialysis.",
+          "structured": {
+            "type": "condition_forbidden",
+            "keywords": [
+              "dialysis",
+              "severe renal disease"
+            ],
+            "systems": [
+              "ICD-10"
+            ]
+          }
+        },
+        {
+          "id": "EXC-3",
+          "category": "social_history",
+          "text": "Current smoker.",
+          "structured": {
+            "type": "smoking_forbidden",
+            "forbidden_statuses": [
+              "Current smoker"
+            ]
+          }
+        }
+      ]
+    },
+    "consent_required": true,
+    "source": {
+      "clinicaltrials_gov_id": "NCT10000104",
+      "protocol_pdf_url": "trials/T104-protocol.pdf"
+    },
+    "status": "RECRUITING",
+    "sponsor": "Dr. Reddy's Research Institute",
+    "locations": [
+      "Karnataka",
+      "Kerala"
+    ],
+    "start_date": "2026-03-20"
+  },
+  {
+    "id": "T201",
+    "title": "LUNG-2027: Investigational Therapy for Non-Small Cell Lung Cancer",
+    "phase": "Phase 2",
+    "condition": [
+      "Non-Small Cell Lung Cancer"
+    ],
+    "intervention": [
+      "Investigational Oncology Agent 1"
+    ],
+    "eligibility": {
+      "inclusion": [
+        {
+          "id": "INC-1",
+          "category": "demographics",
+          "text": "Age 18 to 75 years, inclusive.",
+          "structured": {
+            "type": "age_range",
+            "min": 18,
+            "max": 75
+          }
+        },
+        {
+          "id": "INC-2",
+          "category": "diagnosis",
+          "text": "Confirmed non-small cell lung cancer.",
+          "structured": {
+            "type": "diagnosis_required",
+            "codes": [
+              "C34.90"
+            ],
+            "systems": [
+              "ICD-10"
+            ],
+            "min_duration_months": null
+          }
+        },
+        {
+          "id": "INC-3",
+          "category": "lab",
+          "text": "ECOG performance status ≤ 1.",
+          "structured": {
+            "type": "lab_threshold",
+            "code": "89247-1",
+            "display": "ECOG Performance Status",
+            "operator": "<=",
+            "value": 1,
+            "unit": "score"
+          }
+        }
+      ],
+      "exclusion": [
+        {
+          "id": "EXC-1",
+          "category": "condition",
+          "text": "Active uncontrolled second malignancy.",
+          "structured": {
+            "type": "condition_forbidden",
+            "keywords": [
+              "active malignancy"
+            ],
+            "systems": [
+              "ICD-10"
+            ]
+          }
+        },
+        {
+          "id": "EXC-2",
+          "category": "other",
+          "text": "Prior systemic chemotherapy within 21 days of screening.",
+          "structured": {
+            "type": "free_text",
+            "text_rule": "Prior systemic chemotherapy within 21 days"
+          }
+        },
+        {
+          "id": "EXC-3",
+          "category": "social_history",
+          "text": "Current smoker.",
+          "structured": {
+            "type": "smoking_forbidden",
+            "forbidden_statuses": [
+              "Current smoker"
+            ]
+          }
+        }
+      ]
+    },
+    "consent_required": true,
+    "source": {
+      "clinicaltrials_gov_id": "NCT10000201",
+      "protocol_pdf_url": "trials/T201-protocol.pdf"
+    },
+    "status": "RECRUITING",
+    "sponsor": "Tata Memorial Centre",
+    "locations": [
+      "Maharashtra",
+      "Delhi"
+    ],
+    "start_date": "2026-01-05"
+  },
+  {
+    "id": "T202",
+    "title": "LUNG-2028: Investigational Therapy for Non-Small Cell Lung Cancer",
+    "phase": "Phase 2",
+    "condition": [
+      "Non-Small Cell Lung Cancer"
+    ],
+    "intervention": [
+      "Investigational Oncology Agent 2"
+    ],
+    "eligibility": {
+      "inclusion": [
+        {
+          "id": "INC-1",
+          "category": "demographics",
+          "text": "Age 40 to 80 years, inclusive.",
+          "structured": {
+            "type": "age_range",
+            "min": 40,
+            "max": 80
+          }
+        },
+        {
+          "id": "INC-2",
+          "category": "diagnosis",
+          "text": "Confirmed non-small cell lung cancer.",
+          "structured": {
+            "type": "diagnosis_required",
+            "codes": [
+              "C34.90"
+            ],
+            "systems": [
+              "ICD-10"
+            ],
+            "min_duration_months": null
+          }
+        },
+        {
+          "id": "INC-3",
+          "category": "lab",
+          "text": "ECOG performance status ≤ 2.",
+          "structured": {
+            "type": "lab_threshold",
+            "code": "89247-1",
+            "display": "ECOG Performance Status",
+            "operator": "<=",
+            "value": 2,
+            "unit": "score"
+          }
+        }
+      ],
+      "exclusion": [
+        {
+          "id": "EXC-1",
+          "category": "condition",
+          "text": "Active uncontrolled second malignancy.",
+          "structured": {
+            "type": "condition_forbidden",
+            "keywords": [
+              "active malignancy"
+            ],
+            "systems": [
+              "ICD-10"
+            ]
+          }
+        },
+        {
+          "id": "EXC-2",
+          "category": "other",
+          "text": "Prior systemic chemotherapy within 21 days of screening.",
+          "structured": {
+            "type": "free_text",
+            "text_rule": "Prior systemic chemotherapy within 21 days"
+          }
+        },
+        {
+          "id": "EXC-3",
+          "category": "social_history",
+          "text": "Current smoker.",
+          "structured": {
+            "type": "smoking_forbidden",
+            "forbidden_statuses": [
+              "Current smoker"
+            ]
+          }
+        }
+      ]
+    },
+    "consent_required": true,
+    "source": {
+      "clinicaltrials_gov_id": "NCT10000202",
+      "protocol_pdf_url": "trials/T202-protocol.pdf"
+    },
+    "status": "RECRUITING",
+    "sponsor": "Apollo Hospitals Research",
+    "locations": [
+      "Tamil Nadu",
+      "Telangana"
+    ],
+    "start_date": "2026-02-18"
+  },
+  {
+    "id": "T203",
+    "title": "LUNG-2029: Investigational Therapy for Non-Small Cell Lung Cancer",
+    "phase": "Phase 2",
+    "condition": [
+      "Non-Small Cell Lung Cancer"
+    ],
+    "intervention": [
+      "Investigational Oncology Agent 3"
+    ],
+    "eligibility": {
+      "inclusion": [
+        {
+          "id": "INC-1",
+          "category": "demographics",
+          "text": "Age 50 to 85 years, inclusive.",
+          "structured": {
+            "type": "age_range",
+            "min": 50,
+            "max": 85
+          }
+        },
+        {
+          "id": "INC-2",
+          "category": "diagnosis",
+          "text": "Confirmed non-small cell lung cancer.",
+          "structured": {
+            "type": "diagnosis_required",
+            "codes": [
+              "C34.90"
+            ],
+            "systems": [
+              "ICD-10"
+            ],
+            "min_duration_months": null
+          }
+        },
+        {
+          "id": "INC-3",
+          "category": "lab",
+          "text": "ECOG performance status ≤ 1.",
+          "structured": {
+            "type": "lab_threshold",
+            "code": "89247-1",
+            "display": "ECOG Performance Status",
+            "operator": "<=",
+            "value": 1,
+            "unit": "score"
+          }
+        }
+      ],
+      "exclusion": [
+        {
+          "id": "EXC-1",
+          "category": "condition",
+          "text": "Active uncontrolled second malignancy.",
+          "structured": {
+            "type": "condition_forbidden",
+            "keywords": [
+              "active malignancy"
+            ],
+            "systems": [
+              "ICD-10"
+            ]
+          }
+        },
+        {
+          "id": "EXC-2",
+          "category": "other",
+          "text": "Prior systemic chemotherapy within 21 days of screening.",
+          "structured": {
+            "type": "free_text",
+            "text_rule": "Prior systemic chemotherapy within 21 days"
+          }
+        },
+        {
+          "id": "EXC-3",
+          "category": "social_history",
+          "text": "Current smoker.",
+          "structured": {
+            "type": "smoking_forbidden",
+            "forbidden_statuses": [
+              "Current smoker"
+            ]
+          }
+        }
+      ]
+    },
+    "consent_required": true,
+    "source": {
+      "clinicaltrials_gov_id": "NCT10000203",
+      "protocol_pdf_url": "trials/T203-protocol.pdf"
+    },
+    "status": "SUSPENDED",
+    "sponsor": "AIIMS Delhi",
+    "locations": [
+      "Delhi"
+    ],
+    "start_date": "2025-11-01"
+  },
+  {
+    "id": "T301",
+    "title": "CARD-2027: Lipid-Lowering Study in Cardiovascular Disease",
+    "phase": "Phase 3",
+    "condition": [
+      "Atherosclerotic cardiovascular disease"
+    ],
+    "intervention": [
+      "Investigational Lipid Agent 1"
+    ],
+    "eligibility": {
+      "inclusion": [
+        {
+          "id": "INC-1",
+          "category": "demographics",
+          "text": "Age 40 to 80 years, inclusive.",
+          "structured": {
+            "type": "age_range",
+            "min": 40,
+            "max": 80
+          }
+        },
+        {
+          "id": "INC-2",
+          "category": "diagnosis",
+          "text": "Documented atherosclerotic cardiovascular disease.",
+          "structured": {
+            "type": "diagnosis_required",
+            "codes": [
+              "I25.10"
+            ],
+            "systems": [
+              "ICD-10"
+            ],
+            "min_duration_months": 6
+          }
+        },
+        {
+          "id": "INC-3",
+          "category": "lab",
+          "text": "LDL cholesterol ≤ 100 mg/dL.",
+          "structured": {
+            "type": "lab_threshold",
+            "code": "13457-7",
+            "display": "LDL cholesterol",
+            "operator": "<=",
+            "value": 100,
+            "unit": "mg/dL"
+          }
+        }
+      ],
+      "exclusion": [
+        {
+          "id": "EXC-1",
+          "category": "social_history",
+          "text": "Current smoker.",
+          "structured": {
+            "type": "smoking_forbidden",
+            "forbidden_statuses": [
+              "Current smoker"
+            ]
+          }
+        },
+        {
+          "id": "EXC-2",
+          "category": "condition",
+          "text": "Pregnancy or breastfeeding.",
+          "structured": {
+            "type": "condition_forbidden",
+            "keywords": [
+              "pregnancy",
+              "breastfeeding"
+            ],
+            "systems": [
+              "Synthetic"
+            ]
+          }
+        },
+        {
+          "id": "EXC-3",
+          "category": "other",
+          "text": "Unable or unwilling to provide trial data-use consent.",
+          "structured": {
+            "type": "free_text",
+            "text_rule": "data_use_consent must be true"
+          }
+        }
+      ]
+    },
+    "consent_required": true,
+    "source": {
+      "clinicaltrials_gov_id": "NCT10000301",
+      "protocol_pdf_url": "trials/T301-protocol.pdf"
+    },
+    "status": "RECRUITING",
+    "sponsor": "ICMR / Apollo Hospitals",
+    "locations": [
+      "Tamil Nadu",
+      "Karnataka",
+      "Delhi"
+    ],
+    "start_date": "2026-01-15"
+  },
+  {
+    "id": "T302",
+    "title": "CARD-2028: Lipid-Lowering Study in Cardiovascular Disease",
+    "phase": "Phase 3",
+    "condition": [
+      "Atherosclerotic cardiovascular disease"
+    ],
+    "intervention": [
+      "Investigational Lipid Agent 2"
+    ],
+    "eligibility": {
+      "inclusion": [
+        {
+          "id": "INC-1",
+          "category": "demographics",
+          "text": "Age 40 to 80 years, inclusive.",
+          "structured": {
+            "type": "age_range",
+            "min": 40,
+            "max": 80
+          }
+        },
+        {
+          "id": "INC-2",
+          "category": "diagnosis",
+          "text": "Documented atherosclerotic cardiovascular disease.",
+          "structured": {
+            "type": "diagnosis_required",
+            "codes": [
+              "I25.10"
+            ],
+            "systems": [
+              "ICD-10"
+            ],
+            "min_duration_months": 6
+          }
+        },
+        {
+          "id": "INC-3",
+          "category": "lab",
+          "text": "LDL cholesterol ≤ 130 mg/dL.",
+          "structured": {
+            "type": "lab_threshold",
+            "code": "13457-7",
+            "display": "LDL cholesterol",
+            "operator": "<=",
+            "value": 130,
+            "unit": "mg/dL"
+          }
+        }
+      ],
+      "exclusion": [
+        {
+          "id": "EXC-1",
+          "category": "social_history",
+          "text": "Current smoker.",
+          "structured": {
+            "type": "smoking_forbidden",
+            "forbidden_statuses": [
+              "Current smoker"
+            ]
+          }
+        },
+        {
+          "id": "EXC-2",
+          "category": "condition",
+          "text": "Pregnancy or breastfeeding.",
+          "structured": {
+            "type": "condition_forbidden",
+            "keywords": [
+              "pregnancy",
+              "breastfeeding"
+            ],
+            "systems": [
+              "Synthetic"
+            ]
+          }
+        },
+        {
+          "id": "EXC-3",
+          "category": "other",
+          "text": "Unable or unwilling to provide trial data-use consent.",
+          "structured": {
+            "type": "free_text",
+            "text_rule": "data_use_consent must be true"
+          }
+        }
+      ]
+    },
+    "consent_required": true,
+    "source": {
+      "clinicaltrials_gov_id": "NCT10000302",
+      "protocol_pdf_url": "trials/T302-protocol.pdf"
+    },
+    "status": "RECRUITING",
+    "sponsor": "Fortis Research",
+    "locations": [
+      "Punjab",
+      "Haryana"
+    ],
+    "start_date": "2026-04-01"
+  },
+  {
+    "id": "T303",
+    "title": "CARD-2029: Lipid-Lowering Study in Cardiovascular Disease",
+    "phase": "Phase 3",
+    "condition": [
+      "Atherosclerotic cardiovascular disease"
+    ],
+    "intervention": [
+      "Investigational Lipid Agent 3"
+    ],
+    "eligibility": {
+      "inclusion": [
+        {
+          "id": "INC-1",
+          "category": "demographics",
+          "text": "Age 40 to 80 years, inclusive.",
+          "structured": {
+            "type": "age_range",
+            "min": 40,
+            "max": 80
+          }
+        },
+        {
+          "id": "INC-2",
+          "category": "diagnosis",
+          "text": "Documented atherosclerotic cardiovascular disease.",
+          "structured": {
+            "type": "diagnosis_required",
+            "codes": [
+              "I25.10"
+            ],
+            "systems": [
+              "ICD-10"
+            ],
+            "min_duration_months": 6
+          }
+        },
+        {
+          "id": "INC-3",
+          "category": "lab",
+          "text": "LDL cholesterol ≤ 160 mg/dL.",
+          "structured": {
+            "type": "lab_threshold",
+            "code": "13457-7",
+            "display": "LDL cholesterol",
+            "operator": "<=",
+            "value": 160,
+            "unit": "mg/dL"
+          }
+        }
+      ],
+      "exclusion": [
+        {
+          "id": "EXC-1",
+          "category": "social_history",
+          "text": "Current smoker.",
+          "structured": {
+            "type": "smoking_forbidden",
+            "forbidden_statuses": [
+              "Current smoker"
+            ]
+          }
+        },
+        {
+          "id": "EXC-2",
+          "category": "condition",
+          "text": "Pregnancy or breastfeeding.",
+          "structured": {
+            "type": "condition_forbidden",
+            "keywords": [
+              "pregnancy",
+              "breastfeeding"
+            ],
+            "systems": [
+              "Synthetic"
+            ]
+          }
+        },
+        {
+          "id": "EXC-3",
+          "category": "other",
+          "text": "Unable or unwilling to provide trial data-use consent.",
+          "structured": {
+            "type": "free_text",
+            "text_rule": "data_use_consent must be true"
+          }
+        }
+      ]
+    },
+    "consent_required": true,
+    "source": {
+      "clinicaltrials_gov_id": "NCT10000303",
+      "protocol_pdf_url": "trials/T303-protocol.pdf"
+    },
+    "status": "COMPLETED",
+    "sponsor": "Narayana Health",
+    "locations": [
+      "Karnataka"
+    ],
+    "start_date": "2025-06-01"
+  },
+  {
+    "id": "T401",
+    "title": "MIX-2027: Precision Metabolic Research Study",
+    "phase": "Phase 2",
+    "condition": [
+      "Metabolic disease"
+    ],
+    "intervention": [
+      "Investigational Metabolic Agent"
+    ],
+    "eligibility": {
+      "inclusion": [
+        {
+          "id": "INC-1",
+          "category": "demographics",
+          "text": "Age 18 to 70 years, inclusive.",
+          "structured": {
+            "type": "age_range",
+            "min": 18,
+            "max": 70
+          }
+        },
+        {
+          "id": "INC-2",
+          "category": "lab",
+          "text": "Hemoglobin A1c ≥ 7.0%.",
+          "structured": {
+            "type": "lab_threshold",
+            "code": "4548-4",
+            "display": "Hemoglobin A1c",
+            "operator": ">=",
+            "value": 7.0,
+            "unit": "%"
+          }
+        },
+        {
+          "id": "INC-3",
+          "category": "other",
+          "text": "Data-use consent must be documented.",
+          "structured": {
+            "type": "free_text",
+            "text_rule": "data_use_consent == true"
+          }
+        }
+      ],
+      "exclusion": [
+        {
+          "id": "EXC-1",
+          "category": "social_history",
+          "text": "Current smoker.",
+          "structured": {
+            "type": "smoking_forbidden",
+            "forbidden_statuses": [
+              "Current smoker"
+            ]
+          }
+        },
+        {
+          "id": "EXC-2",
+          "category": "other",
+          "text": "Active malignancy.",
+          "structured": {
+            "type": "condition_forbidden",
+            "keywords": [
+              "active malignancy"
+            ],
+            "systems": [
+              "Synthetic"
+            ]
+          }
+        }
+      ]
+    },
+    "consent_required": true,
+    "source": {
+      "clinicaltrials_gov_id": "NCT10000401",
+      "protocol_pdf_url": "trials/T401-protocol.pdf"
+    },
+    "status": "RECRUITING",
+    "sponsor": "Christian Medical College Vellore",
+    "locations": [
+      "Tamil Nadu"
+    ],
+    "start_date": "2026-03-01"
+  },
+  {
+    "id": "T402",
+    "title": "MIX-2028: Precision Metabolic Research Study",
+    "phase": "Phase 2",
+    "condition": [
+      "Metabolic disease"
+    ],
+    "intervention": [
+      "Investigational Metabolic Agent"
+    ],
+    "eligibility": {
+      "inclusion": [
+        {
+          "id": "INC-1",
+          "category": "demographics",
+          "text": "Age 18 to 70 years, inclusive.",
+          "structured": {
+            "type": "age_range",
+            "min": 18,
+            "max": 70
+          }
+        },
+        {
+          "id": "INC-2",
+          "category": "lab",
+          "text": "Hemoglobin A1c ≥ 7.0%.",
+          "structured": {
+            "type": "lab_threshold",
+            "code": "4548-4",
+            "display": "Hemoglobin A1c",
+            "operator": ">=",
+            "value": 7.0,
+            "unit": "%"
+          }
+        },
+        {
+          "id": "INC-3",
+          "category": "other",
+          "text": "Data-use consent must be documented.",
+          "structured": {
+            "type": "free_text",
+            "text_rule": "data_use_consent == true"
+          }
+        }
+      ],
+      "exclusion": [
+        {
+          "id": "EXC-1",
+          "category": "social_history",
+          "text": "Current smoker.",
+          "structured": {
+            "type": "smoking_forbidden",
+            "forbidden_statuses": [
+              "Current smoker"
+            ]
+          }
+        },
+        {
+          "id": "EXC-2",
+          "category": "other",
+          "text": "Active malignancy.",
+          "structured": {
+            "type": "condition_forbidden",
+            "keywords": [
+              "active malignancy"
+            ],
+            "systems": [
+              "Synthetic"
+            ]
+          }
+        }
+      ]
+    },
+    "consent_required": true,
+    "source": {
+      "clinicaltrials_gov_id": "NCT10000402",
+      "protocol_pdf_url": "trials/T402-protocol.pdf"
+    },
+    "status": "NOT_YET_RECRUITING",
+    "sponsor": "PGIMER Chandigarh",
+    "locations": [
+      "Chandigarh",
+      "Punjab"
+    ],
+    "start_date": "2026-06-15"
+  }
+]
