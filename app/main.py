@@ -17,6 +17,8 @@ Endpoints:
     POST /api/match                            -> {patient_id, trial_id} -> MatchResult
     GET  /api/screening-report/{patient_id}     -> match against every trial, sorted best-first
     GET  /api/stats                            -> dashboard aggregate counts
+    GET  /api/studies                          -> Phase-2 studies (participants + daily reports)
+    GET  /api/studies/{study_id}                -> one study
     POST /api/research/query                   -> RAG chat, single JSON response
     POST /api/research/query/stream             -> RAG chat, Server-Sent Events (stream=true)
     POST /api/research/reindex                  -> rebuild the research assistant's in-memory index
@@ -31,15 +33,15 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from fastapi.staticfiles import StaticFiles
 
-from models import Account, MatchRequest, MatchResult, Patient, ResearchQuery, ResearchResponse, Trial
+from models import Account, MatchRequest, MatchResult, Patient, ResearchQuery, ResearchResponse, Study, Trial
 from matching_engine import match_patient_to_trial
 from research_assistant import (
-    _detect_structured_lab_query,
     _retrieve,
-    _structured_lab_answer,
     answer_research_question,
     ensure_index_built,
+    format_source_label,
     stream_llm_answer,
+    try_structured_answer,
 )
 
 APP_DIR = Path(__file__).parent
@@ -62,11 +64,12 @@ app.add_middleware(
 _patients: dict[str, Patient] = {}
 _trials: dict[str, Trial] = {}
 _accounts: dict[str, Account] = {}
+_studies: dict[str, Study] = {}
 
 
 @app.on_event("startup")
 def load_data():
-    global _patients, _trials, _accounts
+    global _patients, _trials, _accounts, _studies
 
     with open(DATA_DIR / "patients.json") as f:
         _patients = {p["id"]: Patient(**p) for p in json.load(f)}
@@ -77,7 +80,11 @@ def load_data():
     with open(DATA_DIR / "accounts.json") as f:
         _accounts = {a["id"]: Account(**a) for a in json.load(f)}
 
-    print(f"[startup] loaded {len(_patients)} patients, {len(_trials)} trials, {len(_accounts)} accounts")
+    with open(DATA_DIR / "studies.json") as f:
+        _studies = {s["id"]: Study(**s) for s in json.load(f)}
+
+    print(f"[startup] loaded {len(_patients)} patients, {len(_trials)} trials, "
+          f"{len(_accounts)} accounts, {len(_studies)} studies")
 
     try:
         ensure_index_built()
@@ -194,6 +201,21 @@ def stats(doctor_id: str | None = None):
 
 
 # ---------------------------------------------------------------------------
+# Studies (Phase 2 — enrolled participants + daily reports)
+# ---------------------------------------------------------------------------
+@app.get("/api/studies", response_model=list[Study])
+def list_studies():
+    return list(_studies.values())
+
+
+@app.get("/api/studies/{study_id}", response_model=Study)
+def get_study(study_id: str):
+    if study_id not in _studies:
+        raise HTTPException(404, f"Unknown study_id '{study_id}'")
+    return _studies[study_id]
+
+
+# ---------------------------------------------------------------------------
 # Research Assistant (RAG chat)
 # ---------------------------------------------------------------------------
 @app.post("/api/research/query", response_model=ResearchResponse)
@@ -215,14 +237,11 @@ def research_query_stream(req: ResearchQuery):
     study_id = req.study_id or None
 
     def gen():
-        ensure_index_built()
-
-        lab_code = _detect_structured_lab_query(req.question)
-        if lab_code:
-            result = _structured_lab_answer(lab_code, study_id)
-            yield _sse("sources", {"sources": result["sources"], "basedOn": result["basedOn"]})
-            yield _sse("token", {"text": result["answer"]})
-            yield _sse("done", {"points": result["points"]})
+        structured = try_structured_answer(req.question, study_id)
+        if structured is not None:
+            yield _sse("sources", {"sources": structured["sources"], "basedOn": structured["basedOn"]})
+            yield _sse("token", {"text": structured["answer"]})
+            yield _sse("done", {"points": structured["points"]})
             return
 
         hits = _retrieve(req.question, study_id)
@@ -232,10 +251,7 @@ def research_query_stream(req: ResearchQuery):
             yield _sse("done", {"points": []})
             return
 
-        sources = [
-            {"id": h["id"], "label": f"{'Trial' if h['type'] == 'document' else 'Patient'} {h['id']}", "type": h["type"]}
-            for h in hits
-        ]
+        sources = [{"id": h["id"], "label": format_source_label(h), "type": h["type"]} for h in hits]
         yield _sse("sources", {
             "sources": sources,
             "basedOn": f"Based on {len(hits)} matching record(s)/document(s) from the current dataset "

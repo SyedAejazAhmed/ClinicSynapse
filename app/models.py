@@ -207,6 +207,45 @@ class Account(BaseModel):
 
 
 # ---------------------------------------------------------------------------
+# Phase 2 — Studies & daily reports (see app/data/studies.json).
+#
+# A Study is a real trial (trial_id) actually being run, with a handful of
+# real patients (patient_id) enrolled as research subjects. Participants are
+# drawn from patients the deterministic matching engine actually finds
+# ELIGIBLE for that trial — this is synthetic data, generated once (see
+# scripts/generate_studies.py-equivalent used to build the JSON), not live,
+# but every number the frontend displays (participant count, reports today,
+# adverse event count) is computed from these records, not hand-typed mock
+# constants. Ask the Research Assistant about it and the answer is grounded
+# in these exact records.
+# ---------------------------------------------------------------------------
+class DailyReport(BaseModel):
+    date: str
+    blood_glucose: float
+    heart_rate: int
+    bp_systolic: int
+    bp_diastolic: int
+    fatigue: str  # "None" | "Mild" | "Moderate" | "Severe"
+    adverse_event: Optional[str] = None
+    notes: Optional[str] = None
+
+
+class StudyParticipant(BaseModel):
+    patient_id: str
+    research_subject_id: str
+    status: str  # "Active" | "Completed" | "Review" | "Withdrawn"
+    enrolled_date: str
+    reports: list[DailyReport] = Field(default_factory=list)
+
+
+class Study(BaseModel):
+    id: str
+    trial_id: str
+    title: str
+    participants: list[StudyParticipant] = Field(default_factory=list)
+
+
+# ---------------------------------------------------------------------------
 # Phase 2 — Research Assistant (RAG). Shapes mirror Frontend/src/types/research.ts
 # exactly; do not rename fields without updating that file too.
 # ---------------------------------------------------------------------------

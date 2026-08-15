@@ -1,0 +1,453 @@
+[
+  {
+    "id": "DIAB-2026-001",
+    "trial_id": "T101",
+    "title": "DIAB-2027: Study of Investigational Therapy in Type 2 Diabetes",
+    "participants": [
+      {
+        "patient_id": "P-1002",
+        "research_subject_id": "RS-0001",
+        "status": "Active",
+        "enrolled_date": "2026-02-07",
+        "reports": [
+          {
+            "date": "2026-08-03",
+            "blood_glucose": 142.4,
+            "heart_rate": 72,
+            "bp_systolic": 129,
+            "bp_diastolic": 74,
+            "fatigue": "Mild",
+            "adverse_event": "Mild headache, resolved same day.",
+            "notes": "Participant reported mild fatigue today."
+          },
+          {
+            "date": "2026-08-04",
+            "blood_glucose": 128.9,
+            "heart_rate": 70,
+            "bp_systolic": 115,
+            "bp_diastolic": 75,
+            "fatigue": "Moderate",
+            "adverse_event": null,
+            "notes": "Participant reported moderate fatigue today."
+          },
+          {
+            "date": "2026-08-05",
+            "blood_glucose": 134.2,
+            "heart_rate": 70,
+            "bp_systolic": 119,
+            "bp_diastolic": 83,
+            "fatigue": "None",
+            "adverse_event": null,
+            "notes": "No new symptoms reported today."
+          },
+          {
+            "date": "2026-08-06",
+            "blood_glucose": 132.1,
+            "heart_rate": 66,
+            "bp_systolic": 130,
+            "bp_diastolic": 77,
+            "fatigue": "None",
+            "adverse_event": null,
+            "notes": "No new symptoms reported today."
+          },
+          {
+            "date": "2026-08-07",
+            "blood_glucose": 132.6,
+            "heart_rate": 68,
+            "bp_systolic": 119,
+            "bp_diastolic": 73,
+            "fatigue": "Mild",
+            "adverse_event": null,
+            "notes": "Participant reported mild fatigue today."
+          },
+          {
+            "date": "2026-08-08",
+            "blood_glucose": 148.6,
+            "heart_rate": 69,
+            "bp_systolic": 124,
+            "bp_diastolic": 83,
+            "fatigue": "Mild",
+            "adverse_event": null,
+            "notes": "Participant reported mild fatigue today."
+          },
+          {
+            "date": "2026-08-09",
+            "blood_glucose": 132.7,
+            "heart_rate": 67,
+            "bp_systolic": 116,
+            "bp_diastolic": 81,
+            "fatigue": "None",
+            "adverse_event": null,
+            "notes": "No new symptoms reported today."
+          },
+          {
+            "date": "2026-08-10",
+            "blood_glucose": 145.5,
+            "heart_rate": 75,
+            "bp_systolic": 121,
+            "bp_diastolic": 78,
+            "fatigue": "None",
+            "adverse_event": null,
+            "notes": "No new symptoms reported today."
+          },
+          {
+            "date": "2026-08-11",
+            "blood_glucose": 132.5,
+            "heart_rate": 72,
+            "bp_systolic": 126,
+            "bp_diastolic": 81,
+            "fatigue": "None",
+            "adverse_event": null,
+            "notes": "No new symptoms reported today."
+          },
+          {
+            "date": "2026-08-12",
+            "blood_glucose": 127.7,
+            "heart_rate": 73,
+            "bp_systolic": 118,
+            "bp_diastolic": 77,
+            "fatigue": "Moderate",
+            "adverse_event": null,
+            "notes": "Participant reported moderate fatigue today."
+          },
+          {
+            "date": "2026-08-13",
+            "blood_glucose": 129.0,
+            "heart_rate": 68,
+            "bp_systolic": 127,
+            "bp_diastolic": 73,
+            "fatigue": "None",
+            "adverse_event": null,
+            "notes": "No new symptoms reported today."
+          },
+          {
+            "date": "2026-08-14",
+            "blood_glucose": 133.7,
+            "heart_rate": 65,
+            "bp_systolic": 130,
+            "bp_diastolic": 79,
+            "fatigue": "Moderate",
+            "adverse_event": null,
+            "notes": "Participant reported moderate fatigue today."
+          },
+          {
+            "date": "2026-08-15",
+            "blood_glucose": 140.3,
+            "heart_rate": 69,
+            "bp_systolic": 130,
+            "bp_diastolic": 78,
+            "fatigue": "None",
+            "adverse_event": null,
+            "notes": "No new symptoms reported today."
+          },
+          {
+            "date": "2026-08-16",
+            "blood_glucose": 142.6,
+            "heart_rate": 71,
+            "bp_systolic": 127,
+            "bp_diastolic": 78,
+            "fatigue": "Mild",
+            "adverse_event": null,
+            "notes": "Participant reported mild fatigue today."
+          }
+        ]
+      },
+      {
+        "patient_id": "P-1008",
+        "research_subject_id": "RS-0002",
+        "status": "Active",
+        "enrolled_date": "2026-02-05",
+        "reports": [
+          {
+            "date": "2026-08-03",
+            "blood_glucose": 113.1,
+            "heart_rate": 77,
+            "bp_systolic": 129,
+            "bp_diastolic": 81,
+            "fatigue": "Mild",
+            "adverse_event": null,
+            "notes": "Participant reported mild fatigue today."
+          },
+          {
+            "date": "2026-08-04",
+            "blood_glucose": 121.9,
+            "heart_rate": 83,
+            "bp_systolic": 127,
+            "bp_diastolic": 74,
+            "fatigue": "Mild",
+            "adverse_event": null,
+            "notes": "Participant reported mild fatigue today."
+          },
+          {
+            "date": "2026-08-05",
+            "blood_glucose": 112.2,
+            "heart_rate": 85,
+            "bp_systolic": 130,
+            "bp_diastolic": 78,
+            "fatigue": "None",
+            "adverse_event": null,
+            "notes": "No new symptoms reported today."
+          },
+          {
+            "date": "2026-08-06",
+            "blood_glucose": 120.8,
+            "heart_rate": 79,
+            "bp_systolic": 122,
+            "bp_diastolic": 71,
+            "fatigue": "Moderate",
+            "adverse_event": null,
+            "notes": "Participant reported moderate fatigue today."
+          },
+          {
+            "date": "2026-08-07",
+            "blood_glucose": 118.8,
+            "heart_rate": 82,
+            "bp_systolic": 122,
+            "bp_diastolic": 82,
+            "fatigue": "Moderate",
+            "adverse_event": null,
+            "notes": "Participant reported moderate fatigue today."
+          },
+          {
+            "date": "2026-08-08",
+            "blood_glucose": 128.5,
+            "heart_rate": 83,
+            "bp_systolic": 122,
+            "bp_diastolic": 80,
+            "fatigue": "Mild",
+            "adverse_event": null,
+            "notes": "Participant reported mild fatigue today."
+          },
+          {
+            "date": "2026-08-09",
+            "blood_glucose": 135.9,
+            "heart_rate": 87,
+            "bp_systolic": 129,
+            "bp_diastolic": 77,
+            "fatigue": "None",
+            "adverse_event": null,
+            "notes": "No new symptoms reported today."
+          },
+          {
+            "date": "2026-08-10",
+            "blood_glucose": 134.8,
+            "heart_rate": 86,
+            "bp_systolic": 124,
+            "bp_diastolic": 72,
+            "fatigue": "Mild",
+            "adverse_event": null,
+            "notes": "Participant reported mild fatigue today."
+          },
+          {
+            "date": "2026-08-11",
+            "blood_glucose": 114.1,
+            "heart_rate": 82,
+            "bp_systolic": 120,
+            "bp_diastolic": 80,
+            "fatigue": "None",
+            "adverse_event": null,
+            "notes": "No new symptoms reported today."
+          },
+          {
+            "date": "2026-08-12",
+            "blood_glucose": 124.3,
+            "heart_rate": 83,
+            "bp_systolic": 123,
+            "bp_diastolic": 82,
+            "fatigue": "Mild",
+            "adverse_event": null,
+            "notes": "Participant reported mild fatigue today."
+          },
+          {
+            "date": "2026-08-13",
+            "blood_glucose": 136.1,
+            "heart_rate": 85,
+            "bp_systolic": 130,
+            "bp_diastolic": 80,
+            "fatigue": "Mild",
+            "adverse_event": null,
+            "notes": "Participant reported mild fatigue today."
+          },
+          {
+            "date": "2026-08-14",
+            "blood_glucose": 128.8,
+            "heart_rate": 81,
+            "bp_systolic": 127,
+            "bp_diastolic": 73,
+            "fatigue": "None",
+            "adverse_event": "Mild headache, resolved same day.",
+            "notes": "No new symptoms reported today."
+          },
+          {
+            "date": "2026-08-15",
+            "blood_glucose": 127.2,
+            "heart_rate": 79,
+            "bp_systolic": 123,
+            "bp_diastolic": 72,
+            "fatigue": "Moderate",
+            "adverse_event": "Mild headache, resolved same day.",
+            "notes": "Participant reported moderate fatigue today."
+          },
+          {
+            "date": "2026-08-16",
+            "blood_glucose": 135.5,
+            "heart_rate": 86,
+            "bp_systolic": 120,
+            "bp_diastolic": 74,
+            "fatigue": "Moderate",
+            "adverse_event": null,
+            "notes": "Participant reported moderate fatigue today."
+          }
+        ]
+      },
+      {
+        "patient_id": "P-1014",
+        "research_subject_id": "RS-0003",
+        "status": "Active",
+        "enrolled_date": "2026-02-03",
+        "reports": [
+          {
+            "date": "2026-08-03",
+            "blood_glucose": 126.9,
+            "heart_rate": 78,
+            "bp_systolic": 132,
+            "bp_diastolic": 78,
+            "fatigue": "Moderate",
+            "adverse_event": null,
+            "notes": "Participant reported moderate fatigue today."
+          },
+          {
+            "date": "2026-08-04",
+            "blood_glucose": 131.6,
+            "heart_rate": 78,
+            "bp_systolic": 138,
+            "bp_diastolic": 85,
+            "fatigue": "Moderate",
+            "adverse_event": "Mild gastrointestinal discomfort.",
+            "notes": "Participant reported moderate fatigue today."
+          },
+          {
+            "date": "2026-08-05",
+            "blood_glucose": 139.5,
+            "heart_rate": 82,
+            "bp_systolic": 128,
+            "bp_diastolic": 79,
+            "fatigue": "Mild",
+            "adverse_event": null,
+            "notes": "Participant reported mild fatigue today."
+          },
+          {
+            "date": "2026-08-06",
+            "blood_glucose": 131.5,
+            "heart_rate": 76,
+            "bp_systolic": 130,
+            "bp_diastolic": 88,
+            "fatigue": "Mild",
+            "adverse_event": null,
+            "notes": "Participant reported mild fatigue today."
+          },
+          {
+            "date": "2026-08-07",
+            "blood_glucose": 142.8,
+            "heart_rate": 74,
+            "bp_systolic": 136,
+            "bp_diastolic": 83,
+            "fatigue": "None",
+            "adverse_event": null,
+            "notes": "No new symptoms reported today."
+          },
+          {
+            "date": "2026-08-08",
+            "blood_glucose": 144.6,
+            "heart_rate": 83,
+            "bp_systolic": 129,
+            "bp_diastolic": 83,
+            "fatigue": "None",
+            "adverse_event": null,
+            "notes": "No new symptoms reported today."
+          },
+          {
+            "date": "2026-08-09",
+            "blood_glucose": 144.0,
+            "heart_rate": 75,
+            "bp_systolic": 126,
+            "bp_diastolic": 82,
+            "fatigue": "Mild",
+            "adverse_event": null,
+            "notes": "Participant reported mild fatigue today."
+          },
+          {
+            "date": "2026-08-10",
+            "blood_glucose": 138.7,
+            "heart_rate": 81,
+            "bp_systolic": 138,
+            "bp_diastolic": 85,
+            "fatigue": "Mild",
+            "adverse_event": null,
+            "notes": "Participant reported mild fatigue today."
+          },
+          {
+            "date": "2026-08-11",
+            "blood_glucose": 128.3,
+            "heart_rate": 84,
+            "bp_systolic": 135,
+            "bp_diastolic": 83,
+            "fatigue": "Moderate",
+            "adverse_event": null,
+            "notes": "Participant reported moderate fatigue today."
+          },
+          {
+            "date": "2026-08-12",
+            "blood_glucose": 121.9,
+            "heart_rate": 78,
+            "bp_systolic": 141,
+            "bp_diastolic": 83,
+            "fatigue": "None",
+            "adverse_event": null,
+            "notes": "No new symptoms reported today."
+          },
+          {
+            "date": "2026-08-13",
+            "blood_glucose": 122.6,
+            "heart_rate": 75,
+            "bp_systolic": 135,
+            "bp_diastolic": 85,
+            "fatigue": "None",
+            "adverse_event": null,
+            "notes": "No new symptoms reported today."
+          },
+          {
+            "date": "2026-08-14",
+            "blood_glucose": 145.0,
+            "heart_rate": 80,
+            "bp_systolic": 135,
+            "bp_diastolic": 77,
+            "fatigue": "None",
+            "adverse_event": null,
+            "notes": "No new symptoms reported today."
+          },
+          {
+            "date": "2026-08-15",
+            "blood_glucose": 135.7,
+            "heart_rate": 79,
+            "bp_systolic": 141,
+            "bp_diastolic": 79,
+            "fatigue": "Moderate",
+            "adverse_event": null,
+            "notes": "Participant reported moderate fatigue today."
+          },
+          {
+            "date": "2026-08-16",
+            "blood_glucose": 127.5,
+            "heart_rate": 74,
+            "bp_systolic": 136,
+            "bp_diastolic": 82,
+            "fatigue": "None",
+            "adverse_event": "Fatigue greater than usual, no intervention needed.",
+            "notes": "No new symptoms reported today."
+          }
+        ]
+      }
+    ]
+  }
+]
