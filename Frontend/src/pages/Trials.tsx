@@ -102,7 +102,7 @@ export default function Trials() {
       ) : filtered.length === 0 ? (
         <div className="empty-state"><p>No trials match your filters.</p></div>
       ) : (
-        <div style={{ maxWidth: 720 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(420px, 1fr))', gap: 16 }}>
           {filtered.map(t => <TrialCard key={t.id} trial={t} />)}
         </div>
       )}

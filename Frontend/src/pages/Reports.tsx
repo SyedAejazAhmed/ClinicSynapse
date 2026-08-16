@@ -29,7 +29,7 @@ export default function Reports() {
   if (!study || !participant) return <div className="empty-state"><p>Participant not found.</p></div>;
 
   return (
-    <div style={{ maxWidth: 640 }}>
+    <div>
       <button className="btn btn-ghost btn-sm" onClick={() => nav(-1)} style={{ marginBottom: 16 }}>
         <ArrowLeft size={13} /> Back to Study
       </button>

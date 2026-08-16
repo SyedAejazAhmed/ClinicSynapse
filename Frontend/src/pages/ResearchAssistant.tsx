@@ -15,7 +15,7 @@ export default function ResearchAssistant() {
   }, []);
 
   return (
-    <div style={{ maxWidth: 720 }}>
+    <div>
       <div className="page-title">Research Assistant</div>
       <div className="page-subtitle">Ask questions grounded in study data and participant records</div>
 

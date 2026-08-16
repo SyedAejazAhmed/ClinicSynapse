@@ -23,7 +23,7 @@ export default function Patients() {
       <div className="page-title">Patient Explorer</div>
       <div className="page-subtitle">{patients.length} patients in registry</div>
 
-      <div className="card card-sm mb-4" style={{ marginBottom: 20, maxWidth: 400 }}>
+      <div className="card card-sm mb-4" style={{ marginBottom: 20 }}>
         <div style={{ position: 'relative' }}>
           <Search size={13} style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
           <input
@@ -39,7 +39,7 @@ export default function Patients() {
       {loading ? (
         <div className="loading-state"><div className="spinner" /> Loading patients...</div>
       ) : (
-        <div style={{ maxWidth: 480 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(420px, 1fr))', gap: 10 }}>
           {filtered.map(p => <PatientCard key={p.id} patient={p} />)}
         </div>
       )}

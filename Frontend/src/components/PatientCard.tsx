@@ -9,7 +9,7 @@ export default function PatientCard({ patient }: { patient: Patient }) {
   return (
     <div
       className="card"
-      style={{ marginBottom: 12, cursor: 'pointer' }}
+      style={{ cursor: 'pointer' }}
       onClick={() => nav(`/patients/${patient.id}`)}
     >
       <div className="flex items-center justify-between mb-2">
