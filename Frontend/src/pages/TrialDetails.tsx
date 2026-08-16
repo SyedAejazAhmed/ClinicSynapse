@@ -1,19 +1,33 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getTrialById } from '../services/trialApi';
+import { getTrialPatients } from '../services/matchingApi';
 import type { Trial } from '../types/trial';
 import StatusBadge from '../components/StatusBadge';
-import { ArrowLeft, MapPin, Building2, Users } from 'lucide-react';
+import { ArrowLeft, MapPin, Building2, Users, FileText, Loader2 } from 'lucide-react';
+import { exportTrialDocumentation } from '../utils/exportTrialDocumentation';
 
 export default function TrialDetails() {
   const { id } = useParams<{ id: string }>();
   const nav = useNavigate();
   const [trial, setTrial] = useState<Trial | null>(null);
   const [loading, setLoading] = useState(true);
+  const [exporting, setExporting] = useState(false);
 
   useEffect(() => {
     if (id) getTrialById(id).then(t => { setTrial(t ?? null); setLoading(false); });
   }, [id]);
+
+  async function handleExportDocumentation() {
+    if (!trial) return;
+    setExporting(true);
+    try {
+      const results = await getTrialPatients(trial.id);
+      exportTrialDocumentation(trial, results);
+    } finally {
+      setExporting(false);
+    }
+  }
 
   if (loading) return <div className="loading-state"><div className="spinner" /> Loading trial...</div>;
   if (!trial) return <div className="empty-state"><p>Trial not found.</p></div>;
@@ -81,6 +95,10 @@ export default function TrialDetails() {
         </button>
         <button className="btn btn-secondary" onClick={() => nav(`/trials/${trial.id}/patients`)}>
           <Users size={13} /> View Tested Patients
+        </button>
+        <button className="btn btn-secondary" onClick={handleExportDocumentation} disabled={exporting}>
+          {exporting ? <Loader2 size={13} className="spin" /> : <FileText size={13} />}
+          {exporting ? 'Generating...' : 'Documentation'}
         </button>
       </div>
     </div>

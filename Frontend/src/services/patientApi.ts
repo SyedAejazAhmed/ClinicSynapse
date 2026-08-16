@@ -31,8 +31,13 @@ function toPatient(p: any): Patient {
   };
 }
 
-export const getPatients = async (): Promise<Patient[]> => {
-  const res = await fetch(`${API_BASE}/api/patients`);
+// doctorId: pass the signed-in doctor's account id to get only the patients
+// relevant to their specialty's trials; omit (or pass an Admin's id) for
+// the full roster.
+export const getPatients = async (doctorId?: string): Promise<Patient[]> => {
+  const url = new URL(`${API_BASE}/api/patients`);
+  if (doctorId) url.searchParams.set('doctor_id', doctorId);
+  const res = await fetch(url);
   if (!res.ok) throw new Error(`Failed to load patients (${res.status})`);
   const data = await res.json();
   return data.map(toPatient);

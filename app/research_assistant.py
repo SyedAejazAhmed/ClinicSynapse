@@ -80,6 +80,7 @@ _RAW_PATIENTS: list[dict] = []
 _RAW_TRIALS: list[dict] = []
 _RAW_STUDIES: list[dict] = []
 _TRIAL_BY_ID: dict[str, dict] = {}
+_TRIAL_ID_BY_UPPER: dict[str, str] = {}
 _STUDY_BY_ID: dict[str, dict] = {}
 _LAB_META: dict[str, dict] = {}           # lab_code -> {"display", "unit"}
 _PATIENT_LABS: dict[str, dict] = {}       # lab_code -> {patient_id: value} (most recent)
@@ -95,7 +96,7 @@ _LOADED = False
 
 
 def _load_raw_data() -> None:
-    global _RAW_PATIENTS, _RAW_TRIALS, _RAW_STUDIES, _TRIAL_BY_ID, _STUDY_BY_ID, _LAB_META
+    global _RAW_PATIENTS, _RAW_TRIALS, _RAW_STUDIES, _TRIAL_BY_ID, _TRIAL_ID_BY_UPPER, _STUDY_BY_ID, _LAB_META
     global _PATIENT_LABS, _PATIENT_DIAG_TEXT, _DIAGNOSIS_INDEX, _DIAGNOSIS_DISPLAYS_BY_LEN, _LOADED
 
     with open(DATA_DIR / "patients.json") as f:
@@ -105,6 +106,13 @@ def _load_raw_data() -> None:
     with open(DATA_DIR / "studies.json") as f:
         _RAW_STUDIES = json.load(f)
     _TRIAL_BY_ID = {t["id"]: t for t in _RAW_TRIALS}
+    # Trial ids in this dataset are lowercase ("t-1", "t-d3", ...), unlike the
+    # old all-caps scheme ("T101") this code was originally written against.
+    # Tool-call args from the LLM (or a user typing "T-1") arrive in whatever
+    # case they please, so resolve case-insensitively through this alias map
+    # instead of blindly uppercasing and looking up in _TRIAL_BY_ID directly.
+    _TRIAL_ID_BY_UPPER = {tid.upper(): tid for tid in _TRIAL_BY_ID}
+    _build_trial_keyword_index()
     _STUDY_BY_ID = {s["id"]: s for s in _RAW_STUDIES}
 
     lab_meta: dict[str, dict] = {}
@@ -365,14 +373,60 @@ def _diagnosis_cohort_answer(display: str, pids: set[str]) -> dict:
     }
 
 
+_TRIAL_KEYWORD_STOPWORDS = {
+    "a", "an", "the", "of", "in", "on", "to", "for", "and", "or", "with", "study", "studies",
+    "evaluate", "evaluating", "evaluation", "assess", "assessment", "patients", "patient",
+    "trial", "clinical", "efficacy", "safety", "treatment", "treatments", "across", "among",
+    "advanced", "attending", "based", "confirmed", "not", "than", "years", "year", "age",
+    "both", "sex", "sexes", "aged", "adult", "adults", "observational", "retrospective",
+}
+
+
+def _significant_words(text: str) -> set[str]:
+    return {w for w in re.findall(r"[a-z0-9]+", text.lower())
+            if len(w) >= 4 and w not in _TRIAL_KEYWORD_STOPWORDS}
+
+
+_TRIAL_KEYWORDS: dict[str, set[str]] = {}
+
+
+def _build_trial_keyword_index() -> None:
+    global _TRIAL_KEYWORDS
+    _TRIAL_KEYWORDS = {}
+    for trial in _RAW_TRIALS:
+        words = _significant_words(trial.get("title", ""))
+        words |= _significant_words(" ".join(trial.get("condition", [])))
+        words |= _significant_words(" ".join(trial.get("intervention", [])))
+        _TRIAL_KEYWORDS[trial["id"]] = words
+
+
 def _find_trial_id_in_text(ql: str) -> str | None:
-    for trial in _RAW_TRIALS:  # match by internal id, e.g. "T101"
-        if trial["id"].lower() in ql:
+    # 1. Exact internal id as a whole word — "t-1", "t-d3", etc.
+    for trial in _RAW_TRIALS:
+        if re.search(rf"\b{re.escape(trial['id'].lower())}\b", ql):
             return trial["id"]
-    for trial in _RAW_TRIALS:  # match by the trial's own short code, e.g. "DIAB-2027"
-        title_code = trial["title"].split(":")[0].strip().lower()
-        if title_code and title_code in ql:
-            return trial["id"]
+
+    # 2. Users (and the LLM's own narration) naturally refer to a trial by
+    # its title/condition/drug, never by the opaque internal id — match on
+    # significant-word overlap against each trial's title/condition/
+    # intervention text instead of requiring the id or the full title
+    # verbatim, either of which basically never appears in a real question.
+    q_words = _significant_words(ql)
+    if not q_words:
+        return None
+    best_id, best_score = None, 0
+    for trial in _RAW_TRIALS:
+        overlap = q_words & _TRIAL_KEYWORDS.get(trial["id"], set())
+        if not overlap:
+            continue
+        score = sum(len(w) for w in overlap)  # longer/more specific words count more
+        if score > best_score:
+            best_score, best_id = score, trial["id"]
+    # Require either 2+ overlapping words or one genuinely distinctive
+    # (long) term, so generic words like "cancer" or "diabetes" alone don't
+    # confidently pin an ambiguous question to the wrong trial.
+    if best_id and (len(q_words & _TRIAL_KEYWORDS[best_id]) >= 2 or best_score >= 10):
+        return best_id
     return None
 
 
@@ -420,15 +474,16 @@ def _single_match_answer(patient_id: str, trial_id: str) -> dict:
             line += f" ({c.reason})"
         points.append(line)
 
+    trial_title = trial_raw.get("title", trial_id)
     return {
-        "answer": f"{patient_id} is {result.overall_status} for {trial_id} ({trial_raw.get('title', '')}). {result.summary}",
+        "answer": f"{patient_id} is {result.overall_status} for {trial_title}. {result.summary}",
         "points": points,
         "basedOn": f"Based on the deterministic eligibility rule engine (matching_engine.match_patient_to_trial) "
-                   f"evaluating all {len(result.criteria_results)} criteria for {patient_id} against {trial_id} "
+                   f"evaluating all {len(result.criteria_results)} criteria for {patient_id} against {trial_title} "
                    f"— the same result /api/match returns, not an LLM guess.",
         "sources": [
             {"id": patient_id, "label": f"Patient {patient_id}", "type": "record"},
-            {"id": trial_id, "label": f"Trial {trial_id}", "type": "document"},
+            {"id": trial_id, "label": trial_title, "type": "document"},
         ],
     }
 
@@ -506,7 +561,7 @@ def _patient_all_trials_answer(patient_id: str) -> dict:
                    f"run for {patient_id} against all {len(rows)} trials — the same rules used by /api/match, not an LLM guess.",
         "sources": (
             [{"id": patient_id, "label": f"Patient {patient_id}", "type": "record"}]
-            + [{"id": tid, "label": f"Trial {tid}", "type": "document"} for tid, _, _ in (eligible + review)[:9]]
+            + [{"id": tid, "label": title, "type": "document"} for tid, title, _ in (eligible + review)[:9]]
         ),
     }
 
@@ -569,7 +624,7 @@ def _global_eligibility_answer() -> dict:
             "sources": [],
         }
 
-    points = [f"{tid}: {', '.join(pids)}" for tid, pids in sorted(by_trial.items())]
+    points = [f"{_TRIAL_BY_ID[tid].get('title', tid)}: {', '.join(pids)}" for tid, pids in sorted(by_trial.items())]
     total_pairs = sum(len(v) for v in by_trial.values())
     return {
         "answer": f"{len(by_trial)} of {len(_RAW_TRIALS)} trials currently have at least one ELIGIBLE patient "
@@ -578,7 +633,8 @@ def _global_eligibility_answer() -> dict:
         "basedOn": f"Based on the deterministic eligibility rule engine (matching_engine.match_patient_to_trial) "
                    f"run across all {len(_RAW_PATIENTS)} patients x {len(_RAW_TRIALS)} trials — the same rules "
                    f"used by /api/match, not an LLM guess.",
-        "sources": [{"id": tid, "label": f"Trial {tid}", "type": "document"} for tid in sorted(by_trial)[:10]],
+        "sources": [{"id": tid, "label": _TRIAL_BY_ID[tid].get("title", tid), "type": "document"}
+                    for tid in sorted(by_trial)[:10]],
     }
 
 
@@ -787,7 +843,15 @@ _SOURCE_LABEL_PREFIX = {"document": "Trial", "report": "Daily report —", "reco
 
 def format_source_label(doc: dict) -> str:
     """Shared by both the sync (_synthesize) and streaming (main.py) paths
-    so a doc's label can never drift between the two entry points."""
+    so a doc's label can never drift between the two entry points.
+
+    Trial docs are cited by title, not the opaque internal id ("t-d3") —
+    a bare id in a citation chip reads as a broken/hallucinated reference
+    to anyone who didn't memorize the dataset's ids."""
+    if doc["type"] == "document":
+        trial = _TRIAL_BY_ID.get(doc["id"])
+        if trial:
+            return trial.get("title", doc["id"])
     return f"{_SOURCE_LABEL_PREFIX.get(doc['type'], 'Patient')} {doc['id']}"
 
 
@@ -986,10 +1050,24 @@ def _tool_lookup_patient(args: dict, study_id: str | None) -> dict | None:
     return _patient_lookup_answer(pid) if _known_patient(pid) else None
 
 
+def _resolve_trial_id(raw: str) -> str | None:
+    """The LLM tool-planner sometimes passes a trial's name/title fragment
+    instead of its internal id (it only ever sees the id in a hint string in
+    the tool catalog, never learns it) — resolve either the same way a
+    user's typed question would be resolved."""
+    raw = (raw or "").strip()
+    if not raw:
+        return None
+    exact = _TRIAL_ID_BY_UPPER.get(raw.upper())
+    if exact:
+        return exact
+    return _find_trial_id_in_text(raw.lower())
+
+
 def _tool_check_eligibility(args: dict, study_id: str | None) -> dict | None:
     pid = str(args.get("patient_id", "")).upper()
-    tid = str(args.get("trial_id", "")).upper()
-    if not _known_patient(pid) or tid not in _TRIAL_BY_ID:
+    tid = _resolve_trial_id(str(args.get("trial_id", "")))
+    if not _known_patient(pid) or tid is None:
         return None
     return _single_match_answer(pid, tid)
 
@@ -1000,8 +1078,8 @@ def _tool_list_patient_trial_matches(args: dict, study_id: str | None) -> dict |
 
 
 def _tool_list_eligible_patients(args: dict, study_id: str | None) -> dict | None:
-    tid = str(args.get("trial_id", "")).upper()
-    return _trial_cohort_answer(tid) if tid in _TRIAL_BY_ID else None
+    tid = _resolve_trial_id(str(args.get("trial_id", "")))
+    return _trial_cohort_answer(tid) if tid is not None else None
 
 
 def _tool_list_patients_by_diagnosis(args: dict, study_id: str | None) -> dict | None:
@@ -1041,7 +1119,8 @@ TOOLS: dict[str, dict] = {
     "check_eligibility": {
         "description": "Check whether ONE specific patient is eligible for ONE specific trial, with full "
                         "PASS/FAIL/REVIEW reasoning per criterion. Use when both a patient AND one specific trial are named.",
-        "params": {"patient_id": "string", "trial_id": "string, e.g. 'T101'"},
+        "params": {"patient_id": "string", "trial_id": "the trial's id OR its name/title/drug as the user wrote it "
+                                                        "(e.g. 't-1', or 'the Remogliflozin trial') — either resolves"},
         "fn": _tool_check_eligibility,
     },
     "list_patient_trial_matches": {
@@ -1054,7 +1133,8 @@ TOOLS: dict[str, dict] = {
     "list_eligible_patients": {
         "description": "For ONE specific trial, list every patient who is ELIGIBLE or NEEDS_REVIEW. Use for 'which "
                         "patients qualify/are eligible for trial X' where X is a specific named trial.",
-        "params": {"trial_id": "string, e.g. 'T101'"},
+        "params": {"trial_id": "the trial's id OR its name/title/drug as the user wrote it "
+                                "(e.g. 't-1', or 'the Remogliflozin trial') — either resolves"},
         "fn": _tool_list_eligible_patients,
     },
     "list_patients_by_diagnosis": {

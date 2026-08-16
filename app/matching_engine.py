@@ -22,6 +22,7 @@ Overall status is then rolled up:
   no FAIL, no REVIEW       -> ELIGIBLE
 """
 
+import re
 from datetime import date, datetime
 
 from models import CriterionResult, MatchResult, Patient, Trial, TrialCriterion
@@ -114,16 +115,35 @@ def eval_age_range(patient: Patient, crit: TrialCriterion, category: str, as_of:
 def eval_diagnosis_required(patient: Patient, crit: TrialCriterion, category: str, as_of: date) -> CriterionResult:
     s = crit.structured
     codes = s.get("codes") or []
+    # Most of this dataset's diagnosis_required criteria were extracted with
+    # only a free-text `display` and no ICD code list (real OCR/LLM
+    # extraction gap, not a data-design choice) — without this fallback the
+    # criterion could never resolve to PASS for anyone. `keywords` lets a
+    # criterion match on diagnosis text the same way eval_condition_forbidden
+    # already does, while a criterion with real `codes` still matches exactly.
+    keywords = [k.lower() for k in (s.get("keywords") or [])]
     min_months = s.get("min_duration_months")
     requirement = f"Diagnosis of {crit.text}" if not codes else f"Diagnosis code in {{{', '.join(codes)}}}"
     if min_months:
         requirement += f", recorded >= {min_months} months ago"
 
-    if not patient.diagnoses:
+    if not patient.diagnoses and category == "inclusion":
+        # An empty problem list can't confirm a *required* diagnosis, so this
+        # genuinely needs review. But for an EXCLUSION criterion, no
+        # diagnoses on file is real (if weak) evidence the excluded
+        # diagnosis isn't present — same as eval_condition_forbidden finding
+        # no keyword hit in an empty list — so fall through to PASS below
+        # rather than blocking every diagnosis-empty patient from ever
+        # reaching ELIGIBLE on trials with an exclusion-side diagnosis check.
         return _result(crit, category, "Diagnosis", REVIEW, "not recorded", requirement,
                         "Patient problem list", "No diagnoses are recorded for this patient.")
 
-    matched = [d for d in patient.diagnoses if d.code in codes] if codes else []
+    if codes:
+        matched = [d for d in patient.diagnoses if d.code in codes]
+    elif keywords:
+        matched = [d for d in patient.diagnoses if any(k in d.display.lower() for k in keywords)]
+    else:
+        matched = []
     condition_met = bool(matched)
     if condition_met and min_months is not None:
         elapsed = _months_since(matched[0].recorded_date, as_of)
@@ -135,8 +155,9 @@ def eval_diagnosis_required(patient: Patient, crit: TrialCriterion, category: st
     patient_value = f"{matched[0].display} ({matched[0].code})" if matched else have
     reason = None
     if status == FAIL:
-        reason = (f"None of the patient's diagnoses match the required code(s) ({', '.join(codes)})." if category == "inclusion"
-                   else f"Patient's diagnosis ({patient_value}) matches an excluded diagnosis code.")
+        match_desc = ', '.join(codes) if codes else ', '.join(s.get("keywords") or [])
+        reason = (f"None of the patient's diagnoses match the required diagnosis ({match_desc})." if category == "inclusion"
+                   else f"Patient's diagnosis ({patient_value}) matches an excluded diagnosis.")
     return _result(crit, category, "Diagnosis", status, patient_value, requirement, "Patient problem list", reason)
 
 
@@ -165,16 +186,31 @@ def eval_lab_threshold(patient: Patient, crit: TrialCriterion, category: str, as
 def eval_medication_required(patient: Patient, crit: TrialCriterion, category: str, as_of: date) -> CriterionResult:
     s = crit.structured
     codes = s.get("codes") or []
+    # Same extraction gap as eval_diagnosis_required: none of this dataset's
+    # medication_required criteria carry an RxNorm code list, only a
+    # free-text `display` — fall back to keyword matching against the
+    # medication display text.
+    keywords = [k.lower() for k in (s.get("keywords") or [])]
     min_months = s.get("min_duration_months")
     requirement = f"On medication: {crit.text}" if not codes else f"Medication code in {{{', '.join(codes)}}}"
     if min_months:
         requirement += f", stable >= {min_months} months"
 
-    if not patient.medications:
+    if not patient.medications and category == "inclusion":
+        # See eval_diagnosis_required: empty-list REVIEW only makes sense
+        # when the criterion requires the medication be present. For an
+        # exclusion ("must not be on drug X"), no medications on file is
+        # evidence the excluded drug isn't there — fall through to PASS.
         return _result(crit, category, "Required medication", REVIEW, "not recorded", requirement,
                         "Patient medication list", "No medications are recorded for this patient.")
 
-    matched = [m for m in patient.medications if m.code in codes and m.status == "active"]
+    active_meds = [m for m in patient.medications if m.status == "active"]
+    if codes:
+        matched = [m for m in active_meds if m.code in codes]
+    elif keywords:
+        matched = [m for m in active_meds if any(k in m.display.lower() for k in keywords)]
+    else:
+        matched = []
     condition_met = bool(matched)
     if condition_met and min_months is not None:
         elapsed = _months_since(matched[0].start_date, as_of)
@@ -186,7 +222,8 @@ def eval_medication_required(patient: Patient, crit: TrialCriterion, category: s
     patient_value = matched[0].display if matched else have
     reason = None
     if status == FAIL:
-        reason = (f"Patient is not currently on any of the required medications ({', '.join(codes)})." if category == "inclusion"
+        match_desc = ', '.join(codes) if codes else ', '.join(s.get("keywords") or [])
+        reason = (f"Patient is not currently on any of the required medications ({match_desc})." if category == "inclusion"
                    else f"Patient is currently on an excluded medication ({patient_value}).")
     return _result(crit, category, "Required medication", status, patient_value, requirement, "Patient medication list", reason)
 
@@ -224,6 +261,143 @@ def eval_smoking_forbidden(patient: Patient, crit: TrialCriterion, category: str
                     None if ok else f"Patient's recorded smoking status ('{status}') is an exclusion criterion.")
 
 
+def eval_medication_forbidden(patient: Patient, crit: TrialCriterion, category: str, as_of: date) -> CriterionResult:
+    s = crit.structured
+    display = s.get("display") or crit.text
+    # These entries only ever carry a free-text `display` (e.g. "PI3K, mTOR, or
+    # AKT inhibitors") rather than a codes list, so split it into candidate
+    # drug-name phrases the same way eval_condition_forbidden works off keywords.
+    phrases = [p.strip().lower() for p in re.split(r",| or | and |/", display) if len(p.strip()) > 2]
+    requirement = f"None of: {display}"
+
+    active_meds = [m for m in patient.medications if m.status == "active"]
+    haystack = " ".join(m.display.lower() for m in active_meds)
+    hit = [p for p in phrases if p in haystack]
+
+    if hit:
+        return _result(crit, category, "Forbidden medication", FAIL,
+                        ", ".join(m.display for m in active_meds) or "—", requirement,
+                        "Patient medication list",
+                        f"Patient is currently on an excluded medication class ({', '.join(hit)}).")
+    return _result(crit, category, "Forbidden medication", PASS, "No match found", requirement,
+                    "Patient medication list")
+
+
+def eval_gender(patient: Patient, crit: TrialCriterion, category: str, as_of: date) -> CriterionResult:
+    s = crit.structured
+    required = (s.get("value") or "Both").strip()
+    requirement = f"Sex: {required}" if required.lower() != "both" else "Any sex"
+
+    if required.lower() == "both" or not required:
+        return _result(crit, category, "Sex", PASS, patient.demographics.sex or "not recorded", requirement,
+                        "Patient demographics")
+
+    sex = patient.demographics.sex
+    if not sex:
+        return _result(crit, category, "Sex", REVIEW, "not recorded", requirement,
+                        "Patient demographics", "Patient sex is missing from the record.")
+
+    condition_met = _norm(sex) == _norm(required)
+    status = _verdict(category, condition_met)
+    reason = None
+    if status == FAIL:
+        reason = (f"Patient sex ({sex}) does not match the required sex ({required})." if category == "inclusion"
+                   else f"Patient sex ({sex}) falls within the excluded sex ({required}).")
+    return _result(crit, category, "Sex", status, sex, requirement, "Patient demographics", reason)
+
+
+def eval_consent_required(patient: Patient, crit: TrialCriterion, category: str, as_of: date) -> CriterionResult:
+    """Criteria extracted as free text about willingness/consent to
+    participate ("willing to give consent", "willing to comply with study
+    procedures", "not willing to give consent" as an exclusion, etc.) all
+    reduce to one real, already-collected fact: Patient.consent.trial_interest.
+    Evaluated the same way regardless of which bucket the protocol filed it
+    under — same pattern as eval_condition_forbidden/eval_smoking_forbidden."""
+    requirement = crit.structured.get("text_rule") or crit.text
+    interest = patient.consent.trial_interest
+
+    if interest is None:
+        return _result(crit, category, "Consent to participate", REVIEW, "not recorded", requirement,
+                        "Patient consent record", "Patient's trial-participation consent is not on file.")
+    if interest:
+        return _result(crit, category, "Consent to participate", PASS, "Consented", requirement,
+                        "Patient consent record")
+    return _result(crit, category, "Consent to participate", FAIL, "Declined", requirement,
+                    "Patient consent record", "Patient has not consented to trial participation.")
+
+
+def eval_data_available_required(patient: Patient, crit: TrialCriterion, category: str, as_of: date) -> CriterionResult:
+    """Free-text criteria about record completeness ("no available data on
+    EMR", "proper documented data not available", "missing ... records")
+    reduce to Patient.data_completeness.score — a real, already-computed
+    field, not a new fabricated one."""
+    threshold = crit.structured.get("min_score", 0.6)
+    requirement = crit.structured.get("text_rule") or crit.text
+    score = patient.data_completeness.score
+
+    if score is None:
+        return _result(crit, category, "Documented data available", REVIEW, "not recorded", requirement,
+                        "Patient data-completeness record", "Data-completeness score is not on file for this patient.")
+    if score >= threshold:
+        return _result(crit, category, "Documented data available", PASS, f"{score:.2f}", requirement,
+                        "Patient data-completeness record")
+    return _result(crit, category, "Documented data available", FAIL, f"{score:.2f}", requirement,
+                    "Patient data-completeness record",
+                    f"Patient's on-file data is below the completeness threshold needed ({score:.2f} < {threshold}).")
+
+
+def eval_finding_required(patient: Patient, crit: TrialCriterion, category: str, as_of: date) -> CriterionResult:
+    """Requirement-style criterion satisfied by a specific procedure or
+    clinical finding being on file (e.g. 'undergoing bone marrow aspiration',
+    'adequate bone marrow and organ function' confirmed at screening) —
+    checked the same way as eval_diagnosis_required, but against
+    Patient.procedures, which doubles as the record of clinical
+    findings/assessments performed for/on the patient."""
+    s = crit.structured
+    keywords = [k.lower() for k in (s.get("keywords") or [])]
+    requirement = s.get("text_rule") or crit.text
+
+    if not patient.procedures:
+        return _result(crit, category, "Clinical finding on file", REVIEW, "not recorded", requirement,
+                        "Patient procedures / findings", "No procedures or findings are recorded for this patient.")
+
+    haystack = " ".join(p.display.lower() for p in patient.procedures)
+    matched = [k for k in keywords if k in haystack]
+    condition_met = bool(matched)
+    status = _verdict(category, condition_met)
+    have = ", ".join(p.display for p in patient.procedures)
+    reason = None
+    if status == FAIL:
+        reason = (f"No procedure/finding on file matches the requirement ({requirement})." if category == "inclusion"
+                   else f"Patient's on-file procedure/finding ({have}) matches an excluded requirement.")
+    return _result(crit, category, "Clinical finding on file", status, have or "not recorded", requirement,
+                    "Patient procedures / findings", reason)
+
+
+def eval_reproductive_exclusion(patient: Patient, crit: TrialCriterion, category: str, as_of: date) -> CriterionResult:
+    """'Sexually active woman of childbearing age not practicing accepted
+    birth control' style exclusions. Contraceptive practice itself isn't in
+    the patient schema, but the applicability of the criterion is fully
+    determined by sex + age, both real fields — so most patients (anyone
+    male, or female outside the childbearing band) resolve cleanly; only
+    women within the band genuinely need human review, same as the protocol
+    intends."""
+    s = crit.structured
+    lo, hi = s.get("min_age", 18), s.get("max_age", 49)
+    requirement = s.get("text_rule") or crit.text
+    sex, age = patient.demographics.sex, patient.demographics.age
+
+    if not sex or age is None:
+        return _result(crit, category, "Reproductive status", REVIEW, "not recorded", requirement,
+                        "Patient demographics", "Patient sex or age is missing from the record.")
+    if _norm(sex) != "female" or not (lo <= age <= hi):
+        return _result(crit, category, "Reproductive status", PASS, f"{sex}, age {age}", requirement,
+                        "Patient demographics")
+    return _result(crit, category, "Reproductive status", REVIEW, f"{sex}, age {age}", requirement,
+                    "Patient demographics",
+                    "Patient is a woman of childbearing age; contraceptive practice isn't recorded and needs confirmation.")
+
+
 def eval_free_text(patient: Patient, crit: TrialCriterion, category: str, as_of: date) -> CriterionResult:
     text_rule = crit.structured.get("text_rule", crit.text)
     return _result(crit, category, crit.text[:60], REVIEW, "not machine-checkable", text_rule,
@@ -236,8 +410,14 @@ CRITERION_EVALUATORS = {
     "diagnosis_required": eval_diagnosis_required,
     "lab_threshold": eval_lab_threshold,
     "medication_required": eval_medication_required,
+    "medication_forbidden": eval_medication_forbidden,
     "condition_forbidden": eval_condition_forbidden,
     "smoking_forbidden": eval_smoking_forbidden,
+    "gender": eval_gender,
+    "consent_required": eval_consent_required,
+    "data_available_required": eval_data_available_required,
+    "finding_required": eval_finding_required,
+    "reproductive_exclusion": eval_reproductive_exclusion,
     "free_text": eval_free_text,
 }
 

@@ -8,7 +8,8 @@ CORS below allows any localhost port for that reason.
 
 Endpoints:
     GET  /api/accounts                        -> mock login accounts (Admin / Doctor)
-    GET  /api/patients                        -> list all patients
+    GET  /api/patients                        -> list all patients (optional ?doctor_id= filter — only
+                                                    patients ELIGIBLE/NEEDS_REVIEW on that doctor's trials)
     GET  /api/patients/{patient_id}            -> one patient
     GET  /api/trials                           -> list trials (optional ?doctor_id= filter)
     GET  /api/trials/{trial_id}                -> one trial
@@ -99,12 +100,34 @@ def _trials_for_account(account: Account | None) -> list[Trial]:
     return [_trials[tid] for tid in account.assigned_trial_ids if tid in _trials]
 
 
+def _patients_for_account(account: Account | None) -> list[Patient]:
+    """Admin sees the full roster. A doctor sees only patients who actually
+    carry their specialty's disease (condition_keywords matched against each
+    patient's diagnosis text) — e.g. the endocrinology doctor sees diabetic
+    patients, not the full 200-patient hospital roster. Deliberately keyed
+    off diagnosis rather than trial ELIGIBLE/NEEDS_REVIEW status: a couple of
+    this dataset's trials have very loose criteria that nearly every patient
+    clears, which would make trial-status-based scoping meaningless."""
+    if account is None or account.role == "ADMIN" or not account.condition_keywords:
+        return list(_patients.values())
+    keywords = [k.lower() for k in account.condition_keywords]
+    return [
+        p for p in _patients.values()
+        if any(k in d.display.lower() for d in p.diagnoses for k in keywords)
+    ]
+
+
 # ---------------------------------------------------------------------------
 # Patients
 # ---------------------------------------------------------------------------
 @app.get("/api/patients", response_model=list[Patient])
-def list_patients():
-    return list(_patients.values())
+def list_patients(doctor_id: str | None = None):
+    if doctor_id is None:
+        return list(_patients.values())
+    account = _accounts.get(doctor_id)
+    if account is None:
+        raise HTTPException(404, f"Unknown doctor_id '{doctor_id}'")
+    return _patients_for_account(account)
 
 
 @app.get("/api/patients/{patient_id}", response_model=Patient)

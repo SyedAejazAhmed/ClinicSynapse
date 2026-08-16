@@ -4,6 +4,7 @@
     "name": "Admin",
     "role": "ADMIN",
     "initials": "AD",
+    "specialty": "",
     "assigned_trial_ids": []
   },
   {
@@ -11,20 +12,26 @@
     "name": "Dr. Meera Nair",
     "role": "DOCTOR",
     "initials": "MN",
-    "assigned_trial_ids": ["T101", "T102", "T201", "T301"]
+    "specialty": "Endocrinology / Diabetes",
+    "condition_keywords": ["diabet"],
+    "assigned_trial_ids": ["t-1", "t-d1", "t-d2", "t-d3", "t-d5", "t-d9"]
   },
   {
     "id": "dr-arjun-sharma",
     "name": "Dr. Arjun Sharma",
     "role": "DOCTOR",
     "initials": "AS",
-    "assigned_trial_ids": ["T103", "T104", "T202", "T302"]
+    "specialty": "Oncology",
+    "condition_keywords": ["cancer", "carcinoma", "neoplasm", "malignant", "tumor", "oncosurgery"],
+    "assigned_trial_ids": ["t-2", "t-3", "t-4", "t-5", "t-6", "t-7", "t-9", "t-o1", "t-o2", "t-o3"]
   },
   {
     "id": "dr-priya-menon",
     "name": "Dr. Priya Menon",
     "role": "DOCTOR",
     "initials": "PM",
-    "assigned_trial_ids": ["T203", "T303", "T401", "T402"]
+    "specialty": "Psychiatry / General Medicine",
+    "condition_keywords": ["somatoform", "anxiety", "psychiatric", "mental", "pediatric"],
+    "assigned_trial_ids": ["t-8", "t-d4", "t-d6", "t-d7", "t-d8"]
   }
 ]
