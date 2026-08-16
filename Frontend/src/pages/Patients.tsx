@@ -2,16 +2,20 @@ import { useEffect, useState } from 'react';
 import { getPatients } from '../services/patientApi';
 import type { Patient } from '../types/patient';
 import PatientCard from '../components/PatientCard';
+import { useAuth } from '../context/AuthContext';
 import { Search } from 'lucide-react';
 
 export default function Patients() {
+  const { account } = useAuth();
   const [patients, setPatients] = useState<Patient[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    getPatients().then(p => { setPatients(p); setLoading(false); });
-  }, []);
+    const doctorId = account?.role === 'DOCTOR' ? account.id : undefined;
+    setLoading(true);
+    getPatients(doctorId).then(p => { setPatients(p); setLoading(false); });
+  }, [account]);
 
   const filtered = patients.filter(p => {
     const q = search.toLowerCase();
@@ -21,7 +25,11 @@ export default function Patients() {
   return (
     <div>
       <div className="page-title">Patient Explorer</div>
-      <div className="page-subtitle">{patients.length} patients in registry</div>
+      <div className="page-subtitle">
+        {account?.role === 'DOCTOR'
+          ? `${patients.length} patients matched to your trials${account.specialty ? ` (${account.specialty})` : ''}`
+          : `${patients.length} patients in registry`}
+      </div>
 
       <div className="card card-sm mb-4" style={{ marginBottom: 20 }}>
         <div style={{ position: 'relative' }}>

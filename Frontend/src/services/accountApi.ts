@@ -10,6 +10,7 @@ export const getAccounts = async (): Promise<Account[]> => {
     name: a.name,
     role: a.role,
     initials: a.initials,
+    specialty: a.specialty ?? '',
     assignedTrialIds: a.assigned_trial_ids ?? [],
   }));
 };

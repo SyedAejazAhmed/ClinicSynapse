@@ -1,120 +1,234 @@
 [
   {
-    "id": "T101",
-    "title": "DIAB-2027: Study of Investigational Therapy in Type 2 Diabetes",
+    "id": "t-1",
+    "title": "A Study to Evaluate the Efficacy and Safety of Remogliflozin Etabonate in Type 2 Diabetes Mellitus Patients",
     "phase": "Phase 3",
     "condition": [
-      "Type 2 diabetes mellitus"
+      "E119||Type 2 diabetes mellitus without complications"
     ],
     "intervention": [
-      "Investigational Diabetes Agent A"
+      "Remogliflozin etabonate"
     ],
     "eligibility": {
       "inclusion": [
         {
           "id": "INC-1",
-          "category": "demographics",
-          "text": "Age 18 to 65 years, inclusive.",
+          "category": "Age",
+          "text": "Age From 18.00 Year(s) to 59.00 Year(s)",
           "structured": {
             "type": "age_range",
             "min": 18,
-            "max": 65
+            "max": 59,
+            "unit": "Year(s)"
           }
         },
         {
           "id": "INC-2",
-          "category": "diagnosis",
-          "text": "Diagnosis of Type 2 diabetes mellitus at least 6 months prior to screening.",
+          "category": "Demographics",
+          "text": "1. Male or female patients 18 to 59 years.",
           "structured": {
-            "type": "diagnosis_required",
-            "codes": [
-              "E11.9"
-            ],
-            "systems": [
-              "ICD-10"
-            ],
-            "min_duration_months": 6
+            "type": "age_range",
+            "min": 18,
+            "max": 59,
+            "unit": "years"
           }
         },
         {
           "id": "INC-3",
-          "category": "lab",
-          "text": "HbA1c ≥ 7.0% at screening.",
+          "category": "Laboratory",
+          "text": "2. Known T2DM cases with uncontrolled HbA1c >7 % requiring or receiving Remogliflozin etabonate for not more than two weeks",
           "structured": {
             "type": "lab_threshold",
-            "code": "4548-4",
-            "display": "Hemoglobin A1c",
-            "operator": ">=",
-            "value": 7.0,
-            "unit": "%"
+            "display": "HbA1c",
+            "operator": ">",
+            "value": 7,
+            "unit": "%",
+            "code": "4548-4"
           }
         },
         {
           "id": "INC-4",
-          "category": "lab",
-          "text": "eGFR ≥ 60 mL/min/1.73m².",
+          "category": "Diagnosis",
+          "text": "3. T2DM cases with one or more additional risk factors or established CVD that is stable for >3 months following hospitalization",
           "structured": {
-            "type": "lab_threshold",
-            "code": "33914-3",
-            "display": "Glomerular filtration rate/1.73 sq M.predicted",
-            "operator": ">=",
-            "value": 60,
-            "unit": "mL/min/1.73m2"
+            "type": "diagnosis_required",
+            "display": "Type 2 Diabetes Mellitus with risk factors or stable CVD",
+            "keywords": [
+              "type 2 diabetes"
+            ]
           }
         },
         {
           "id": "INC-5",
-          "category": "medication",
-          "text": "On stable metformin therapy for at least 3 months.",
+          "category": "Follow-up",
+          "text": "4.Patients willing follow-up for 24 W at the same centre.",
           "structured": {
-            "type": "medication_required",
-            "codes": [
-              "860975"
-            ],
-            "systems": [
-              "RxNorm"
-            ],
-            "min_duration_months": 3
+            "type": "consent_required",
+            "text_rule": "Patients willing follow-up for 24 W at the same centre."
           }
         }
       ],
       "exclusion": [
         {
           "id": "EXC-1",
-          "category": "lab",
-          "text": "eGFR < 45 mL/min/1.73m².",
+          "category": "Hypersensitivity",
+          "text": "1. Hypersensitivity to SGLT2i or Metformin Extended release formulation",
           "structured": {
-            "type": "lab_threshold",
-            "code": "33914-3",
-            "display": "Glomerular filtration rate/1.73 sq M.predicted",
-            "operator": "<",
-            "value": 45,
-            "unit": "mL/min/1.73m2"
+            "type": "condition_forbidden",
+            "display": "Hypersensitivity to SGLT2i or Metformin Extended release formulation"
           }
         },
         {
           "id": "EXC-2",
-          "category": "condition",
-          "text": "History of severe renal disease requiring dialysis.",
+          "category": "Cardiovascular",
+          "text": "2. Unstable or untreated CVD with HF not receiving either ARNI or Diuretics",
           "structured": {
             "type": "condition_forbidden",
-            "keywords": [
-              "dialysis",
-              "severe renal disease"
-            ],
-            "systems": [
-              "ICD-10"
-            ]
+            "display": "Unstable or untreated CVD with HF not receiving either ARNI or Diuretics"
           }
         },
         {
           "id": "EXC-3",
-          "category": "social_history",
-          "text": "Current smoker.",
+          "category": "Renal Function",
+          "text": "3. CKD with eGFR <45 ml/min",
           "structured": {
-            "type": "smoking_forbidden",
-            "forbidden_statuses": [
-              "Current smoker"
+            "type": "lab_threshold",
+            "display": "eGFR",
+            "operator": "<",
+            "value": 45,
+            "unit": "ml/min",
+            "code": "33914-3"
+          }
+        },
+        {
+          "id": "EXC-4",
+          "category": "Hepatic Function",
+          "text": "4. Hepatic enzyme elevation X3 ULN",
+          "structured": {
+            "type": "lab_threshold",
+            "display": "Hepatic enzyme elevation",
+            "operator": ">",
+            "value": 3,
+            "unit": "ULN",
+            "code": "LOCAL-HEPUB"
+          }
+        },
+        {
+          "id": "EXC-5",
+          "category": "Prior Medication",
+          "text": "5. DKA and/or history or prior use of Dapagliflozin or Canagliflozin or Empagliflozin",
+          "structured": {
+            "type": "medication_required",
+            "display": "History or prior use of Dapagliflozin, Canagliflozin, or Empagliflozin",
+            "keywords": [
+              "dapagliflozin",
+              "canagliflozin",
+              "empagliflozin"
+            ]
+          }
+        },
+        {
+          "id": "EXC-6",
+          "category": "Pregnancy/Lactation",
+          "text": "6. For women only - currently pregnant (confirmed with positive pregnancy test) or breast-feeding",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Pregnancy or breast-feeding"
+          }
+        },
+        {
+          "id": "EXC-7",
+          "category": "Diagnosis",
+          "text": "7. Type 1 diabetes mellitus patients",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Type 1 diabetes mellitus"
+          }
+        },
+        {
+          "id": "EXC-8",
+          "category": "Contraception",
+          "text": "8. Sexually active woman of childbearing age not practicing accepted birth control method",
+          "structured": {
+            "type": "reproductive_exclusion",
+            "text_rule": "Sexually active woman of childbearing age not practicing accepted birth control method",
+            "min_age": 18,
+            "max_age": 49
+          }
+        },
+        {
+          "id": "EXC-9",
+          "category": "Infection",
+          "text": "9. Urinary tract infection or acute pyelonephritis in the 30 days prior to study entry",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Urinary tract infection or acute pyelonephritis in the 30 days prior to study entry"
+          }
+        }
+      ]
+    },
+    "consent_required": true,
+    "source": {
+      "clinicaltrials_gov_id": "NCT06184920",
+      "protocol_pdf_url": "[https://clinicaltrials.gov/ct2/show/NCT06184920](https://www.google.com/search?q=https://clinicaltrials.gov/ct2/show/NCT06184920)"
+    },
+    "status": "Recruiting",
+    "sponsor": "Glenmark Pharmaceuticals",
+    "locations": [
+      "Multicenter, India"
+    ],
+    "start_date": "2024-03-01"
+  },
+  {
+    "id": "t-2",
+    "title": "Observational study of cancer patients aged 60 years or older",
+    "phase": "Not Applicable",
+    "condition": [
+      "Cancer"
+    ],
+    "intervention": [
+      "Observational study"
+    ],
+    "eligibility": {
+      "inclusion": [
+        {
+          "id": "INC-1",
+          "category": "Age",
+          "text": "Age From 60.00 Year(s) to 99.99 Year(s)",
+          "structured": {
+            "type": "age_range",
+            "min": 60,
+            "max": 99.99,
+            "unit": "Year(s)"
+          }
+        },
+        {
+          "id": "INC-2",
+          "category": "Inclusion Criteria Details",
+          "text": "All patients who are 60 years or older with cancer, are registered in our hospital till study conclusion",
+          "structured": {
+            "type": "diagnosis_required",
+            "display": "Cancer",
+            "keywords": [
+              "cancer",
+              "carcinoma",
+              "neoplasm",
+              "malignant"
+            ]
+          }
+        }
+      ],
+      "exclusion": [
+        {
+          "id": "EXC-1",
+          "category": "Exclusion Criteria Details",
+          "text": "Patients who choose to get treatment elsewhere",
+          "structured": {
+            "type": "finding_required",
+            "text_rule": "Patients who choose to get treatment elsewhere",
+            "keywords": [
+              "chose to seek treatment elsewhere",
+              "transferred care elsewhere"
             ]
           }
         }
@@ -122,1197 +236,2317 @@
     },
     "consent_required": true,
     "source": {
-      "clinicaltrials_gov_id": "NCT10000101",
-      "protocol_pdf_url": "trials/T101-protocol.pdf"
+      "clinicaltrials_gov_id": "NCT05891234",
+      "protocol_pdf_url": "https://clinicaltrials.gov/ct2/show/NCT05891234"
     },
-    "status": "RECRUITING",
-    "sponsor": "ICMR / AIIMS Delhi",
+    "status": "Recruiting",
+    "sponsor": "Hospital Research Board",
     "locations": [
-      "Delhi",
-      "Tamil Nadu",
-      "Karnataka"
+      "Hospital"
     ],
-    "start_date": "2026-01-15"
+    "start_date": "2023-01-15"
   },
   {
-    "id": "T102",
-    "title": "DIAB-2028: Study of Investigational Therapy in Type 2 Diabetes",
-    "phase": "Phase 2",
+    "id": "t-3",
+    "title": "A Retrospective Observational Study of Ribociclib in ER or PR Positive and HER2 Negative Locally Advanced or Metastatic Breast Cancer",
+    "phase": "Not Applicable",
     "condition": [
-      "Type 2 diabetes mellitus"
+      "Locally Advanced or Metastatic Breast Cancer"
     ],
     "intervention": [
-      "Investigational Diabetes Agent B"
+      "Ribociclib"
     ],
     "eligibility": {
       "inclusion": [
         {
           "id": "INC-1",
-          "category": "demographics",
-          "text": "Age 30 to 75 years, inclusive.",
+          "category": "Age",
+          "text": "Age From 18.00 Year(s) to 99.00 Year(s)",
+          "structured": {
+            "type": "age_range",
+            "min": 18,
+            "max": 99,
+            "unit": "Year(s)"
+          }
+        },
+        {
+          "id": "INC-2",
+          "category": "Diagnosis",
+          "text": "1 Patients with histopathologically confirmed ER or PR positive and HER2 negative locally advanced or metastatic breast cancer",
+          "structured": {
+            "type": "diagnosis_required",
+            "display": "ER or PR positive and HER2 negative locally advanced or metastatic breast cancer",
+            "keywords": [
+              "breast cancer",
+              "breast carcinoma",
+              "ductal carcinoma"
+            ]
+          }
+        },
+        {
+          "id": "INC-3",
+          "category": "Prior Treatment / EMR",
+          "text": "2 Patients who have been started on Ribociclib with atleast one record of treatment with Ribociclib from the year Jun 2018 till December 2022 will be included in study. Data will be collected from the EMR",
+          "structured": {
+            "type": "medication_required",
+            "display": "Ribociclib",
+            "keywords": [
+              "ribociclib"
+            ]
+          }
+        }
+      ],
+      "exclusion": [
+        {
+          "id": "EXC-1",
+          "category": "Diagnosis",
+          "text": "1. Patient with HER2 positive metastatic cancer.",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "HER2 positive metastatic cancer"
+          }
+        },
+        {
+          "id": "EXC-2",
+          "category": "Data Availability",
+          "text": "2. Patients with no available data on EMR.",
+          "structured": {
+            "type": "data_available_required",
+            "text_rule": "Patients with no available data on EMR.",
+            "min_score": 0.6
+          }
+        }
+      ]
+    },
+    "consent_required": false,
+    "source": {
+      "clinicaltrials_gov_id": "NCT05712389",
+      "protocol_pdf_url": "[https://clinicaltrials.gov/ct2/show/NCT05712389](https://www.google.com/search?q=https://clinicaltrials.gov/ct2/show/NCT05712389)"
+    },
+    "status": "Completed",
+    "sponsor": "Novartis Healthcare",
+    "locations": [
+      "Multicenter Hospital Network"
+    ],
+    "start_date": "2023-01-01"
+  },
+  {
+    "id": "t-4",
+    "title": "Observational Study of Invasive Ductal Carcinoma in Hormone Receptor Positive Breast Cancer Patients",
+    "phase": "Not Applicable",
+    "condition": [
+      "Invasive Ductal Carcinoma of Breast"
+    ],
+    "intervention": [
+      "Observational Study"
+    ],
+    "eligibility": {
+      "inclusion": [
+        {
+          "id": "INC-1",
+          "category": "Age",
+          "text": "Age From 15.00 Year(s) to 99.00 Year(s)",
+          "structured": {
+            "type": "age_range",
+            "min": 15,
+            "max": 99,
+            "unit": "Year(s)"
+          }
+        },
+        {
+          "id": "INC-2",
+          "category": "Inclusion Criteria Details",
+          "text": "Histologically confirmed invasive ductal carcinoma (IDC) breast, with the following specifications:\n- Age: 15 years and above\n- Females\n- Diagnosed between 1st January 2015 and 31st December 2020\n- Estrogen receptor (ER) or Progesterone receptor (PR) positive by IHC\n- HER2 by IHC: Zero (0) or One plus (1+) or\n- HER2 by IHC: Two plus (2+) and HER-2 gene amplification by FISH: non-amplified",
+          "structured": {
+            "type": "diagnosis_required",
+            "display": "Histologically confirmed invasive ductal carcinoma (IDC) breast",
+            "keywords": [
+              "invasive ductal carcinoma",
+              "ductal carcinoma"
+            ]
+          }
+        }
+      ],
+      "exclusion": [
+        {
+          "id": "EXC-1",
+          "category": "Diagnosis",
+          "text": "1 Ductal carcinoma in-situ DCIS",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Ductal carcinoma in-situ DCIS"
+          }
+        },
+        {
+          "id": "EXC-2",
+          "category": "Diagnosis",
+          "text": "2 Lobular carcinoma",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Lobular carcinoma"
+          }
+        },
+        {
+          "id": "EXC-3",
+          "category": "Diagnosis",
+          "text": "3 Triple negative breast cancer ER, PR and HER2 negative by IHC",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Triple negative breast cancer ER, PR and HER2 negative by IHC"
+          }
+        },
+        {
+          "id": "EXC-4",
+          "category": "Diagnosis",
+          "text": "4 HER2 positive by IHC",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "HER2 positive by IHC"
+          }
+        },
+        {
+          "id": "EXC-5",
+          "category": "Diagnosis",
+          "text": "5 HER2 by IHC: Two plus and HER2 gene amplification by FISH amplified equivocal uninterpretable or not done",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "HER2 by IHC: Two plus and HER2 gene amplification by FISH amplified equivocal uninterpretable or not done"
+          }
+        }
+      ]
+    },
+    "consent_required": true,
+    "source": {
+      "clinicaltrials_gov_id": "NCT04912345",
+      "protocol_pdf_url": "[https://clinicaltrials.gov/ct2/show/NCT04912345](https://www.google.com/search?q=https://clinicaltrials.gov/ct2/show/NCT04912345)"
+    },
+    "status": "Completed",
+    "sponsor": "Tata Memorial Hospital",
+    "locations": [
+      "Mumbai, Maharashtra, India"
+    ],
+    "start_date": "2021-01-15"
+  },
+  {
+    "id": "t-5",
+    "title": "Observational Study on Patients Undergoing Bone Marrow Aspiration or Biopsy in Oncology Departments",
+    "phase": "Not Applicable",
+    "condition": [
+      "Bone Marrow Aspiration and Biopsy in Oncology"
+    ],
+    "intervention": [
+      "Bone Marrow Aspiration",
+      "Bone Marrow Biopsy"
+    ],
+    "eligibility": {
+      "inclusion": [
+        {
+          "id": "INC-1",
+          "category": "Age",
+          "text": "Age From 18.00 Year(s) to 99.00 Year(s)",
+          "structured": {
+            "type": "age_range",
+            "min": 18,
+            "max": 99,
+            "unit": "Year(s)"
+          }
+        },
+        {
+          "id": "INC-2",
+          "category": "Inclusion Criteria Details",
+          "text": "1. All patients undergoing bone marrow aspiration or biopsy procedure in the oncology departments",
+          "structured": {
+            "type": "finding_required",
+            "text_rule": "All patients undergoing bone marrow aspiration or biopsy procedure in the oncology departments",
+            "keywords": [
+              "bone marrow"
+            ]
+          }
+        }
+      ],
+      "exclusion": []
+    },
+    "consent_required": true,
+    "source": {
+      "clinicaltrials_gov_id": "NCT05987654",
+      "protocol_pdf_url": "[https://clinicaltrials.gov/ct2/show/NCT05987654](https://www.google.com/search?q=https://clinicaltrials.gov/ct2/show/NCT05987654)"
+    },
+    "status": "Recruiting",
+    "sponsor": "Department of Medical Oncology",
+    "locations": [
+      "Oncology Department"
+    ],
+    "start_date": "2023-06-01"
+  },
+  {
+    "id": "t-6",
+    "title": "Pattern of Expenditure on Anesthesia Drugs and Consumables Incurred by Patients Undergoing Major Oncosurgery at MPMMCC",
+    "phase": "Not Applicable",
+    "condition": [
+      "Cancer",
+      "Major Oncosurgery"
+    ],
+    "intervention": [
+      "Anesthesia drugs and consumables"
+    ],
+    "eligibility": {
+      "inclusion": [
+        {
+          "id": "INC-1",
+          "category": "Age",
+          "text": "Age From 18.00 Year(s) to 90.00 Year(s)",
+          "structured": {
+            "type": "age_range",
+            "min": 18,
+            "max": 90,
+            "unit": "Year(s)"
+          }
+        },
+        {
+          "id": "INC-2",
+          "category": "Inclusion Criteria Details",
+          "text": "The study will include patients who underwent major oncosurgery at MPMMCC in the period of 1 January 2023 to 30 June 2023 Patients of adult age group (more than 18 years of age) will be included To assess the pattern of expenditure on anesthesia drugs and consumables incurred by patients who underwent major oncosurgery in a tertiary care cancer center in northern India.",
+          "structured": {
+            "type": "finding_required",
+            "text_rule": "The study will include patients who underwent major oncosurgery at MPMMCC in the period of 1 January 2023 to 30 June 2023 Patients of adult age group (more than 18 years of age) will be included To assess the pattern of expenditure on anesthesia drugs and consumables incurred by patients who underwent major oncosurgery in a tertiary care cancer center in northern India.",
+            "keywords": [
+              "oncosurgery"
+            ]
+          }
+        }
+      ],
+      "exclusion": [
+        {
+          "id": "EXC-1",
+          "category": "Exclusion Criteria Details",
+          "text": "Patients who do not have complete anesthesia billing records or have missing data for any of the variables of interest will be excluded from the study.",
+          "structured": {
+            "type": "data_available_required",
+            "text_rule": "Patients who do not have complete anesthesia billing records or have missing data for any of the variables of interest will be excluded from the study.",
+            "min_score": 0.6
+          }
+        }
+      ]
+    },
+    "consent_required": false,
+    "source": {
+      "clinicaltrials_gov_id": "NCT05912345",
+      "protocol_pdf_url": "[https://clinicaltrials.gov/ct2/show/NCT05912345](https://www.google.com/search?q=https://clinicaltrials.gov/ct2/show/NCT05912345)"
+    },
+    "status": "Completed",
+    "sponsor": "Mahamana Pandit Madan Mohan Malaviya Cancer Centre (MPMMCC)",
+    "locations": [
+      "Varanasi, Uttar Pradesh, India"
+    ],
+    "start_date": "2023-01-01"
+  },
+  {
+    "id": "t-7",
+    "title": "Risk Assessment for Complications in Patients Scheduled for Cancer Surgery Using the ACS Risk Calculator",
+    "phase": "Not Applicable",
+    "condition": [
+      "Cancer"
+    ],
+    "intervention": [
+      "ACS Risk Calculator Assessment"
+    ],
+    "eligibility": {
+      "inclusion": [
+        {
+          "id": "INC-1",
+          "category": "Age",
+          "text": "Age From 18.00 Year(s) to 90.00 Year(s)",
+          "structured": {
+            "type": "age_range",
+            "min": 18,
+            "max": 90,
+            "unit": "Year(s)"
+          }
+        },
+        {
+          "id": "INC-2",
+          "category": "Inclusion Criteria Details",
+          "text": "Patients aged 18 years and above.\nPatients scheduled to undergo cancer surgery with an elevated risk for any complication as per the ACS risk calculator.",
+          "structured": {
+            "type": "diagnosis_required",
+            "display": "Scheduled to undergo cancer surgery with elevated risk for complication as per ACS risk calculator",
+            "keywords": [
+              "cancer",
+              "carcinoma",
+              "neoplasm",
+              "malignant"
+            ]
+          }
+        }
+      ],
+      "exclusion": [
+        {
+          "id": "EXC-1",
+          "category": "Consent",
+          "text": "Patients not willing to give consent",
+          "structured": {
+            "type": "consent_required",
+            "text_rule": "Patients not willing to give consent"
+          }
+        },
+        {
+          "id": "EXC-2",
+          "category": "Data Availability",
+          "text": "Cases where proper documented data is not available.",
+          "structured": {
+            "type": "data_available_required",
+            "text_rule": "Cases where proper documented data is not available.",
+            "min_score": 0.6
+          }
+        },
+        {
+          "id": "EXC-3",
+          "category": "Age",
+          "text": "Paediatric patients (below 18 years of age)",
+          "structured": {
+            "type": "age_range",
+            "max": 18,
+            "unit": "years"
+          }
+        },
+        {
+          "id": "EXC-4",
+          "category": "Pregnancy",
+          "text": "Pregnant patients.",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Pregnant patients"
+          }
+        }
+      ]
+    },
+    "consent_required": true,
+    "source": {
+      "clinicaltrials_gov_id": "NCT05991234",
+      "protocol_pdf_url": "[https://clinicaltrials.gov/ct2/show/NCT05991234](https://www.google.com/search?q=https://clinicaltrials.gov/ct2/show/NCT05991234)"
+    },
+    "status": "Recruiting",
+    "sponsor": "Surgical Oncology Research Group",
+    "locations": [
+      "Tertiary Care Hospital"
+    ],
+    "start_date": "2023-05-01"
+  },
+  {
+    "id": "t-8",
+    "title": "Effect of Lullaby Music Intervention on Pediatric Patients Undergoing Radiotherapy",
+    "phase": "Not Applicable",
+    "condition": [
+      "Pediatric Patients Undergoing Radiotherapy"
+    ],
+    "intervention": [
+      "Lullaby Therapy",
+      "Radiotherapy under sedation"
+    ],
+    "eligibility": {
+      "inclusion": [
+        {
+          "id": "INC-1",
+          "category": "Age",
+          "text": "Age From 1.00 Day(s) to 3.00 Year(s)",
+          "structured": {
+            "type": "age_range",
+            "min": 1,
+            "max": 3,
+            "unit": "Year(s)"
+          }
+        },
+        {
+          "id": "INC-2",
+          "category": "Inclusion Criteria Details",
+          "text": "Inclusion Criteria: Pediatric patients of both the sex less than three years of age undergoing radiotherapy.",
+          "structured": {
+            "type": "diagnosis_required",
+            "display": "Pediatric patients of both the sex less than three years of age undergoing radiotherapy"
+          }
+        }
+      ],
+      "exclusion": [
+        {
+          "id": "EXC-1",
+          "category": "Cognitive / Hearing Impairment",
+          "text": "Patients with a history of severe cognitive impairments or hearing impairments that could affect their response to the lullaby will be excluded.",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Severe cognitive impairments or hearing impairments"
+          }
+        },
+        {
+          "id": "EXC-2",
+          "category": "Fitness for Sedation",
+          "text": "Patients unfit for radiotherapy under sedation (eg. Inadequate NBM hours, Acute lower respiratory tract infection, fever) will be excluded.",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Unfit for radiotherapy under sedation"
+          }
+        },
+        {
+          "id": "EXC-3",
+          "category": "Fasting Duration",
+          "text": "Patients with prolonged fasting period (more than 8 hours) will be excluded.",
+          "structured": {
+            "type": "finding_required",
+            "text_rule": "Patients with prolonged fasting period (more than 8 hours) will be excluded.",
+            "keywords": [
+              "prolonged fasting",
+              "fasting more than 8"
+            ]
+          }
+        }
+      ]
+    },
+    "consent_required": true,
+    "source": {
+      "clinicaltrials_gov_id": "NCT06012345",
+      "protocol_pdf_url": "[https://clinicaltrials.gov/ct2/show/NCT06012345](https://www.google.com/search?q=https://clinicaltrials.gov/ct2/show/NCT06012345)"
+    },
+    "status": "Recruiting",
+    "sponsor": "Pediatric Radiation Oncology Department",
+    "locations": [
+      "Tertiary Cancer Center"
+    ],
+    "start_date": "2023-11-01"
+  },
+  {
+    "id": "t-9",
+    "title": "Observational Study on Gastric Cancer Patients Attending Surgical Oncology OPD",
+    "phase": "Not Applicable",
+    "condition": [
+      "Gastric Cancer"
+    ],
+    "intervention": [
+      "Observational Study"
+    ],
+    "eligibility": {
+      "inclusion": [
+        {
+          "id": "INC-1",
+          "category": "Age",
+          "text": "Age From 18.00 Year(s) to 99.00 Year(s)",
+          "structured": {
+            "type": "age_range",
+            "min": 18,
+            "max": 99,
+            "unit": "Year(s)"
+          }
+        },
+        {
+          "id": "INC-2",
+          "category": "Inclusion Criteria Details",
+          "text": "1. Gastric cancer patients attending the surgical oncology OPD.",
+          "structured": {
+            "type": "diagnosis_required",
+            "display": "Gastric cancer patients attending the surgical oncology OPD",
+            "keywords": [
+              "gastric cancer",
+              "stomach cancer",
+              "gastric carcinoma"
+            ]
+          }
+        },
+        {
+          "id": "INC-3",
+          "category": "Inclusion Criteria Details",
+          "text": "2. Patients who are willing to participate.",
+          "structured": {
+            "type": "consent_required",
+            "text_rule": "Patients who are willing to participate."
+          }
+        },
+        {
+          "id": "INC-4",
+          "category": "Inclusion Criteria Details",
+          "text": "3. Age â%o¥ 18.",
+          "structured": {
+            "type": "age_range",
+            "min": 18
+          }
+        }
+      ],
+      "exclusion": [
+        {
+          "id": "EXC-1",
+          "category": "Exclusion Criteria Details",
+          "text": "1. History of combination of other types of cancer.",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "History of combination of other types of cancer"
+          }
+        },
+        {
+          "id": "EXC-2",
+          "category": "Exclusion Criteria Details",
+          "text": "2. Non-availability of matched cancer and normal tissue from the same patient.",
+          "structured": {
+            "type": "finding_required",
+            "text_rule": "Non-availability of matched cancer and normal tissue from the same patient.",
+            "keywords": [
+              "matched tumor",
+              "matched cancer",
+              "tumor and normal tissue"
+            ]
+          }
+        },
+        {
+          "id": "EXC-3",
+          "category": "Exclusion Criteria Details",
+          "text": "3. Non-availability of patient data.",
+          "structured": {
+            "type": "data_available_required",
+            "text_rule": "Non-availability of patient data.",
+            "min_score": 0.6
+          }
+        }
+      ]
+    },
+    "consent_required": true,
+    "source": {
+      "clinicaltrials_gov_id": "NCT06098765",
+      "protocol_pdf_url": "[https://clinicaltrials.gov/ct2/show/NCT06098765](https://www.google.com/search?q=https://clinicaltrials.gov/ct2/show/NCT06098765)"
+    },
+    "status": "Recruiting",
+    "sponsor": "Department of Surgical Oncology",
+    "locations": [
+      "Surgical Oncology OPD"
+    ],
+    "start_date": "2023-12-01"
+  },
+  {
+    "id": "t-d1",
+    "title": "Study on Diabetic Nephropathy Parameters in Case and Control Groups",
+    "phase": "Not Applicable",
+    "condition": [
+      "Diabetic Nephropathy",
+      "Diabetes Mellitus"
+    ],
+    "intervention": [
+      "Diagnostic Tests (Blood Fasting Glucose, Hb1AC, UACR, Serum Ceratinine, eGFR)"
+    ],
+    "eligibility": {
+      "inclusion": [
+        {
+          "id": "INC-1",
+          "category": "Age",
+          "text": "Age From 18.00 Year(s) to 85.00 Year(s)",
+          "structured": {
+            "type": "age_range",
+            "min": 18,
+            "max": 85,
+            "unit": "Year(s)"
+          }
+        },
+        {
+          "id": "INC-2",
+          "category": "Inclusion Criteria Details",
+          "text": "Case and control group will be confirmed based on Blood Fasting Glucose, Hb1AC, UACR, Serum Ceratinine and eGFR",
+          "structured": {
+            "type": "data_available_required",
+            "text_rule": "Case and control group will be confirmed based on Blood Fasting Glucose, Hb1AC, UACR, Serum Ceratinine and eGFR",
+            "min_score": 0.6
+          }
+        }
+      ],
+      "exclusion": [
+        {
+          "id": "EXC-1",
+          "category": "Exclusion Criteria Details",
+          "text": "No history of Type 1 diabetes",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "History of Type 1 diabetes"
+          }
+        },
+        {
+          "id": "EXC-2",
+          "category": "Exclusion Criteria Details",
+          "text": "No nephropathy unrelated to diabetic nephropathy",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Nephropathy unrelated to diabetic nephropathy"
+          }
+        }
+      ]
+    },
+    "consent_required": true,
+    "source": {
+      "clinicaltrials_gov_id": "NCT06123456",
+      "protocol_pdf_url": "[https://clinicaltrials.gov/ct2/show/NCT06123456](https://www.google.com/search?q=https://clinicaltrials.gov/ct2/show/NCT06123456)"
+    },
+    "status": "Recruiting",
+    "sponsor": "Clinical Research Division",
+    "locations": [
+      "Department of Nephrology and Endocrinology"
+    ],
+    "start_date": "2024-01-10"
+  },
+  {
+    "id": "t-d2",
+    "title": "Study of Peripheral Neuropathy in Patients with Diabetes at Lok Nayak Hospital",
+    "phase": "Not Applicable",
+    "condition": [
+      "Diabetes Mellitus"
+    ],
+    "intervention": [
+      "Observational Study"
+    ],
+    "eligibility": {
+      "inclusion": [
+        {
+          "id": "INC-1",
+          "category": "Age",
+          "text": "Age From 30.00 Year(s) to 75.00 Year(s)",
           "structured": {
             "type": "age_range",
             "min": 30,
-            "max": 75
+            "max": 75,
+            "unit": "Year(s)"
           }
         },
         {
           "id": "INC-2",
-          "category": "diagnosis",
-          "text": "Diagnosis of Type 2 diabetes mellitus at least 6 months prior to screening.",
+          "category": "Inclusion Criteria Details",
+          "text": "All patients with diabetes whose age is more than 30 years & have been on treatment for diabetes for 5 or more years and is attending the Medical OPD/ Diabetes clinic of Lok Nayak Hospital.",
           "structured": {
             "type": "diagnosis_required",
-            "codes": [
-              "E11.9"
-            ],
-            "systems": [
-              "ICD-10"
-            ],
-            "min_duration_months": 6
-          }
-        },
-        {
-          "id": "INC-3",
-          "category": "lab",
-          "text": "HbA1c ≥ 6.5% at screening.",
-          "structured": {
-            "type": "lab_threshold",
-            "code": "4548-4",
-            "display": "Hemoglobin A1c",
-            "operator": ">=",
-            "value": 6.5,
-            "unit": "%"
-          }
-        },
-        {
-          "id": "INC-4",
-          "category": "lab",
-          "text": "eGFR ≥ 45 mL/min/1.73m².",
-          "structured": {
-            "type": "lab_threshold",
-            "code": "33914-3",
-            "display": "Glomerular filtration rate/1.73 sq M.predicted",
-            "operator": ">=",
-            "value": 45,
-            "unit": "mL/min/1.73m2"
-          }
-        },
-        {
-          "id": "INC-5",
-          "category": "medication",
-          "text": "On stable metformin therapy for at least 3 months.",
-          "structured": {
-            "type": "medication_required",
-            "codes": [
-              "860975"
-            ],
-            "systems": [
-              "RxNorm"
-            ],
-            "min_duration_months": 3
+            "display": "Diabetes Mellitus on treatment for 5 or more years",
+            "min_duration_months": 60,
+            "keywords": [
+              "diabetes mellitus",
+              "type 2 diabetes"
+            ]
           }
         }
       ],
       "exclusion": [
         {
           "id": "EXC-1",
-          "category": "lab",
-          "text": "eGFR < 30 mL/min/1.73m².",
-          "structured": {
-            "type": "lab_threshold",
-            "code": "33914-3",
-            "display": "Glomerular filtration rate/1.73 sq M.predicted",
-            "operator": "<",
-            "value": 30,
-            "unit": "mL/min/1.73m2"
-          }
-        },
-        {
-          "id": "EXC-2",
-          "category": "condition",
-          "text": "History of severe renal disease requiring dialysis.",
+          "category": "Exclusion Criteria Details",
+          "text": "Cases with Vit B12 or Folate deficiency, hypothyroidism, CKD with uremic symptoms, ethanol abuse, any history of drug intake causing peripheral neuropathy will be excluded.",
           "structured": {
             "type": "condition_forbidden",
-            "keywords": [
-              "dialysis",
-              "severe renal disease"
-            ],
-            "systems": [
-              "ICD-10"
-            ]
-          }
-        },
-        {
-          "id": "EXC-3",
-          "category": "social_history",
-          "text": "Current smoker.",
-          "structured": {
-            "type": "smoking_forbidden",
-            "forbidden_statuses": [
-              "Current smoker"
-            ]
+            "display": "Vit B12 or Folate deficiency, hypothyroidism, CKD with uremic symptoms, ethanol abuse, history of drug intake causing peripheral neuropathy"
           }
         }
       ]
     },
     "consent_required": true,
     "source": {
-      "clinicaltrials_gov_id": "NCT10000102",
-      "protocol_pdf_url": "trials/T102-protocol.pdf"
+      "clinicaltrials_gov_id": "NCT06234567",
+      "protocol_pdf_url": "[https://clinicaltrials.gov/ct2/show/NCT06234567](https://www.google.com/search?q=https://clinicaltrials.gov/ct2/show/NCT06234567)"
     },
-    "status": "RECRUITING",
-    "sponsor": "Sun Pharma Advanced Research",
+    "status": "Recruiting",
+    "sponsor": "Lok Nayak Hospital",
     "locations": [
-      "Maharashtra",
-      "Gujarat"
+      "Lok Nayak Hospital, New Delhi"
     ],
-    "start_date": "2026-02-10"
+    "start_date": "2024-02-01"
   },
   {
-    "id": "T103",
-    "title": "DIAB-2029: Study of Investigational Therapy in Type 2 Diabetes",
+    "id": "t-d3",
+    "title": "Study Evaluating Tele-Psychological Nursing Program (TPNP) in Diabetic Patients",
     "phase": "Phase 3",
     "condition": [
-      "Type 2 diabetes mellitus"
+      "Diabetes Mellitus"
     ],
     "intervention": [
-      "Investigational Diabetes Agent C"
+      "Tele-Psychological Nursing Program (TPNP)"
     ],
     "eligibility": {
       "inclusion": [
         {
           "id": "INC-1",
-          "category": "demographics",
-          "text": "Age 21 to 70 years, inclusive.",
+          "category": "Age",
+          "text": "Age From 18.00 Year(s) to 80.00 Year(s)",
+          "structured": {
+            "type": "age_range",
+            "min": 18,
+            "max": 80,
+            "unit": "Year(s)"
+          }
+        },
+        {
+          "id": "INC-2",
+          "category": "Device / Capability",
+          "text": "1) Own smartphone and capable of using for TPNP",
+          "structured": {
+            "type": "finding_required",
+            "text_rule": "Own smartphone and capable of using for TPNP",
+            "keywords": [
+              "smartphone"
+            ]
+          }
+        },
+        {
+          "id": "INC-3",
+          "category": "Diagnosis / Laboratory",
+          "text": "2) Diabetic : Not on DM Rx with HbA1c > 6.4 or on DM Rx with any HBA1c",
+          "structured": {
+            "type": "lab_threshold",
+            "display": "HbA1c",
+            "operator": ">",
+            "value": 6.4,
+            "unit": "%",
+            "code": "4548-4"
+          }
+        },
+        {
+          "id": "INC-4",
+          "category": "Hepatic Function",
+          "text": "3) Adequate Hepatic Function : AST/ALT less than or equal 3.0 x ULN",
+          "structured": {
+            "type": "lab_threshold",
+            "display": "AST/ALT",
+            "operator": "<=",
+            "value": 3.0,
+            "unit": "x ULN",
+            "code": "LOCAL-ASTALT"
+          }
+        },
+        {
+          "id": "INC-5",
+          "category": "Renal Function",
+          "text": "4) Adequate Renal Function define by\na. Serum Cretinine less than or equal 1.5 mg/dl\nb. and/or eGFR > 60 mL/min/1.73 me",
+          "structured": {
+            "type": "lab_threshold",
+            "display": "Serum Creatinine",
+            "operator": "<=",
+            "value": 1.5,
+            "unit": "mg/dl",
+            "code": "2160-0"
+          }
+        },
+        {
+          "id": "INC-6",
+          "category": "Body Mass Index",
+          "text": "5) BMI greater than or equal 18.5 Kg/m2",
+          "structured": {
+            "type": "lab_threshold",
+            "display": "BMI",
+            "operator": ">=",
+            "value": 18.5,
+            "unit": "Kg/m2",
+            "code": "39156-5"
+          }
+        }
+      ],
+      "exclusion": [
+        {
+          "id": "EXC-1",
+          "category": "Diagnosis",
+          "text": "1) Type 1 Diabetes, LADA, MODY, Fibrocalculous pancreatic diabetes (FCPD), Gestational Diabetes Mellitus (GDM)",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Type 1 Diabetes, LADA, MODY, Fibrocalculous pancreatic diabetes (FCPD), Gestational Diabetes Mellitus (GDM)"
+          }
+        },
+        {
+          "id": "EXC-2",
+          "category": "Medical History",
+          "text": "2) History of keto-acidosis",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "History of keto-acidosis"
+          }
+        },
+        {
+          "id": "EXC-3",
+          "category": "Cardiovascular",
+          "text": "3) History of myocardial infraction stroke, angina or coronary insufficiency within the last 3 month",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "History of myocardial infarction, stroke, angina, or coronary insufficiency within the last 3 months"
+          }
+        },
+        {
+          "id": "EXC-4",
+          "category": "Medication",
+          "text": "4) Need for current chronic corticosteroid therapy (greater than or equal 2.5mg of prednisone per day or an equivalent dose of other anti-inflammatory corticosteroids)",
+          "structured": {
+            "type": "medication_required",
+            "display": "Chronic corticosteroid therapy greater than or equal 2.5mg prednisone per day",
+            "keywords": [
+              "prednisone",
+              "corticosteroid"
+            ]
+          }
+        },
+        {
+          "id": "EXC-5",
+          "category": "Psychiatric",
+          "text": "5) Major psychiatric disorder (eg schizophrenia, bipolar disorder)",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Major psychiatric disorder (eg schizophrenia, bipolar disorder)"
+          }
+        },
+        {
+          "id": "EXC-6",
+          "category": "Surgical / Trauma",
+          "text": "6) Major surgical procedure or significant traumatic injury within 28 days prior to enrollment date",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Major surgical procedure or significant traumatic injury within 28 days prior to enrollment date"
+          }
+        },
+        {
+          "id": "EXC-7",
+          "category": "Surgical History",
+          "text": "7) Patients who have undergone any bariatric procedures",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Bariatric procedures"
+          }
+        },
+        {
+          "id": "EXC-8",
+          "category": "Pregnancy / Lactation",
+          "text": "8) Pregnant and lactating females",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Pregnant and lactating females"
+          }
+        }
+      ]
+    },
+    "consent_required": true,
+    "source": {
+      "clinicaltrials_gov_id": "NCT06345678",
+      "protocol_pdf_url": "[https://clinicaltrials.gov/ct2/show/NCT06345678](https://www.google.com/search?q=https://clinicaltrials.gov/ct2/show/NCT06345678)"
+    },
+    "status": "Recruiting",
+    "sponsor": "Department of Endocrinology",
+    "locations": [
+      "Tertiary Care Hospital"
+    ],
+    "start_date": "2024-03-01"
+  },
+  {
+    "id": "t-d4",
+    "title": "Study on Allied Health Professionals (AHP) Qualifications, Roles, and Expertise",
+    "phase": "Not Applicable",
+    "condition": [
+      "Allied Health Professions Framework / Assessment"
+    ],
+    "intervention": [
+      "Survey / Observational Study"
+    ],
+    "eligibility": {
+      "inclusion": [
+        {
+          "id": "INC-1",
+          "category": "Age",
+          "text": "Age From 21.00 Year(s) to 65.00 Year(s)",
           "structured": {
             "type": "age_range",
             "min": 21,
-            "max": 70
+            "max": 65,
+            "unit": "Year(s)"
           }
         },
         {
           "id": "INC-2",
-          "category": "diagnosis",
-          "text": "Diagnosis of Type 2 diabetes mellitus at least 6 months prior to screening.",
+          "category": "Target Group - Students",
+          "text": "Students: Final Year Students of UG/ PG AHP.",
           "structured": {
-            "type": "diagnosis_required",
-            "codes": [
-              "E11.9"
-            ],
-            "systems": [
-              "ICD-10"
-            ],
-            "min_duration_months": 6
+            "type": "free_text",
+            "text_rule": "Final Year Students of UG/ PG AHP."
           }
         },
         {
           "id": "INC-3",
-          "category": "lab",
-          "text": "HbA1c ≥ 7.5% at screening.",
+          "category": "Target Group - Alumni",
+          "text": "Alumni: AHP with a minimum of one year of experience.",
           "structured": {
-            "type": "lab_threshold",
-            "code": "4548-4",
-            "display": "Hemoglobin A1c",
-            "operator": ">=",
-            "value": 7.5,
-            "unit": "%"
+            "type": "free_text",
+            "text_rule": "AHP with a minimum of one year of experience."
           }
         },
         {
           "id": "INC-4",
-          "category": "lab",
-          "text": "eGFR ≥ 30 mL/min/1.73m².",
+          "category": "Target Group - Teaching Faculty",
+          "text": "Teaching Faculty: AHP with min qualification of PG degree; AHP with min experience of 3 years.",
           "structured": {
-            "type": "lab_threshold",
-            "code": "33914-3",
-            "display": "Glomerular filtration rate/1.73 sq M.predicted",
-            "operator": ">=",
-            "value": 30,
-            "unit": "mL/min/1.73m2"
+            "type": "free_text",
+            "text_rule": "AHP with min qualification of PG degree; AHP with min experience of 3 years."
           }
         },
         {
           "id": "INC-5",
-          "category": "medication",
-          "text": "On stable metformin therapy for at least 3 months.",
+          "category": "Target Group - Researcher",
+          "text": "Researcher: AHP with min qualification of PG /Ph.D. degree; AHP with min experience of 3 years; AHP with min.2 publications in indexed journals.",
           "structured": {
-            "type": "medication_required",
-            "codes": [
-              "860975"
-            ],
-            "systems": [
-              "RxNorm"
-            ],
-            "min_duration_months": 3
+            "type": "free_text",
+            "text_rule": "AHP with min qualification of PG /Ph.D. degree; AHP with min experience of 3 years; AHP with min.2 publications in indexed journals."
+          }
+        },
+        {
+          "id": "INC-6",
+          "category": "Target Group - Clinician / Diagnostician / Managerial / Non clinical",
+          "text": "Clinician/ Diagnostician/ Managerial / Non clinical: AHP with min qualification of UG degree with minimum 3 years of experience in their respective field",
+          "structured": {
+            "type": "free_text",
+            "text_rule": "AHP with min qualification of UG degree with minimum 3 years of experience in their respective field"
+          }
+        },
+        {
+          "id": "INC-7",
+          "category": "Target Group - Professional experts",
+          "text": "Professional experts: expert (Member of Professional Body/Association/National Agencies/Committee) for each AHP mentioned in the category (Clinical/Diagnostic/Management)",
+          "structured": {
+            "type": "free_text",
+            "text_rule": "Expert (Member of Professional Body/Association/National Agencies/Committee) for each AHP mentioned in the category (Clinical/Diagnostic/Management)"
+          }
+        },
+        {
+          "id": "INC-8",
+          "category": "Target Group - Employers",
+          "text": "Employers: employer (with 2 - 5 years of Industry experience/presence) for each AHP mentioned in the category (Clinical/Diagnostic/Management)",
+          "structured": {
+            "type": "free_text",
+            "text_rule": "Employer (with 2 - 5 years of Industry experience/presence) for each AHP mentioned in the category (Clinical/Diagnostic/Management)"
+          }
+        },
+        {
+          "id": "INC-9",
+          "category": "Target Group - Education experts",
+          "text": "Education experts: Experts (expert in the field of medical education with min 5 - 10 years of experience).",
+          "structured": {
+            "type": "free_text",
+            "text_rule": "Experts (expert in the field of medical education with min 5 - 10 years of experience)."
+          }
+        },
+        {
+          "id": "INC-10",
+          "category": "Target Group - Policy makers",
+          "text": "Policy makers:People who are working in the public health system or National health mission. Involved in developing guidelines/SOP for the health care system.",
+          "structured": {
+            "type": "free_text",
+            "text_rule": "People who are working in the public health system or National health mission. Involved in developing guidelines/SOP for the health care system."
           }
         }
       ],
       "exclusion": [
         {
           "id": "EXC-1",
-          "category": "lab",
-          "text": "eGFR < 25 mL/min/1.73m².",
+          "category": "Consent",
+          "text": "AHPs not willing to participate",
           "structured": {
-            "type": "lab_threshold",
-            "code": "33914-3",
-            "display": "Glomerular filtration rate/1.73 sq M.predicted",
-            "operator": "<",
-            "value": 25,
-            "unit": "mL/min/1.73m2"
+            "type": "consent_required",
+            "text_rule": "AHPs not willing to participate"
           }
         },
         {
           "id": "EXC-2",
-          "category": "condition",
-          "text": "History of severe renal disease requiring dialysis.",
+          "category": "Qualification",
+          "text": "Practicing paramedics without the required qualification",
           "structured": {
-            "type": "condition_forbidden",
-            "keywords": [
-              "dialysis",
-              "severe renal disease"
-            ],
-            "systems": [
-              "ICD-10"
-            ]
-          }
-        },
-        {
-          "id": "EXC-3",
-          "category": "social_history",
-          "text": "Current smoker.",
-          "structured": {
-            "type": "smoking_forbidden",
-            "forbidden_statuses": [
-              "Current smoker"
-            ]
+            "type": "free_text",
+            "text_rule": "Practicing paramedics without the required qualification"
           }
         }
       ]
     },
     "consent_required": true,
     "source": {
-      "clinicaltrials_gov_id": "NCT10000103",
-      "protocol_pdf_url": "trials/T103-protocol.pdf"
+      "clinicaltrials_gov_id": "NCT06456789",
+      "protocol_pdf_url": "https://clinicaltrials.gov/ct2/show/NCT06456789"
     },
-    "status": "NOT_YET_RECRUITING",
-    "sponsor": "Cipla Research Foundation",
+    "status": "Recruiting",
+    "sponsor": "Department of Health Sciences",
     "locations": [
-      "Telangana",
-      "Andhra Pradesh"
+      "Academic and Clinical Institutions"
     ],
-    "start_date": "2026-05-01"
+    "start_date": "2024-04-01"
   },
   {
-    "id": "T104",
-    "title": "DIAB-2030: Study of Investigational Therapy in Type 2 Diabetes",
-    "phase": "Phase 2",
+    "id": "t-d5",
+    "title": "Study on Insulin and Metformin Regimens in Pregnant Women Diagnosed with Diabetes in Pregnancy",
+    "phase": "Not Applicable",
     "condition": [
-      "Type 2 diabetes mellitus"
+      "Diabetes in Pregnancy",
+      "Gestational Diabetes Mellitus"
     ],
     "intervention": [
-      "Investigational Diabetes Agent D"
+      "Insulin Therapy",
+      "Metformin Therapy"
     ],
     "eligibility": {
       "inclusion": [
         {
           "id": "INC-1",
-          "category": "demographics",
-          "text": "Age 40 to 80 years, inclusive.",
+          "category": "Age",
+          "text": "Age From 18.00 Year(s) to 46.00 Year(s)",
           "structured": {
             "type": "age_range",
-            "min": 40,
-            "max": 80
+            "min": 18,
+            "max": 46,
+            "unit": "Year(s)"
           }
         },
         {
           "id": "INC-2",
-          "category": "diagnosis",
-          "text": "Diagnosis of Type 2 diabetes mellitus at least 6 months prior to screening.",
+          "category": "Gender",
+          "text": "Female",
           "structured": {
-            "type": "diagnosis_required",
-            "codes": [
-              "E11.9"
-            ],
-            "systems": [
-              "ICD-10"
-            ],
-            "min_duration_months": 6
+            "type": "gender",
+            "value": "Female"
           }
         },
         {
           "id": "INC-3",
-          "category": "lab",
-          "text": "HbA1c ≥ 8.0% at screening.",
+          "category": "Diagnosis",
+          "text": "PREGNANT WOMEN DIAGNOSED WITH DIABETES IN PREGNANCY (WHO CRITERIA)",
           "structured": {
-            "type": "lab_threshold",
-            "code": "4548-4",
-            "display": "Hemoglobin A1c",
-            "operator": ">=",
-            "value": 8.0,
-            "unit": "%"
+            "type": "diagnosis_required",
+            "display": "Diabetes in pregnancy (WHO criteria)",
+            "keywords": [
+              "diabetes in pregnancy",
+              "gestational diabetes"
+            ]
           }
         },
         {
           "id": "INC-4",
-          "category": "lab",
-          "text": "eGFR ≥ 50 mL/min/1.73m².",
+          "category": "Age",
+          "text": "1) > 18 YRS AGE",
           "structured": {
-            "type": "lab_threshold",
-            "code": "33914-3",
-            "display": "Glomerular filtration rate/1.73 sq M.predicted",
-            "operator": ">=",
-            "value": 50,
-            "unit": "mL/min/1.73m2"
+            "type": "age_range",
+            "min": 18,
+            "unit": "Year(s)"
           }
         },
         {
           "id": "INC-5",
-          "category": "medication",
-          "text": "On stable metformin therapy for at least 3 months.",
+          "category": "Pregnancy Status",
+          "text": "2) SINGLETON FOETUS",
+          "structured": {
+            "type": "finding_required",
+            "text_rule": "Singleton fetus",
+            "keywords": [
+              "singleton"
+            ]
+          }
+        },
+        {
+          "id": "INC-6",
+          "category": "Medication",
+          "text": "3) WOMEN ON RECEIVING INSULIN AND METFORMIN (EITHER THERAPY STARTED INITIALLY)/WOMEN ON INSULIN THERAPY ALONE",
           "structured": {
             "type": "medication_required",
-            "codes": [
-              "860975"
-            ],
-            "systems": [
-              "RxNorm"
-            ],
-            "min_duration_months": 3
+            "display": "Insulin and Metformin, or Insulin therapy alone",
+            "keywords": [
+              "insulin",
+              "metformin"
+            ]
+          }
+        },
+        {
+          "id": "INC-7",
+          "category": "Medication",
+          "text": "4) RECEIVING REGULAR+/- NPH INSULIN",
+          "structured": {
+            "type": "medication_required",
+            "display": "Regular +/- NPH insulin",
+            "keywords": [
+              "insulin"
+            ]
           }
         }
       ],
       "exclusion": [
         {
           "id": "EXC-1",
-          "category": "lab",
-          "text": "eGFR < 35 mL/min/1.73m².",
+          "category": "Device / Medication Delivery",
+          "text": "PREGNANT WOMEN ON INSULIN PUMP",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Insulin pump therapy"
+          }
+        }
+      ]
+    },
+    "consent_required": true,
+    "source": {
+      "clinicaltrials_gov_id": "NCT06567890",
+      "protocol_pdf_url": "https://clinicaltrials.gov/ct2/show/NCT06567890"
+    },
+    "status": "Recruiting",
+    "sponsor": "Department of Obstetrics and Gynecology",
+    "locations": [
+      "Tertiary Care Hospital"
+    ],
+    "start_date": "2024-05-01"
+  },
+  {
+    "id": "t-d6",
+    "title": "Study on Patients Diagnosed with Somatoform Disorder",
+    "phase": "Not Applicable",
+    "condition": [
+      "Somatoform Disorder"
+    ],
+    "intervention": [
+      "Observational / Psychological Intervention"
+    ],
+    "eligibility": {
+      "inclusion": [
+        {
+          "id": "INC-1",
+          "category": "Age",
+          "text": "Age From 18.00 Year(s) to 60.00 Year(s)",
+          "structured": {
+            "type": "age_range",
+            "min": 18,
+            "max": 60,
+            "unit": "Year(s)"
+          }
+        },
+        {
+          "id": "INC-2",
+          "category": "Gender",
+          "text": "Both",
+          "structured": {
+            "type": "gender",
+            "value": "Both"
+          }
+        },
+        {
+          "id": "INC-3",
+          "category": "Diagnosis",
+          "text": "Person diagnosed with the somatoform disorder",
+          "structured": {
+            "type": "diagnosis_required",
+            "display": "Somatoform disorder",
+            "keywords": [
+              "somatoform disorder",
+              "somatoform"
+            ]
+          }
+        }
+      ],
+      "exclusion": [
+        {
+          "id": "EXC-1",
+          "category": "Psychiatric Diagnosis",
+          "text": "person diagnosed with other psychiatric disorder",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Other psychiatric disorder"
+          }
+        },
+        {
+          "id": "EXC-2",
+          "category": "Living Arrangement",
+          "text": "person not staying with the family members for three months.",
+          "structured": {
+            "type": "finding_required",
+            "text_rule": "Person not staying with the family members for three months.",
+            "keywords": [
+              "not staying with family",
+              "living alone without family support"
+            ]
+          }
+        }
+      ]
+    },
+    "consent_required": true,
+    "source": {
+      "clinicaltrials_gov_id": "NCT06678901",
+      "protocol_pdf_url": "https://clinicaltrials.gov/ct2/show/NCT06678901"
+    },
+    "status": "Recruiting",
+    "sponsor": "Department of Psychiatry",
+    "locations": [
+      "Tertiary Care Hospital"
+    ],
+    "start_date": "2024-06-01"
+  },
+  {
+    "id": "t-d7",
+    "title": "Observational Study on Adult Patients Across Demographics",
+    "phase": "Not Applicable",
+    "condition": [
+      "General Medical Condition"
+    ],
+    "intervention": [
+      "Observational Study"
+    ],
+    "eligibility": {
+      "inclusion": [
+        {
+          "id": "INC-1",
+          "category": "Age",
+          "text": "Age From 18.00 Year(s) to 80.00 Year(s)",
+          "structured": {
+            "type": "age_range",
+            "min": 18,
+            "max": 80,
+            "unit": "Year(s)"
+          }
+        },
+        {
+          "id": "INC-2",
+          "category": "Gender",
+          "text": "Both",
+          "structured": {
+            "type": "gender",
+            "value": "Both"
+          }
+        },
+        {
+          "id": "INC-3",
+          "category": "Demographics",
+          "text": "Subjects falling under the age group 18-80 years across both sexes, different caste, class and religion..",
+          "structured": {
+            "type": "data_available_required",
+            "text_rule": "Subjects falling under the age group 18-80 years across both sexes, different caste, class and religion..",
+            "min_score": 0.6
+          }
+        }
+      ],
+      "exclusion": [
+        {
+          "id": "EXC-1",
+          "category": "Consent",
+          "text": "Who are not willing to give the consent for the study.",
+          "structured": {
+            "type": "consent_required",
+            "text_rule": "Who are not willing to give the consent for the study."
+          }
+        },
+        {
+          "id": "EXC-2",
+          "category": "Cognitive / Psychiatric Condition",
+          "text": "2. Patients with dementia and other psychiatric conditions affecting decision making",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Dementia and other psychiatric conditions affecting decision making"
+          }
+        },
+        {
+          "id": "EXC-3",
+          "category": "Emergency Care",
+          "text": "Patient requiring acute emergency care such as high grade fever (above 102 degree fahrenheit) or severe incapacitating pain etc",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Acute emergency care (e.g., high grade fever > 102°F or severe incapacitating pain)"
+          }
+        }
+      ]
+    },
+    "consent_required": true,
+    "source": {
+      "clinicaltrials_gov_id": "NCT06789012",
+      "protocol_pdf_url": "https://clinicaltrials.gov/ct2/show/NCT06789012"
+    },
+    "status": "Recruiting",
+    "sponsor": "Department of Internal Medicine",
+    "locations": [
+      "Tertiary Care Hospital"
+    ],
+    "start_date": "2024-07-01"
+  },
+  {
+    "id": "t-d8",
+    "title": "Study on Caregivers of Patients Admitted in LGBRIMH, Tezpur",
+    "phase": "Not Applicable",
+    "condition": [
+      "Caregiver Burden / Mental Health"
+    ],
+    "intervention": [
+      "Observational Study"
+    ],
+    "eligibility": {
+      "inclusion": [
+        {
+          "id": "INC-1",
+          "category": "Age",
+          "text": "Age From 18.00 Year(s) to 60.00 Year(s)",
+          "structured": {
+            "type": "age_range",
+            "min": 18,
+            "max": 60,
+            "unit": "Year(s)"
+          }
+        },
+        {
+          "id": "INC-2",
+          "category": "Gender",
+          "text": "Both",
+          "structured": {
+            "type": "gender",
+            "value": "Both"
+          }
+        },
+        {
+          "id": "INC-3",
+          "category": "Target Population",
+          "text": "1. Caregivers of patients admitted in LGBRIMH,Tezpur",
+          "structured": {
+            "type": "finding_required",
+            "text_rule": "Caregivers of patients admitted in LGBRIMH, Tezpur",
+            "keywords": [
+              "caregiver",
+              "lgbrimh"
+            ]
+          }
+        },
+        {
+          "id": "INC-4",
+          "category": "Age",
+          "text": "2. Age between 18 years and below 60 years",
+          "structured": {
+            "type": "age_range",
+            "min": 18,
+            "max": 60,
+            "unit": "Year(s)"
+          }
+        }
+      ],
+      "exclusion": [
+        {
+          "id": "EXC-1",
+          "category": "Medical / Psychiatric History",
+          "text": "1. Caregiver diagnosed with mental illness or major physical illness",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Mental illness or major physical illness in caregiver"
+          }
+        },
+        {
+          "id": "EXC-2",
+          "category": "Caregiver Type",
+          "text": "2. Paid care giver",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Paid caregiver"
+          }
+        }
+      ]
+    },
+    "consent_required": true,
+    "source": {
+      "clinicaltrials_gov_id": "NCT06890123",
+      "protocol_pdf_url": "https://clinicaltrials.gov/ct2/show/NCT06890123"
+    },
+    "status": "Recruiting",
+    "sponsor": "LGBRIMH, Tezpur",
+    "locations": [
+      "LGBRIMH, Tezpur"
+    ],
+    "start_date": "2024-08-01"
+  },
+  {
+    "id": "t-d9",
+    "title": "Study Evaluating Gingival Tissue Sampling Across Healthy, Periodontally Diseased, and Type 2 Diabetes Mellitus Patients",
+    "phase": "Not Applicable",
+    "condition": [
+      "Periodontitis",
+      "Type 2 Diabetes Mellitus",
+      "Periodontal Health"
+    ],
+    "intervention": [
+      "Gingival Tissue Sampling / Observational Study"
+    ],
+    "eligibility": {
+      "inclusion": [
+        {
+          "id": "INC-1",
+          "category": "Age",
+          "text": "Age From 18.00 Year(s) to 75.00 Year(s)",
+          "structured": {
+            "type": "age_range",
+            "min": 18,
+            "max": 75,
+            "unit": "Year(s)"
+          }
+        },
+        {
+          "id": "INC-2",
+          "category": "Gender",
+          "text": "Both",
+          "structured": {
+            "type": "gender",
+            "value": "Both"
+          }
+        },
+        {
+          "id": "INC-3",
+          "category": "Group 1 - Healthy - Age",
+          "text": "Age group years >= 18years",
+          "structured": {
+            "type": "age_range",
+            "min": 18,
+            "unit": "Year(s)"
+          }
+        },
+        {
+          "id": "INC-4",
+          "category": "Group 1 - Healthy - Systemic Health",
+          "text": "Good systemic health",
+          "structured": {
+            "type": "free_text",
+            "text_rule": "Good systemic health"
+          }
+        },
+        {
+          "id": "INC-5",
+          "category": "Group 1 - Healthy - Dentition",
+          "text": "Presence of at least 20 natural teeth excluding 3rd molars",
           "structured": {
             "type": "lab_threshold",
-            "code": "33914-3",
-            "display": "Glomerular filtration rate/1.73 sq M.predicted",
+            "display": "Natural teeth count (excluding 3rd molars)",
+            "operator": ">=",
+            "value": 20,
+            "unit": "teeth"
+          }
+        },
+        {
+          "id": "INC-6",
+          "category": "Group 1 - Healthy - Bleeding Sites",
+          "text": "< 10% bleeding sites",
+          "structured": {
+            "type": "lab_threshold",
+            "display": "Bleeding sites",
             "operator": "<",
-            "value": 35,
-            "unit": "mL/min/1.73m2"
-          }
-        },
-        {
-          "id": "EXC-2",
-          "category": "condition",
-          "text": "History of severe renal disease requiring dialysis.",
-          "structured": {
-            "type": "condition_forbidden",
-            "keywords": [
-              "dialysis",
-              "severe renal disease"
-            ],
-            "systems": [
-              "ICD-10"
-            ]
-          }
-        },
-        {
-          "id": "EXC-3",
-          "category": "social_history",
-          "text": "Current smoker.",
-          "structured": {
-            "type": "smoking_forbidden",
-            "forbidden_statuses": [
-              "Current smoker"
-            ]
-          }
-        }
-      ]
-    },
-    "consent_required": true,
-    "source": {
-      "clinicaltrials_gov_id": "NCT10000104",
-      "protocol_pdf_url": "trials/T104-protocol.pdf"
-    },
-    "status": "RECRUITING",
-    "sponsor": "Dr. Reddy's Research Institute",
-    "locations": [
-      "Karnataka",
-      "Kerala"
-    ],
-    "start_date": "2026-03-20"
-  },
-  {
-    "id": "T201",
-    "title": "LUNG-2027: Investigational Therapy for Non-Small Cell Lung Cancer",
-    "phase": "Phase 2",
-    "condition": [
-      "Non-Small Cell Lung Cancer"
-    ],
-    "intervention": [
-      "Investigational Oncology Agent 1"
-    ],
-    "eligibility": {
-      "inclusion": [
-        {
-          "id": "INC-1",
-          "category": "demographics",
-          "text": "Age 18 to 75 years, inclusive.",
-          "structured": {
-            "type": "age_range",
-            "min": 18,
-            "max": 75
-          }
-        },
-        {
-          "id": "INC-2",
-          "category": "diagnosis",
-          "text": "Confirmed non-small cell lung cancer.",
-          "structured": {
-            "type": "diagnosis_required",
-            "codes": [
-              "C34.90"
-            ],
-            "systems": [
-              "ICD-10"
-            ],
-            "min_duration_months": null
-          }
-        },
-        {
-          "id": "INC-3",
-          "category": "lab",
-          "text": "ECOG performance status ≤ 1.",
-          "structured": {
-            "type": "lab_threshold",
-            "code": "89247-1",
-            "display": "ECOG Performance Status",
-            "operator": "<=",
-            "value": 1,
-            "unit": "score"
-          }
-        }
-      ],
-      "exclusion": [
-        {
-          "id": "EXC-1",
-          "category": "condition",
-          "text": "Active uncontrolled second malignancy.",
-          "structured": {
-            "type": "condition_forbidden",
-            "keywords": [
-              "active malignancy"
-            ],
-            "systems": [
-              "ICD-10"
-            ]
-          }
-        },
-        {
-          "id": "EXC-2",
-          "category": "other",
-          "text": "Prior systemic chemotherapy within 21 days of screening.",
-          "structured": {
-            "type": "free_text",
-            "text_rule": "Prior systemic chemotherapy within 21 days"
-          }
-        },
-        {
-          "id": "EXC-3",
-          "category": "social_history",
-          "text": "Current smoker.",
-          "structured": {
-            "type": "smoking_forbidden",
-            "forbidden_statuses": [
-              "Current smoker"
-            ]
-          }
-        }
-      ]
-    },
-    "consent_required": true,
-    "source": {
-      "clinicaltrials_gov_id": "NCT10000201",
-      "protocol_pdf_url": "trials/T201-protocol.pdf"
-    },
-    "status": "RECRUITING",
-    "sponsor": "Tata Memorial Centre",
-    "locations": [
-      "Maharashtra",
-      "Delhi"
-    ],
-    "start_date": "2026-01-05"
-  },
-  {
-    "id": "T202",
-    "title": "LUNG-2028: Investigational Therapy for Non-Small Cell Lung Cancer",
-    "phase": "Phase 2",
-    "condition": [
-      "Non-Small Cell Lung Cancer"
-    ],
-    "intervention": [
-      "Investigational Oncology Agent 2"
-    ],
-    "eligibility": {
-      "inclusion": [
-        {
-          "id": "INC-1",
-          "category": "demographics",
-          "text": "Age 40 to 80 years, inclusive.",
-          "structured": {
-            "type": "age_range",
-            "min": 40,
-            "max": 80
-          }
-        },
-        {
-          "id": "INC-2",
-          "category": "diagnosis",
-          "text": "Confirmed non-small cell lung cancer.",
-          "structured": {
-            "type": "diagnosis_required",
-            "codes": [
-              "C34.90"
-            ],
-            "systems": [
-              "ICD-10"
-            ],
-            "min_duration_months": null
-          }
-        },
-        {
-          "id": "INC-3",
-          "category": "lab",
-          "text": "ECOG performance status ≤ 2.",
-          "structured": {
-            "type": "lab_threshold",
-            "code": "89247-1",
-            "display": "ECOG Performance Status",
-            "operator": "<=",
-            "value": 2,
-            "unit": "score"
-          }
-        }
-      ],
-      "exclusion": [
-        {
-          "id": "EXC-1",
-          "category": "condition",
-          "text": "Active uncontrolled second malignancy.",
-          "structured": {
-            "type": "condition_forbidden",
-            "keywords": [
-              "active malignancy"
-            ],
-            "systems": [
-              "ICD-10"
-            ]
-          }
-        },
-        {
-          "id": "EXC-2",
-          "category": "other",
-          "text": "Prior systemic chemotherapy within 21 days of screening.",
-          "structured": {
-            "type": "free_text",
-            "text_rule": "Prior systemic chemotherapy within 21 days"
-          }
-        },
-        {
-          "id": "EXC-3",
-          "category": "social_history",
-          "text": "Current smoker.",
-          "structured": {
-            "type": "smoking_forbidden",
-            "forbidden_statuses": [
-              "Current smoker"
-            ]
-          }
-        }
-      ]
-    },
-    "consent_required": true,
-    "source": {
-      "clinicaltrials_gov_id": "NCT10000202",
-      "protocol_pdf_url": "trials/T202-protocol.pdf"
-    },
-    "status": "RECRUITING",
-    "sponsor": "Apollo Hospitals Research",
-    "locations": [
-      "Tamil Nadu",
-      "Telangana"
-    ],
-    "start_date": "2026-02-18"
-  },
-  {
-    "id": "T203",
-    "title": "LUNG-2029: Investigational Therapy for Non-Small Cell Lung Cancer",
-    "phase": "Phase 2",
-    "condition": [
-      "Non-Small Cell Lung Cancer"
-    ],
-    "intervention": [
-      "Investigational Oncology Agent 3"
-    ],
-    "eligibility": {
-      "inclusion": [
-        {
-          "id": "INC-1",
-          "category": "demographics",
-          "text": "Age 50 to 85 years, inclusive.",
-          "structured": {
-            "type": "age_range",
-            "min": 50,
-            "max": 85
-          }
-        },
-        {
-          "id": "INC-2",
-          "category": "diagnosis",
-          "text": "Confirmed non-small cell lung cancer.",
-          "structured": {
-            "type": "diagnosis_required",
-            "codes": [
-              "C34.90"
-            ],
-            "systems": [
-              "ICD-10"
-            ],
-            "min_duration_months": null
-          }
-        },
-        {
-          "id": "INC-3",
-          "category": "lab",
-          "text": "ECOG performance status ≤ 1.",
-          "structured": {
-            "type": "lab_threshold",
-            "code": "89247-1",
-            "display": "ECOG Performance Status",
-            "operator": "<=",
-            "value": 1,
-            "unit": "score"
-          }
-        }
-      ],
-      "exclusion": [
-        {
-          "id": "EXC-1",
-          "category": "condition",
-          "text": "Active uncontrolled second malignancy.",
-          "structured": {
-            "type": "condition_forbidden",
-            "keywords": [
-              "active malignancy"
-            ],
-            "systems": [
-              "ICD-10"
-            ]
-          }
-        },
-        {
-          "id": "EXC-2",
-          "category": "other",
-          "text": "Prior systemic chemotherapy within 21 days of screening.",
-          "structured": {
-            "type": "free_text",
-            "text_rule": "Prior systemic chemotherapy within 21 days"
-          }
-        },
-        {
-          "id": "EXC-3",
-          "category": "social_history",
-          "text": "Current smoker.",
-          "structured": {
-            "type": "smoking_forbidden",
-            "forbidden_statuses": [
-              "Current smoker"
-            ]
-          }
-        }
-      ]
-    },
-    "consent_required": true,
-    "source": {
-      "clinicaltrials_gov_id": "NCT10000203",
-      "protocol_pdf_url": "trials/T203-protocol.pdf"
-    },
-    "status": "SUSPENDED",
-    "sponsor": "AIIMS Delhi",
-    "locations": [
-      "Delhi"
-    ],
-    "start_date": "2025-11-01"
-  },
-  {
-    "id": "T301",
-    "title": "CARD-2027: Lipid-Lowering Study in Cardiovascular Disease",
-    "phase": "Phase 3",
-    "condition": [
-      "Atherosclerotic cardiovascular disease"
-    ],
-    "intervention": [
-      "Investigational Lipid Agent 1"
-    ],
-    "eligibility": {
-      "inclusion": [
-        {
-          "id": "INC-1",
-          "category": "demographics",
-          "text": "Age 40 to 80 years, inclusive.",
-          "structured": {
-            "type": "age_range",
-            "min": 40,
-            "max": 80
-          }
-        },
-        {
-          "id": "INC-2",
-          "category": "diagnosis",
-          "text": "Documented atherosclerotic cardiovascular disease.",
-          "structured": {
-            "type": "diagnosis_required",
-            "codes": [
-              "I25.10"
-            ],
-            "systems": [
-              "ICD-10"
-            ],
-            "min_duration_months": 6
-          }
-        },
-        {
-          "id": "INC-3",
-          "category": "lab",
-          "text": "LDL cholesterol ≤ 100 mg/dL.",
-          "structured": {
-            "type": "lab_threshold",
-            "code": "13457-7",
-            "display": "LDL cholesterol",
-            "operator": "<=",
-            "value": 100,
-            "unit": "mg/dL"
-          }
-        }
-      ],
-      "exclusion": [
-        {
-          "id": "EXC-1",
-          "category": "social_history",
-          "text": "Current smoker.",
-          "structured": {
-            "type": "smoking_forbidden",
-            "forbidden_statuses": [
-              "Current smoker"
-            ]
-          }
-        },
-        {
-          "id": "EXC-2",
-          "category": "condition",
-          "text": "Pregnancy or breastfeeding.",
-          "structured": {
-            "type": "condition_forbidden",
-            "keywords": [
-              "pregnancy",
-              "breastfeeding"
-            ],
-            "systems": [
-              "Synthetic"
-            ]
-          }
-        },
-        {
-          "id": "EXC-3",
-          "category": "other",
-          "text": "Unable or unwilling to provide trial data-use consent.",
-          "structured": {
-            "type": "free_text",
-            "text_rule": "data_use_consent must be true"
-          }
-        }
-      ]
-    },
-    "consent_required": true,
-    "source": {
-      "clinicaltrials_gov_id": "NCT10000301",
-      "protocol_pdf_url": "trials/T301-protocol.pdf"
-    },
-    "status": "RECRUITING",
-    "sponsor": "ICMR / Apollo Hospitals",
-    "locations": [
-      "Tamil Nadu",
-      "Karnataka",
-      "Delhi"
-    ],
-    "start_date": "2026-01-15"
-  },
-  {
-    "id": "T302",
-    "title": "CARD-2028: Lipid-Lowering Study in Cardiovascular Disease",
-    "phase": "Phase 3",
-    "condition": [
-      "Atherosclerotic cardiovascular disease"
-    ],
-    "intervention": [
-      "Investigational Lipid Agent 2"
-    ],
-    "eligibility": {
-      "inclusion": [
-        {
-          "id": "INC-1",
-          "category": "demographics",
-          "text": "Age 40 to 80 years, inclusive.",
-          "structured": {
-            "type": "age_range",
-            "min": 40,
-            "max": 80
-          }
-        },
-        {
-          "id": "INC-2",
-          "category": "diagnosis",
-          "text": "Documented atherosclerotic cardiovascular disease.",
-          "structured": {
-            "type": "diagnosis_required",
-            "codes": [
-              "I25.10"
-            ],
-            "systems": [
-              "ICD-10"
-            ],
-            "min_duration_months": 6
-          }
-        },
-        {
-          "id": "INC-3",
-          "category": "lab",
-          "text": "LDL cholesterol ≤ 130 mg/dL.",
-          "structured": {
-            "type": "lab_threshold",
-            "code": "13457-7",
-            "display": "LDL cholesterol",
-            "operator": "<=",
-            "value": 130,
-            "unit": "mg/dL"
-          }
-        }
-      ],
-      "exclusion": [
-        {
-          "id": "EXC-1",
-          "category": "social_history",
-          "text": "Current smoker.",
-          "structured": {
-            "type": "smoking_forbidden",
-            "forbidden_statuses": [
-              "Current smoker"
-            ]
-          }
-        },
-        {
-          "id": "EXC-2",
-          "category": "condition",
-          "text": "Pregnancy or breastfeeding.",
-          "structured": {
-            "type": "condition_forbidden",
-            "keywords": [
-              "pregnancy",
-              "breastfeeding"
-            ],
-            "systems": [
-              "Synthetic"
-            ]
-          }
-        },
-        {
-          "id": "EXC-3",
-          "category": "other",
-          "text": "Unable or unwilling to provide trial data-use consent.",
-          "structured": {
-            "type": "free_text",
-            "text_rule": "data_use_consent must be true"
-          }
-        }
-      ]
-    },
-    "consent_required": true,
-    "source": {
-      "clinicaltrials_gov_id": "NCT10000302",
-      "protocol_pdf_url": "trials/T302-protocol.pdf"
-    },
-    "status": "RECRUITING",
-    "sponsor": "Fortis Research",
-    "locations": [
-      "Punjab",
-      "Haryana"
-    ],
-    "start_date": "2026-04-01"
-  },
-  {
-    "id": "T303",
-    "title": "CARD-2029: Lipid-Lowering Study in Cardiovascular Disease",
-    "phase": "Phase 3",
-    "condition": [
-      "Atherosclerotic cardiovascular disease"
-    ],
-    "intervention": [
-      "Investigational Lipid Agent 3"
-    ],
-    "eligibility": {
-      "inclusion": [
-        {
-          "id": "INC-1",
-          "category": "demographics",
-          "text": "Age 40 to 80 years, inclusive.",
-          "structured": {
-            "type": "age_range",
-            "min": 40,
-            "max": 80
-          }
-        },
-        {
-          "id": "INC-2",
-          "category": "diagnosis",
-          "text": "Documented atherosclerotic cardiovascular disease.",
-          "structured": {
-            "type": "diagnosis_required",
-            "codes": [
-              "I25.10"
-            ],
-            "systems": [
-              "ICD-10"
-            ],
-            "min_duration_months": 6
-          }
-        },
-        {
-          "id": "INC-3",
-          "category": "lab",
-          "text": "LDL cholesterol ≤ 160 mg/dL.",
-          "structured": {
-            "type": "lab_threshold",
-            "code": "13457-7",
-            "display": "LDL cholesterol",
-            "operator": "<=",
-            "value": 160,
-            "unit": "mg/dL"
-          }
-        }
-      ],
-      "exclusion": [
-        {
-          "id": "EXC-1",
-          "category": "social_history",
-          "text": "Current smoker.",
-          "structured": {
-            "type": "smoking_forbidden",
-            "forbidden_statuses": [
-              "Current smoker"
-            ]
-          }
-        },
-        {
-          "id": "EXC-2",
-          "category": "condition",
-          "text": "Pregnancy or breastfeeding.",
-          "structured": {
-            "type": "condition_forbidden",
-            "keywords": [
-              "pregnancy",
-              "breastfeeding"
-            ],
-            "systems": [
-              "Synthetic"
-            ]
-          }
-        },
-        {
-          "id": "EXC-3",
-          "category": "other",
-          "text": "Unable or unwilling to provide trial data-use consent.",
-          "structured": {
-            "type": "free_text",
-            "text_rule": "data_use_consent must be true"
-          }
-        }
-      ]
-    },
-    "consent_required": true,
-    "source": {
-      "clinicaltrials_gov_id": "NCT10000303",
-      "protocol_pdf_url": "trials/T303-protocol.pdf"
-    },
-    "status": "COMPLETED",
-    "sponsor": "Narayana Health",
-    "locations": [
-      "Karnataka"
-    ],
-    "start_date": "2025-06-01"
-  },
-  {
-    "id": "T401",
-    "title": "MIX-2027: Precision Metabolic Research Study",
-    "phase": "Phase 2",
-    "condition": [
-      "Metabolic disease"
-    ],
-    "intervention": [
-      "Investigational Metabolic Agent"
-    ],
-    "eligibility": {
-      "inclusion": [
-        {
-          "id": "INC-1",
-          "category": "demographics",
-          "text": "Age 18 to 70 years, inclusive.",
-          "structured": {
-            "type": "age_range",
-            "min": 18,
-            "max": 70
-          }
-        },
-        {
-          "id": "INC-2",
-          "category": "lab",
-          "text": "Hemoglobin A1c ≥ 7.0%.",
-          "structured": {
-            "type": "lab_threshold",
-            "code": "4548-4",
-            "display": "Hemoglobin A1c",
-            "operator": ">=",
-            "value": 7.0,
+            "value": 10,
             "unit": "%"
           }
         },
         {
-          "id": "INC-3",
-          "category": "other",
-          "text": "Data-use consent must be documented.",
+          "id": "INC-7",
+          "category": "Group 1 - Healthy - Probing Depth",
+          "text": "Probing depth <= 3mm",
+          "structured": {
+            "type": "lab_threshold",
+            "display": "Probing depth",
+            "operator": "<=",
+            "value": 3,
+            "unit": "mm"
+          }
+        },
+        {
+          "id": "INC-8",
+          "category": "Group 1 - Healthy - Attachment Loss",
+          "text": "No clinical attachment loss",
           "structured": {
             "type": "free_text",
-            "text_rule": "data_use_consent == true"
+            "text_rule": "No clinical attachment loss"
+          }
+        },
+        {
+          "id": "INC-9",
+          "category": "Group 2 - Periodontally Diseased - Age",
+          "text": "Patients with age group >= 18years",
+          "structured": {
+            "type": "age_range",
+            "min": 18,
+            "unit": "Year(s)"
+          }
+        },
+        {
+          "id": "INC-10",
+          "category": "Group 2 - Periodontally Diseased - Diagnosis",
+          "text": "Patients with stage III/IV periodontitis (according to 2017 EFP/AAP classification)",
+          "structured": {
+            "type": "diagnosis_required",
+            "display": "Stage III/IV periodontitis (2017 EFP/AAP classification)"
+          }
+        },
+        {
+          "id": "INC-11",
+          "category": "Group 2 - Periodontally Diseased - FMPS",
+          "text": "FMPS >= 20%",
+          "structured": {
+            "type": "lab_threshold",
+            "display": "FMPS",
+            "operator": ">=",
+            "value": 20,
+            "unit": "%"
+          }
+        },
+        {
+          "id": "INC-12",
+          "category": "Group 2 - Periodontally Diseased - FMBPS",
+          "text": "FMBPS >= 20%",
+          "structured": {
+            "type": "lab_threshold",
+            "display": "FMBPS",
+            "operator": ">=",
+            "value": 20,
+            "unit": "%"
+          }
+        },
+        {
+          "id": "INC-13",
+          "category": "Group 2 - Periodontally Diseased - Probing Depth",
+          "text": "Periodontal probing depth >= 6mm",
+          "structured": {
+            "type": "lab_threshold",
+            "display": "Periodontal probing depth",
+            "operator": ">=",
+            "value": 6,
+            "unit": "mm"
+          }
+        },
+        {
+          "id": "INC-14",
+          "category": "Group 2 - Periodontally Diseased - Attachment Loss",
+          "text": "Clinical attachment loss >= 5mm",
+          "structured": {
+            "type": "lab_threshold",
+            "display": "Clinical attachment loss",
+            "operator": ">=",
+            "value": 5,
+            "unit": "mm"
+          }
+        },
+        {
+          "id": "INC-15",
+          "category": "Group 2 - Periodontally Diseased - Radiographics",
+          "text": "Radiographic evidence of bone loss for stage III/IV bone loss extending to middle or apical third of root.",
+          "structured": {
+            "type": "free_text",
+            "text_rule": "Radiographic evidence of bone loss extending to middle or apical third of root (stage III/IV)"
+          }
+        },
+        {
+          "id": "INC-16",
+          "category": "Group 3 - Periodontally Diseased + T2DM - Age",
+          "text": "Patients with age group >= 18years",
+          "structured": {
+            "type": "age_range",
+            "min": 18,
+            "unit": "Year(s)"
+          }
+        },
+        {
+          "id": "INC-17",
+          "category": "Group 3 - Periodontally Diseased + T2DM - Diagnosis",
+          "text": "Patients with stage III/IV periodontitis grade C (according to 2017 EFP/AAP classification)",
+          "structured": {
+            "type": "diagnosis_required",
+            "display": "Stage III/IV periodontitis grade C (2017 EFP/AAP classification)"
+          }
+        },
+        {
+          "id": "INC-18",
+          "category": "Group 3 - Periodontally Diseased + T2DM - FMPS",
+          "text": "FMPS >= 20%",
+          "structured": {
+            "type": "lab_threshold",
+            "display": "FMPS",
+            "operator": ">=",
+            "value": 20,
+            "unit": "%"
+          }
+        },
+        {
+          "id": "INC-19",
+          "category": "Group 3 - Periodontally Diseased + T2DM - FMBPS",
+          "text": "FMBPS >= 20%",
+          "structured": {
+            "type": "lab_threshold",
+            "display": "FMBPS",
+            "operator": ">=",
+            "value": 20,
+            "unit": "%"
+          }
+        },
+        {
+          "id": "INC-20",
+          "category": "Group 3 - Periodontally Diseased + T2DM - Probing Depth",
+          "text": "Periodontal probing depth >= 6mm",
+          "structured": {
+            "type": "lab_threshold",
+            "display": "Periodontal probing depth",
+            "operator": ">=",
+            "value": 6,
+            "unit": "mm"
+          }
+        },
+        {
+          "id": "INC-21",
+          "category": "Group 3 - Periodontally Diseased + T2DM - Attachment Loss",
+          "text": "Clinical attachment loss >= 5mm",
+          "structured": {
+            "type": "lab_threshold",
+            "display": "Clinical attachment loss",
+            "operator": ">=",
+            "value": 5,
+            "unit": "mm"
+          }
+        },
+        {
+          "id": "INC-22",
+          "category": "Group 3 - Periodontally Diseased + T2DM - Radiographics",
+          "text": "Radiographic evidence of bone loss for stage III/IV bone loss extending to middle or apical third of root.",
+          "structured": {
+            "type": "free_text",
+            "text_rule": "Radiographic evidence of bone loss extending to middle or apical third of root (stage III/IV)"
+          }
+        },
+        {
+          "id": "INC-23",
+          "category": "Group 3 - Periodontally Diseased + T2DM - Laboratory / History",
+          "text": "HbA1c >= 7% diagnosed and under medication for the past more than 1 year",
+          "structured": {
+            "type": "lab_threshold",
+            "display": "HbA1c",
+            "operator": ">=",
+            "value": 7.0,
+            "unit": "%"
           }
         }
       ],
       "exclusion": [
         {
           "id": "EXC-1",
-          "category": "social_history",
-          "text": "Current smoker.",
+          "category": "Systemic Disease",
+          "text": "Patients with any other systemic diseases (other than T2DM)/ auto immune diseases",
           "structured": {
-            "type": "smoking_forbidden",
-            "forbidden_statuses": [
-              "Current smoker"
-            ]
+            "type": "condition_forbidden",
+            "display": "Systemic diseases (other than Type 2 Diabetes Mellitus) or autoimmune diseases"
           }
         },
         {
           "id": "EXC-2",
-          "category": "other",
-          "text": "Active malignancy.",
+          "category": "Medication",
+          "text": "Immunosuppressants, antibiotics, anti-inflammatory drugs usage in the last six months",
+          "structured": {
+            "type": "medication_forbidden",
+            "display": "Immunosuppressants, antibiotics, or anti-inflammatory drugs in the last 6 months"
+          }
+        },
+        {
+          "id": "EXC-3",
+          "category": "Pregnancy / Lactation",
+          "text": "Pregnant or lactating mothers.",
           "structured": {
             "type": "condition_forbidden",
-            "keywords": [
-              "active malignancy"
-            ],
-            "systems": [
-              "Synthetic"
-            ]
+            "display": "Pregnant or lactating mothers"
+          }
+        },
+        {
+          "id": "EXC-4",
+          "category": "Habits",
+          "text": "Smokers ( current and past)",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Current or past smokers"
+          }
+        },
+        {
+          "id": "EXC-5",
+          "category": "Dental History",
+          "text": "Previous history of periodontal therapy",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Previous history of periodontal therapy"
           }
         }
       ]
     },
     "consent_required": true,
     "source": {
-      "clinicaltrials_gov_id": "NCT10000401",
-      "protocol_pdf_url": "trials/T401-protocol.pdf"
+      "clinicaltrials_gov_id": "NCT06901234",
+      "protocol_pdf_url": "https://clinicaltrials.gov/ct2/show/NCT06901234"
     },
-    "status": "RECRUITING",
-    "sponsor": "Christian Medical College Vellore",
+    "status": "Recruiting",
+    "sponsor": "Department of Periodontics",
     "locations": [
-      "Tamil Nadu"
+      "Dental College and Hospital"
     ],
-    "start_date": "2026-03-01"
+    "start_date": "2024-09-01"
   },
   {
-    "id": "T402",
-    "title": "MIX-2028: Precision Metabolic Research Study",
+    "id": "t-o1",
+    "title": "Study Evaluating Treatment Strategies in Advanced or Metastatic Triple-Negative Breast Cancer (TNBC)",
     "phase": "Phase 2",
     "condition": [
-      "Metabolic disease"
+      "Triple-Negative Breast Cancer (TNBC)",
+      "Metastatic Breast Cancer"
     ],
     "intervention": [
-      "Investigational Metabolic Agent"
+      "Alpelisib",
+      "Nab-paclitaxel"
     ],
     "eligibility": {
       "inclusion": [
         {
           "id": "INC-1",
-          "category": "demographics",
-          "text": "Age 18 to 70 years, inclusive.",
+          "category": "Age",
+          "text": "Age From 18.00 Year(s) to 99.00 Year(s)",
           "structured": {
             "type": "age_range",
             "min": 18,
-            "max": 70
+            "max": 99,
+            "unit": "Year(s)"
           }
         },
         {
           "id": "INC-2",
-          "category": "lab",
-          "text": "Hemoglobin A1c ≥ 7.0%.",
+          "category": "Gender",
+          "text": "Both",
           "structured": {
-            "type": "lab_threshold",
-            "code": "4548-4",
-            "display": "Hemoglobin A1c",
-            "operator": ">=",
-            "value": 7.0,
-            "unit": "%"
+            "type": "gender",
+            "value": "Both"
           }
         },
         {
           "id": "INC-3",
-          "category": "other",
-          "text": "Data-use consent must be documented.",
+          "category": "Age / Consent",
+          "text": "1.Subject is >= 18 years old at the time of informed consent",
           "structured": {
-            "type": "free_text",
-            "text_rule": "data_use_consent == true"
+            "type": "age_range",
+            "min": 18,
+            "unit": "Year(s)"
+          }
+        },
+        {
+          "id": "INC-4",
+          "category": "Diagnosis / Stage",
+          "text": "2.Subject has histologically confirmed diagnosis of advanced (loco-regionally recurrent and not amenable to curative therapy, or metastatic (stage IV)) TNBC",
+          "structured": {
+            "type": "diagnosis_required",
+            "display": "Histologically confirmed advanced (loco-regionally recurrent not amenable to curative therapy) or metastatic (stage IV) TNBC",
+            "keywords": [
+              "triple-negative breast cancer",
+              "tnbc",
+              "triple negative breast"
+            ]
+          }
+        },
+        {
+          "id": "INC-5",
+          "category": "Measurable Disease",
+          "text": "3.Subject has either a measurable disease per RECIST 1.1 criteria or, if no measurable disease is present, then at least one predominantly lytic bone lesion or mixed lytic-blastic bone lesion with identifiable soft tissue component (that can be evaluated by CT/MRI) must be present. Part B1: patients must have measurable disease",
+          "structured": {
+            "type": "finding_required",
+            "text_rule": "Measurable disease per RECIST 1.1 or at least one lytic/mixed lytic-blastic bone lesion with soft tissue component. Part B1 requires measurable disease.",
+            "keywords": [
+              "recist",
+              "measurable disease",
+              "lytic bone lesion"
+            ]
+          }
+        },
+        {
+          "id": "INC-6",
+          "category": "Biomarker / Tissue",
+          "text": "4.Subject has adequate tumor tissue to identify the PIK3CA mutation status (either carrying a mutation or without a mutation) and the PTEN loss status; both of which will determine whether the 5.subject can be allocated to Part A - PIK3CA mutation regardless of PTEN status; or to Part B - PTEN loss without a PIK3CA mutation",
+          "structured": {
+            "type": "finding_required",
+            "text_rule": "Adequate tumor tissue for PIK3CA mutation and PTEN loss status allocation.",
+            "keywords": [
+              "pik3ca",
+              "tumor tissue adequate"
+            ]
+          }
+        },
+        {
+          "id": "INC-7",
+          "category": "Performance Status",
+          "text": "6.Subject has an Eastern Cooperative Oncology Group (ECOG) performance status of 0 or 1",
+          "structured": {
+            "type": "lab_threshold",
+            "display": "ECOG Performance Status",
+            "operator": "<=",
+            "value": 1,
+            "unit": "score",
+            "code": "LOCAL-ECOG"
+          }
+        },
+        {
+          "id": "INC-8",
+          "category": "Prior Therapy",
+          "text": "7.Subject has received no more than one line of therapy for metastatic disease.",
+          "structured": {
+            "type": "lab_threshold",
+            "display": "Prior lines of therapy for metastatic disease",
+            "operator": "<=",
+            "value": 1,
+            "unit": "lines",
+            "code": "LOCAL-PRIORLINES"
+          }
+        },
+        {
+          "id": "INC-9",
+          "category": "Organ Function",
+          "text": "8.Subject has adequate bone marrow and organ function",
+          "structured": {
+            "type": "finding_required",
+            "text_rule": "Adequate bone marrow and organ function",
+            "keywords": [
+              "bone marrow and organ function",
+              "adequate organ function"
+            ]
           }
         }
       ],
       "exclusion": [
         {
           "id": "EXC-1",
-          "category": "social_history",
-          "text": "Current smoker.",
+          "category": "Prior Treatment",
+          "text": "1.Subject has received prior treatment with any PI3K, mTOR or AKT inhibitor",
           "structured": {
-            "type": "smoking_forbidden",
-            "forbidden_statuses": [
-              "Current smoker"
-            ]
+            "type": "medication_forbidden",
+            "display": "PI3K, mTOR, or AKT inhibitors"
           }
         },
         {
           "id": "EXC-2",
-          "category": "other",
-          "text": "Active malignancy.",
+          "category": "Hypersensitivity",
+          "text": "2.Subject has a known hypersensitivity to alpelisib, nab-paclitaxel or to any of their excipients",
           "structured": {
             "type": "condition_forbidden",
+            "display": "Hypersensitivity to alpelisib, nab-paclitaxel, or their excipients"
+          }
+        },
+        {
+          "id": "EXC-3",
+          "category": "Toxicity / Recovery",
+          "text": "3.Subject has not recovered from all toxicities related to prior anticancer therapies to NCI CTCAE version 4.03 Grade <= 1; with the exception of alopecia",
+          "structured": {
+            "type": "finding_required",
+            "text_rule": "Unresolved toxicities from prior anticancer therapies (> Grade 1 NCI CTCAE v4.03), except alopecia",
             "keywords": [
-              "active malignancy"
-            ],
-            "systems": [
-              "Synthetic"
+              "unresolved toxicity",
+              "grade 2 toxicity"
             ]
+          }
+        },
+        {
+          "id": "EXC-4",
+          "category": "Central Nervous System",
+          "text": "4.Subject has central nervous system involvement",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Central nervous system involvement"
+          }
+        },
+        {
+          "id": "EXC-5",
+          "category": "Endocrine / Diabetes",
+          "text": "5.Subject with an established diagnosis of diabetes mellitus type I or uncontrolled type II based on Fasting Plasma Glucose and HbA1c",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Type 1 diabetes mellitus or uncontrolled Type 2 diabetes mellitus"
+          }
+        },
+        {
+          "id": "EXC-6",
+          "category": "Gastrointestinal Function",
+          "text": "6.Subject has impairment of gastrointestinal (GI) function or GI disease that may significantly alter the absorption of the study drugs (e.g., ulcerative diseases, uncontrolled nausea, vomiting, diarrhea, malabsorption syndrome, or small bowel resection) based on investigator discretion",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "GI function impairment or GI disease affecting drug absorption"
+          }
+        },
+        {
+          "id": "EXC-7",
+          "category": "Pancreatitis",
+          "text": "7.Subject has a history of acute pancreatitis within 1 year of screening or past medical history of chronic pancreatitis",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Acute pancreatitis within 1 year of screening or chronic pancreatitis"
+          }
+        },
+        {
+          "id": "EXC-8",
+          "category": "Pulmonary",
+          "text": "8.Subject has currently documented pneumonitis/interstitial lung disease",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Pneumonitis or interstitial lung disease"
+          }
+        },
+        {
+          "id": "EXC-9",
+          "category": "Dermatologic / Cutaneous Reactions",
+          "text": "9.Subject has a history of severe cutaneous reactions, such as Steven-Johnson Syndrome (SJS), erythema multiforme (EM),Toxic Epidermal Necrolysis (TEN) or Drug Reaction with Eosinophilia and Systemic Syndrome (DRESS)",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Severe cutaneous reactions (SJS, EM, TEN, DRESS)"
+          }
+        },
+        {
+          "id": "EXC-10",
+          "category": "Dental / Musculoskeletal",
+          "text": "10.Subject with unresolved osteonecrosis of the jaw",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Unresolved osteonecrosis of the jaw"
           }
         }
       ]
     },
     "consent_required": true,
     "source": {
-      "clinicaltrials_gov_id": "NCT10000402",
-      "protocol_pdf_url": "trials/T402-protocol.pdf"
+      "clinicaltrials_gov_id": "NCT07012345",
+      "protocol_pdf_url": "https://clinicaltrials.gov/ct2/show/NCT07012345"
     },
-    "status": "NOT_YET_RECRUITING",
-    "sponsor": "PGIMER Chandigarh",
+    "status": "Recruiting",
+    "sponsor": "Department of Medical Oncology",
     "locations": [
-      "Chandigarh",
-      "Punjab"
+      "Comprehensive Cancer Center"
     ],
-    "start_date": "2026-06-15"
+    "start_date": "2024-10-01"
+  },
+  {
+    "id": "t-o2",
+    "title": "Evaluation of CremaGel-H for Postoperative Symptoms in Surgery of Hemorrhoids, Fistulae, and Anal Fissures",
+    "phase": "Not Applicable",
+    "condition": [
+      "Hemorrhoids",
+      "Anal Fistula",
+      "Anal Fissure"
+    ],
+    "intervention": [
+      "CremaGel-H"
+    ],
+    "eligibility": {
+      "inclusion": [
+        {
+          "id": "INC-1",
+          "category": "Age",
+          "text": "Age From 18.00 Year(s) to 64.00 Year(s)",
+          "structured": {
+            "type": "age_range",
+            "min": 18,
+            "max": 64,
+            "unit": "Year(s)"
+          }
+        },
+        {
+          "id": "INC-2",
+          "category": "Gender",
+          "text": "Both",
+          "structured": {
+            "type": "gender",
+            "value": "Both"
+          }
+        },
+        {
+          "id": "INC-3",
+          "category": "Age",
+          "text": "1. Male and female patients above 18 up to 64 years (both inclusive)",
+          "structured": {
+            "type": "age_range",
+            "min": 18,
+            "max": 64,
+            "unit": "Year(s)"
+          }
+        },
+        {
+          "id": "INC-4",
+          "category": "Surgical / Postoperative Status",
+          "text": "2. Patients who are undergoing surgery of hemorrhoids, fistulae, and / or anal fissures and are willing to take CremaGel-H for their postoperative symptoms",
+          "structured": {
+            "type": "finding_required",
+            "text_rule": "Undergoing surgery for hemorrhoids, fistulae, and/or anal fissures and willing to take CremaGel-H for postoperative symptoms",
+            "keywords": [
+              "hemorrhoidectomy",
+              "fistulotomy",
+              "anal fissure repair",
+              "hemorrhoid"
+            ]
+          }
+        },
+        {
+          "id": "INC-5",
+          "category": "Study Compliance",
+          "text": "3. Patients willing to comply with study procedures and requirements",
+          "structured": {
+            "type": "consent_required",
+            "text_rule": "Willing to comply with study procedures and requirements"
+          }
+        },
+        {
+          "id": "INC-6",
+          "category": "Informed Consent",
+          "text": "4. Patients willing to sign and date written informed consent form (ICF) to participate in the study",
+          "structured": {
+            "type": "consent_required",
+            "text_rule": "Willing to sign and date written informed consent form (ICF)"
+          }
+        }
+      ],
+      "exclusion": [
+        {
+          "id": "EXC-1",
+          "category": "Medical History / Comorbidities",
+          "text": "1. History of inflammatory bowel disease, multiple fistulas, perianal dermatitis, proctitis, pulmonary or cardiovascular complications, or poorly controlled diabetes mellitus",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Inflammatory bowel disease, multiple fistulas, perianal dermatitis, proctitis, pulmonary/cardiovascular complications, or poorly controlled diabetes mellitus"
+          }
+        },
+        {
+          "id": "EXC-2",
+          "category": "Etiology",
+          "text": "2. Anal fistulas or anal fissure due to other causes such as Crohn disease, anal suppuration, and abscesses",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Anal fistulas or anal fissure due to Crohn disease, anal suppuration, or abscesses"
+          }
+        },
+        {
+          "id": "EXC-3",
+          "category": "Recent Therapy",
+          "text": "3. Recent history (< 2 weeks) of chemotherapy",
+          "structured": {
+            "type": "medication_forbidden",
+            "display": "Chemotherapy within less than 2 weeks"
+          }
+        },
+        {
+          "id": "EXC-4",
+          "category": "Concomitant Conditions",
+          "text": "4. Diagnosis of active cancer, severe anemia, hypoalbuminemia, or immunocompromise",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Active cancer, severe anemia, hypoalbuminemia, or immunocompromise"
+          }
+        },
+        {
+          "id": "EXC-5",
+          "category": "Hypersensitivity",
+          "text": "5. Past history of hypersensitivity to any of the ingredients of the study product, including Metronidazole, Lignocaine Hydrochloride, Sucralfate, or any other ingredient in the formulation",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Hypersensitivity to Metronidazole, Lignocaine Hydrochloride, Sucralfate, or other ingredients in CremaGel-H"
+          }
+        },
+        {
+          "id": "EXC-6",
+          "category": "Medication",
+          "text": "6. Patients on Class I anti-arrhythmic drugs or anticoagulant treatment as the toxic effects are additive and generally synergistic",
+          "structured": {
+            "type": "medication_forbidden",
+            "display": "Class I anti-arrhythmic drugs or anticoagulant treatment"
+          }
+        },
+        {
+          "id": "EXC-7",
+          "category": "Investigator Discretion",
+          "text": "7. Any past or present conditions / diseases that Investigator considers inappropriate for a patient to participate in the study",
+          "structured": {
+            "type": "finding_required",
+            "text_rule": "Conditions deemed inappropriate by Investigator",
+            "keywords": [
+              "inappropriate for participation",
+              "investigator considers inappropriate"
+            ]
+          }
+        },
+        {
+          "id": "EXC-8",
+          "category": "Procedure Compliance",
+          "text": "8. Patients who are unwilling to have an examination of anal wounds",
+          "structured": {
+            "type": "consent_required",
+            "text_rule": "Unwilling to have an examination of anal wounds"
+          }
+        },
+        {
+          "id": "EXC-9",
+          "category": "Pregnancy / Lactation",
+          "text": "9. Pregnant and lactating females",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Pregnant and lactating females"
+          }
+        }
+      ]
+    },
+    "consent_required": true,
+    "source": {
+      "clinicaltrials_gov_id": "NCT07123456",
+      "protocol_pdf_url": "https://clinicaltrials.gov/ct2/show/NCT07123456"
+    },
+    "status": "Recruiting",
+    "sponsor": "Department of General Surgery",
+    "locations": [
+      "Tertiary Care Hospital"
+    ],
+    "start_date": "2024-11-01"
+  },
+  {
+    "id": "t-o3",
+    "title": "Study Evaluating Treatment Strategies in Advanced Hepatocellular Carcinoma (HCC)",
+    "phase": "Phase 2",
+    "condition": [
+      "Hepatocellular Carcinoma (HCC)",
+      "Advanced HCC"
+    ],
+    "intervention": [
+      "Targeted Therapy / Systemic Therapy"
+    ],
+    "eligibility": {
+      "inclusion": [
+        {
+          "id": "INC-1",
+          "category": "Age",
+          "text": "Age From 18.00 Year(s) to 65.00 Year(s)",
+          "structured": {
+            "type": "age_range",
+            "min": 18,
+            "max": 65,
+            "unit": "Year(s)"
+          }
+        },
+        {
+          "id": "INC-2",
+          "category": "Gender",
+          "text": "Both",
+          "structured": {
+            "type": "gender",
+            "value": "Both"
+          }
+        },
+        {
+          "id": "INC-3",
+          "category": "Diagnosis / Stage",
+          "text": "Histologic or cytologic confirmed diagnosis of HCC. Advanced HCC",
+          "structured": {
+            "type": "diagnosis_required",
+            "display": "Histologically or cytologically confirmed advanced Hepatocellular Carcinoma (HCC)",
+            "keywords": [
+              "hepatocellular carcinoma",
+              "hcc",
+              "liver cancer"
+            ]
+          }
+        },
+        {
+          "id": "INC-4",
+          "category": "Prior Therapy / Eligibility",
+          "text": "Disease not eligible for surgical and / or locoregional therapies",
+          "structured": {
+            "type": "finding_required",
+            "text_rule": "Disease not eligible for surgical and/or locoregional therapies",
+            "keywords": [
+              "not eligible for surgical",
+              "not amenable to surgical or locoregional"
+            ]
+          }
+        },
+        {
+          "id": "INC-5",
+          "category": "Disease Progression",
+          "text": "Progressive disease after surgical and / or locoregional therapies",
+          "structured": {
+            "type": "finding_required",
+            "text_rule": "Progressive disease after surgical and/or locoregional therapies",
+            "keywords": [
+              "progressive disease after",
+              "progressive disease following"
+            ]
+          }
+        },
+        {
+          "id": "INC-6",
+          "category": "Hepatic Function",
+          "text": "Child-Pugh Class A",
+          "structured": {
+            "type": "finding_required",
+            "text_rule": "Child-Pugh Class A",
+            "keywords": [
+              "child-pugh class a",
+              "child pugh a"
+            ]
+          }
+        },
+        {
+          "id": "INC-7",
+          "category": "Performance Status",
+          "text": "ECOG performance status 0-1",
+          "structured": {
+            "type": "lab_threshold",
+            "display": "ECOG Performance Status",
+            "operator": "<=",
+            "value": 1,
+            "unit": "score",
+            "code": "LOCAL-ECOG"
+          }
+        },
+        {
+          "id": "INC-8",
+          "category": "Organ Function",
+          "text": "Adequate hematologic, hepatic, and renal function",
+          "structured": {
+            "type": "finding_required",
+            "text_rule": "Adequate hematologic, hepatic, and renal function",
+            "keywords": [
+              "adequate hematologic",
+              "hematologic, hepatic, and renal"
+            ]
+          }
+        }
+      ],
+      "exclusion": [
+        {
+          "id": "EXC-1",
+          "category": "Prior Therapy",
+          "text": "Prior use of any systemic anti-cancer chemotherapy, immunotherapy or molecular targeted agents for HCC",
+          "structured": {
+            "type": "medication_forbidden",
+            "display": "Prior systemic anti-cancer chemotherapy, immunotherapy, or molecular targeted agents for HCC"
+          }
+        },
+        {
+          "id": "EXC-2",
+          "category": "Cardiovascular",
+          "text": "History of active cardiac disease",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Active cardiac disease"
+          }
+        },
+        {
+          "id": "EXC-3",
+          "category": "Vascular / Embolic Events",
+          "text": "Thrombotic or embolic events within the past 6 months",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Thrombotic or embolic events within the past 6 months"
+          }
+        },
+        {
+          "id": "EXC-4",
+          "category": "Hemorrhage / Bleeding",
+          "text": "Any other hemorrhage/bleeding event >= CTCAE Grade 3 within 4 weeks except for esophageal or gastric varices",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Hemorrhage/bleeding event >= Grade 3 CTCAE within 4 weeks (except esophageal or gastric varices)"
+          }
+        },
+        {
+          "id": "EXC-5",
+          "category": "Gastrointestinal / Administration",
+          "text": "Inability to swallow tablets or untreated malabsorption syndrome",
+          "structured": {
+            "type": "condition_forbidden",
+            "display": "Inability to swallow tablets or untreated malabsorption syndrome"
+          }
+        }
+      ]
+    },
+    "consent_required": true,
+    "source": {
+      "clinicaltrials_gov_id": "NCT07234567",
+      "protocol_pdf_url": "https://clinicaltrials.gov/ct2/show/NCT07234567"
+    },
+    "status": "Recruiting",
+    "sponsor": "Department of Surgical Oncology",
+    "locations": [
+      "Tertiary Care Cancer Center"
+    ],
+    "start_date": "2024-12-01"
   }
 ]

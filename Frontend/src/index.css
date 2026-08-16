@@ -280,6 +280,7 @@ body {
   display: inline-block;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
+.spin { animation: spin 0.7s linear infinite; }
 
 .stream-cursor {
   display: inline-block;

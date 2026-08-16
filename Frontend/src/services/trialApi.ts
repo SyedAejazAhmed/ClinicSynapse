@@ -16,7 +16,12 @@ function toCriterion(c: any): Criterion {
 function toTrial(t: any): Trial {
   return {
     id: t.id,
-    ctriId: (t.title as string).split(':')[0].trim(),
+    // Older seed data prefixed titles with "CTRI/…: Actual title" — this
+    // dataset's titles don't, so falling back to the raw title here would
+    // just repeat it verbatim next to the real title in the UI.
+    ctriId: (t.title as string).includes(':')
+      ? (t.title as string).split(':')[0].trim()
+      : (t.id as string).toUpperCase(),
     title: t.title,
     condition: (t.condition ?? []).join(', '),
     phase: t.phase ?? 'Unknown',

@@ -39,8 +39,10 @@ TRIAL (see app/data/trials.json)
 
 `structured.type` (see matching_engine.CRITERION_EVALUATORS) is one of:
   age_range, diagnosis_required, lab_threshold, medication_required,
-  condition_forbidden, smoking_forbidden, free_text (always routes to REVIEW —
-  it's not machine-checkable, that's the point of the three-state model).
+  medication_forbidden, condition_forbidden, smoking_forbidden, gender,
+  consent_required, data_available_required, finding_required,
+  reproductive_exclusion, free_text (always routes to REVIEW — it's not
+  machine-checkable, that's the point of the three-state model).
 
 Every criterion is evaluated independently, so a new `structured.type` can be
 added to matching_engine.CRITERION_EVALUATORS without touching the rest of
@@ -193,16 +195,22 @@ class MatchRequest(BaseModel):
 
 
 # ---------------------------------------------------------------------------
-# Accounts (mock auth — Admin sees every trial, a Doctor sees only the
-# trials assigned to them). No passwords: this is a demo-only identity
-# picker, not a real auth system — see README for what a real ABDM-style
-# deployment would need instead.
+# Accounts (mock auth — Admin sees every trial/patient, a Doctor sees only
+# the trials assigned to them, grouped by a single medical specialty (a
+# diabetes doctor is assigned diabetes trials, not one diabetes trial and
+# three unrelated oncology trials) — plus only the patients relevant to
+# those trials (ELIGIBLE or NEEDS_REVIEW on at least one), not the full
+# 200-patient roster. No passwords: this is a demo-only identity picker,
+# not a real auth system — see README for what a real ABDM-style deployment
+# would need instead.
 # ---------------------------------------------------------------------------
 class Account(BaseModel):
     id: str
     name: str
     role: Literal["ADMIN", "DOCTOR"]
     initials: str
+    specialty: str = ""
+    condition_keywords: list[str] = Field(default_factory=list)
     assigned_trial_ids: list[str] = Field(default_factory=list)
 
 
@@ -211,11 +219,14 @@ class Account(BaseModel):
 #
 # A Study is a real trial (trial_id) actually being run, with a handful of
 # real patients (patient_id) enrolled as research subjects. Participants are
-# drawn from patients the deterministic matching engine actually finds
-# ELIGIBLE for that trial — this is synthetic data, generated once (see
-# scripts/generate_studies.py-equivalent used to build the JSON), not live,
-# but every number the frontend displays (participant count, reports today,
-# adverse event count) is computed from these records, not hand-typed mock
+# drawn from patients the deterministic matching engine evaluates as
+# ELIGIBLE for that trial, or — since most of this dataset's trials carry at
+# least one `free_text` criterion that can never auto-resolve to PASS (see
+# matching_engine.py) — as NEEDS_REVIEW with the fewest unresolved criteria,
+# modeling a coordinator who cleared those items by hand. This is synthetic
+# data, generated once (see data/generate_studies.py), not live, but every
+# number the frontend displays (participant count, reports today, adverse
+# event count) is computed from these records, not hand-typed mock
 # constants. Ask the Research Assistant about it and the answer is grounded
 # in these exact records.
 # ---------------------------------------------------------------------------
