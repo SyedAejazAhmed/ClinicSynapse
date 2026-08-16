@@ -26,7 +26,7 @@ export default function Audit() {
   const filtered = filter === 'All' ? AUDIT_LOGS : AUDIT_LOGS.filter(l => l.type === filter);
 
   return (
-    <div style={{ maxWidth: 800 }}>
+    <div>
       <div className="flex items-center gap-2 mb-1">
         <Shield size={18} style={{ color: 'var(--accent)' }} />
         <div className="page-title" style={{ marginBottom: 0 }}>Audit Log</div>

@@ -60,7 +60,7 @@ export default function Dashboard() {
         ))}
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 16, marginBottom: 20 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: 16, marginBottom: 20 }}>
         <div className="card">
           <div className="section-title" style={{ marginBottom: 14 }}>Match Status</div>
           {ELIGIBILITY.map(e => (

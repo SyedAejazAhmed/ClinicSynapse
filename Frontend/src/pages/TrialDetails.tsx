@@ -19,59 +19,63 @@ export default function TrialDetails() {
   if (!trial) return <div className="empty-state"><p>Trial not found.</p></div>;
 
   return (
-    <div style={{ maxWidth: 760 }}>
+    <div>
       <button className="btn btn-ghost btn-sm mb-3" onClick={() => nav(-1)} style={{ marginBottom: 16 }}>
         <ArrowLeft size={13} /> Back
       </button>
 
-      {/* Header */}
-      <div className="card mb-4" style={{ marginBottom: 16 }}>
-        <div className="flex items-center justify-between mb-2">
-          <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.5px' }}>{trial.ctriId}</span>
-          <StatusBadge status={trial.status} />
-        </div>
-        <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 14, letterSpacing: '-0.3px' }}>
-          {trial.title}
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px 24px' }}>
-          <InfoRow icon={<Building2 size={13} />} label="Sponsor" value={trial.sponsor} />
-          <InfoRow icon={null} label="Phase" value={trial.phase} />
-          <InfoRow icon={null} label="Start Date" value={new Date(trial.startDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })} />
-          <InfoRow icon={<MapPin size={13} />} label="Locations" value={trial.locations.join(' · ')} />
-        </div>
-      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: '2fr 3fr', gap: 14, alignItems: 'stretch' }}>
 
-      {/* Eligibility */}
-      <div className="card mb-4" style={{ marginBottom: 16 }}>
-        <div className="section-title" style={{ marginBottom: 14 }}>Eligibility Criteria</div>
-
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
-          <div>
-            <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--green)', textTransform: 'uppercase', letterSpacing: '0.7px', marginBottom: 10 }}>
-              Inclusion
-            </div>
-            {trial.inclusionCriteria.map(c => (
-              <div key={c.id} className="flex items-center gap-2" style={{ marginBottom: 8 }}>
-                <span style={{ color: 'var(--green)', fontWeight: 700, fontSize: 13, flexShrink: 0 }}>✓</span>
-                <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>{c.text}</span>
-              </div>
-            ))}
+        {/* LEFT — header info */}
+        <div className="card">
+          <div className="flex items-center justify-between mb-2">
+            <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.5px' }}>{trial.ctriId}</span>
+            <StatusBadge status={trial.status} />
           </div>
-          <div>
-            <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--red)', textTransform: 'uppercase', letterSpacing: '0.7px', marginBottom: 10 }}>
-              Exclusion
-            </div>
-            {trial.exclusionCriteria.map(c => (
-              <div key={c.id} className="flex items-center gap-2" style={{ marginBottom: 8 }}>
-                <span style={{ color: 'var(--red)', fontWeight: 700, fontSize: 13, flexShrink: 0 }}>✕</span>
-                <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>{c.text}</span>
-              </div>
-            ))}
+          <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 14, letterSpacing: '-0.3px' }}>
+            {trial.title}
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px 24px' }}>
+            <InfoRow icon={<Building2 size={13} />} label="Sponsor" value={trial.sponsor} />
+            <InfoRow icon={null} label="Phase" value={trial.phase} />
+            <InfoRow icon={null} label="Start Date" value={new Date(trial.startDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })} />
+            <InfoRow icon={<MapPin size={13} />} label="Locations" value={trial.locations.join(' · ')} />
           </div>
         </div>
+
+        {/* RIGHT — eligibility criteria */}
+        <div className="card">
+          <div className="section-title" style={{ marginBottom: 14 }}>Eligibility Criteria</div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+            <div>
+              <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--green)', textTransform: 'uppercase', letterSpacing: '0.7px', marginBottom: 10 }}>
+                Inclusion
+              </div>
+              {trial.inclusionCriteria.map(c => (
+                <div key={c.id} className="flex items-center gap-2" style={{ marginBottom: 8 }}>
+                  <span style={{ color: 'var(--green)', fontWeight: 700, fontSize: 13, flexShrink: 0 }}>✓</span>
+                  <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>{c.text}</span>
+                </div>
+              ))}
+            </div>
+            <div>
+              <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--red)', textTransform: 'uppercase', letterSpacing: '0.7px', marginBottom: 10 }}>
+                Exclusion
+              </div>
+              {trial.exclusionCriteria.map(c => (
+                <div key={c.id} className="flex items-center gap-2" style={{ marginBottom: 8 }}>
+                  <span style={{ color: 'var(--red)', fontWeight: 700, fontSize: 13, flexShrink: 0 }}>✕</span>
+                  <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>{c.text}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
       </div>
 
-      <div className="flex gap-2">
+      {/* Buttons — centered below both cards */}
+      <div style={{ display: 'flex', justifyContent: 'center', gap: 12, marginTop: 20 }}>
         <button className="btn btn-primary" onClick={() => nav(`/matching?trialId=${trial.id}`)}>
           <Users size={13} /> Find Matching Patients
         </button>
