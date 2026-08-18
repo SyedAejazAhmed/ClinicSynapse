@@ -489,16 +489,6 @@ def _single_match_answer(patient_id: str, trial_id: str) -> dict:
 
 
 def _detect_patient_lookup_query(question: str) -> str | None:
-    """A question naming a specific KNOWN patient with no trial attached
-    ('who is P-1004', 'tell me about P-1004') is a direct identity lookup —
-    answered from the full patient roster, deliberately bypassing whatever
-    study_id the chat happens to be scoped to. Scoping to 'patients enrolled
-    in the currently selected study' makes sense for cohort/aggregate
-    questions, but not for 'who is this specific, named patient' — that
-    patient is real and in the database whether or not they're enrolled in
-    whichever study tab is currently open, and the previous behavior (silently
-    filtering the search corpus down to only enrolled participants) made a
-    real patient look nonexistent, which is worse than not scoping at all."""
     m = _PATIENT_ID_PATTERN.search(question)
     if not m:
         return None
