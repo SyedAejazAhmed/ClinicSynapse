@@ -1,24 +1,27 @@
 """
 Turns unstructured trial protocol text into the structured TrialCriteria
-schema (see models.py) using the Anthropic API.
+schema (see models.py) using whichever LLM backend utils/llm_provider.py
+resolves — Ollama (gpt-oss:20b by default) if reachable, else Groq if
+GROQ_API_KEY is set, else the legacy LM Studio fallback. Same provider chain
+as extract_rules.py and research_assistant.py, so a friend running this with
+only a GROQ_API_KEY in .env gets the same behavior as someone running Ollama.
 
 Deliberate design choice: this module ONLY does unstructured -> structured
 extraction. It never decides eligibility — that stays in matching_engine.py
 as plain deterministic rules, so every eligibility decision is reproducible
 and auditable.
 
-Reliability for a live demo: if ANTHROPIC_API_KEY is missing, the network is
-unavailable, or the model output fails to parse, we fall back to the
-`fallback_criteria` already embedded in data/trials.json instead of crashing
-mid-demo. Swap in a live call whenever you want to show the "AI extraction"
-step live; the fallback is what keeps the rest of the app usable regardless.
+Reliability for a live demo: if no LLM provider is reachable, or the model
+output fails to parse, we fall back to the `fallback_criteria` already
+embedded in data/trials.json instead of crashing mid-demo. Swap in a live
+call whenever you want to show the "AI extraction" step live; the fallback
+is what keeps the rest of the app usable regardless.
 
 TODO(claude-code): if you add real PDF upload, extract text with PyMuPDF
 first (pip install pymupdf), then pass that text into extract_criteria().
 """
 
 import json
-import os
 from models import TrialCriteria
 
 EXTRACTION_SYSTEM_PROMPT = """You convert clinical trial eligibility protocols into structured JSON.
@@ -42,18 +45,22 @@ Rules:
 - Output must be valid JSON parseable by json.loads with no surrounding text."""
 
 
-def _call_claude(raw_protocol_text: str) -> dict:
-    import anthropic  # pip install anthropic
+def _call_llm(raw_protocol_text: str) -> dict:
+    from utils.llm_provider import resolve_provider, get_llm_client, get_llm_model
 
-    client = anthropic.Anthropic()  # reads ANTHROPIC_API_KEY from env
-    resp = client.messages.create(
-        model="claude-sonnet-4-6",
-        max_tokens=1000,
-        system=EXTRACTION_SYSTEM_PROMPT,
-        messages=[{"role": "user", "content": raw_protocol_text}],
+    provider = resolve_provider()
+    client = get_llm_client()
+    kwargs = {"extra_body": {"reasoning_effort": "low"}} if provider == "ollama" else {}
+    resp = client.chat.completions.create(
+        model=get_llm_model(),
+        temperature=0,
+        messages=[
+            {"role": "system", "content": EXTRACTION_SYSTEM_PROMPT},
+            {"role": "user", "content": raw_protocol_text},
+        ],
+        **kwargs,
     )
-    text_blocks = [b.text for b in resp.content if b.type == "text"]
-    raw = "".join(text_blocks).strip()
+    raw = resp.choices[0].message.content.strip()
     raw = raw.removeprefix("```json").removeprefix("```").removesuffix("```").strip()
     return json.loads(raw)
 
@@ -65,18 +72,16 @@ def extract_criteria(raw_protocol_text: str, fallback: dict | None = None) -> Tr
     the demo. Prints a short note either way so it's obvious in the terminal
     which path was used.
     """
-    has_key = bool(os.environ.get("ANTHROPIC_API_KEY"))
-    if has_key:
-        try:
-            data = _call_claude(raw_protocol_text)
-            print("[extraction] used live Claude extraction")
-            return TrialCriteria(**data)
-        except Exception as e:  # noqa: BLE001 - demo-safety fallback is intentional
-            print(f"[extraction] live extraction failed ({e}); using fallback criteria")
+    try:
+        data = _call_llm(raw_protocol_text)
+        print("[extraction] used live LLM extraction")
+        return TrialCriteria(**data)
+    except Exception as e:  # noqa: BLE001 - demo-safety fallback is intentional
+        print(f"[extraction] live extraction failed ({e}); using fallback criteria")
 
     if fallback is not None:
         return TrialCriteria(**fallback)
 
     raise RuntimeError(
-        "No ANTHROPIC_API_KEY set and no fallback criteria provided for this trial."
+        "No LLM provider reachable (Ollama/Groq/LM Studio) and no fallback criteria provided for this trial."
     )

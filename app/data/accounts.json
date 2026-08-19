@@ -8,8 +8,8 @@
     "assigned_trial_ids": []
   },
   {
-    "id": "dr-meera-nair",
-    "name": "Dr. Meera Nair",
+    "id": "Dr. Syed Aejaz Ahmed A",
+    "name": "Dr. Syed Aejaz Ahmed A",
     "role": "DOCTOR",
     "initials": "MN",
     "specialty": "Endocrinology / Diabetes",
@@ -17,8 +17,8 @@
     "assigned_trial_ids": ["t-1", "t-d1", "t-d2", "t-d3", "t-d5", "t-d9"]
   },
   {
-    "id": "dr-arjun-sharma",
-    "name": "Dr. Arjun Sharma",
+    "id": "Dr. Rahul Boby",
+    "name": "Dr. Rahul Boby",
     "role": "DOCTOR",
     "initials": "AS",
     "specialty": "Oncology",
@@ -26,8 +26,17 @@
     "assigned_trial_ids": ["t-2", "t-3", "t-4", "t-5", "t-6", "t-7", "t-9", "t-o1", "t-o2", "t-o3"]
   },
   {
-    "id": "dr-priya-menon",
-    "name": "Dr. Priya Menon",
+    "id": "Dr. Lohithadevi",
+    "name": "Dr. Lohithadevi",
+    "role": "DOCTOR",
+    "initials": "PM",
+    "specialty": "Psychiatry / General Medicine",
+    "condition_keywords": ["somatoform", "anxiety", "psychiatric", "mental", "pediatric"],
+    "assigned_trial_ids": ["t-8", "t-d4", "t-d6", "t-d7", "t-d8"]
+  },
+  {
+    "id": "Dr. Rishieshwari",
+    "name": "Dr. Rishieshwari",
     "role": "DOCTOR",
     "initials": "PM",
     "specialty": "Psychiatry / General Medicine",

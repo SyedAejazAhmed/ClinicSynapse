@@ -40,18 +40,18 @@ but unrelated sources next to a "not found" answer. Both the FAISS path and
 the keyword fallback path now honor this: no relevant evidence -> empty
 sources -> the frontend shows nothing rather than misleading citations.
 
-LLM synthesis tries, in order: a local Ollama model (gpt-oss:20b by default —
-see app/utils/llm_provider.py) if Ollama is actually reachable with that
-model pulled, then the Anthropic API if ANTHROPIC_API_KEY is set, then an
-extractive summary of the retrieved snippets. Nothing here ever raises —
-every step degrades to the next instead of erroring, mirroring extraction.py's
-"never let the fallback break" rule.
+LLM synthesis tries, in order: a local Ollama model (gpt-oss:20b by default)
+if Ollama is actually reachable with that model pulled, then the Groq API if
+GROQ_API_KEY is set, then the legacy LM Studio fallback, then an extractive
+summary of the retrieved snippets — see app/utils/llm_provider.py for the
+full resolution order. Nothing here ever raises — every step degrades to the
+next instead of erroring, mirroring extraction.py's "never let the fallback
+break" rule.
 If sentence-transformers/faiss aren't importable (e.g. no internet to fetch
 the embedding model), semantic retrieval falls back to keyword overlap.
 """
 
 import json
-import os
 import re
 from collections import defaultdict
 from pathlib import Path
@@ -846,7 +846,7 @@ def format_source_label(doc: dict) -> str:
 
 
 def _extractive_summary(hits: list[dict]) -> tuple[str, list[str]]:
-    answer = "Relevant evidence retrieved from the current dataset (set ANTHROPIC_API_KEY or run Ollama for a narrative summary):"
+    answer = "Relevant evidence retrieved from the current dataset (set GROQ_API_KEY or run Ollama for a narrative summary):"
     points = [h["text"][:180] + ("…" if len(h["text"]) > 180 else "") for h in hits[:5]]
     return answer, points
 
@@ -869,49 +869,44 @@ def _parse_llm_json(raw: str) -> tuple[str | None, list[str] | None]:
     return answer, points
 
 
-def _synthesize_ollama(question: str, evidence: str) -> tuple[str | None, list[str] | None]:
-    """Local-first synthesis via Ollama (gpt-oss:20b by default). Returns
-    (None, None) if Ollama isn't actually reachable with the model pulled, so
-    callers can fall through to the next provider without erroring."""
+def _describe_provider() -> str:
+    """Human-readable label for whichever provider actually answered, shown
+    in the response's `basedOn` line so it's obvious in the UI which one ran."""
+    from utils.llm_provider import resolve_provider, get_llm_model
+
+    provider = resolve_provider()
+    label = {"ollama": "Ollama", "groq": "Groq", "lm_studio": "LM Studio"}.get(provider, provider)
+    return f"{label} ({get_llm_model()})"
+
+
+def _synthesize_llm(question: str, evidence: str) -> tuple[str | None, list[str] | None]:
+    """Synthesis via whichever provider utils/llm_provider.py resolves —
+    Ollama (gpt-oss:20b by default) if reachable with the model pulled,
+    else Groq if GROQ_API_KEY is set (the expected path for anyone running
+    this without a local Ollama install), else the legacy LM Studio
+    fallback. Returns (None, None) if nothing is reachable so the caller
+    degrades to the extractive summary instead of erroring."""
     try:
         from utils.llm_provider import resolve_provider, get_llm_client, get_llm_model
 
-        if resolve_provider() != "ollama":
-            return None, None
-
+        provider = resolve_provider()
         client = get_llm_client()
+        # gpt-oss defaults to heavy chain-of-thought; this task doesn't need it
+        # — ~2x faster with no quality loss observed. Other providers don't
+        # support this param.
+        kwargs = {"extra_body": {"reasoning_effort": "low"}} if provider == "ollama" else {}
         resp = client.chat.completions.create(
             model=get_llm_model(),
             temperature=0,
-            extra_body={"reasoning_effort": "low"},  # gpt-oss defaults to heavy chain-of-thought; this task doesn't need it — ~2x faster with no quality loss observed
             messages=[
                 {"role": "system", "content": _SYNTH_SYSTEM_PROMPT},
                 {"role": "user", "content": f"Question: {question}\n\nEvidence:\n{evidence}"},
             ],
+            **kwargs,
         )
         return _parse_llm_json(resp.choices[0].message.content)
     except Exception as e:
-        print(f"[research_assistant] Ollama synthesis failed, trying next provider: {e}")
-        return None, None
-
-
-def _synthesize_anthropic(question: str, evidence: str) -> tuple[str | None, list[str] | None]:
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if not api_key:
-        return None, None
-    try:
-        import anthropic
-
-        client = anthropic.Anthropic()
-        resp = client.messages.create(
-            model="claude-sonnet-4-6",
-            max_tokens=600,
-            system=_SYNTH_SYSTEM_PROMPT,
-            messages=[{"role": "user", "content": f"Question: {question}\n\nEvidence:\n{evidence}"}],
-        )
-        return _parse_llm_json(resp.content[0].text)
-    except Exception as e:
-        print(f"[research_assistant] Anthropic synthesis failed, using extractive fallback: {e}")
+        print(f"[research_assistant] LLM synthesis failed, using extractive fallback: {e}")
         return None, None
 
 
@@ -932,7 +927,7 @@ def build_evidence_text(hits: list[dict]) -> str:
 
 def stream_llm_answer(question: str, evidence: str, fallback: str):
     """Yields answer text chunks as they're generated, for a live-typing UI.
-    Same provider order as _synthesize (Ollama -> Anthropic -> fallback), but
+    Same provider order as _synthesize (Ollama -> Groq -> fallback), but
     falls through to the next provider only if the current one produced no
     output at all — once a provider has started streaming text, the response
     commits to it rather than restarting mid-stream. `fallback` is yielded
@@ -940,49 +935,29 @@ def stream_llm_answer(question: str, evidence: str, fallback: str):
     try:
         from utils.llm_provider import resolve_provider, get_llm_client, get_llm_model
 
-        if resolve_provider() == "ollama":
-            client = get_llm_client()
-            stream = client.chat.completions.create(
-                model=get_llm_model(),
-                temperature=0,
-                stream=True,
-                extra_body={"reasoning_effort": "low"},
-                messages=[
-                    {"role": "system", "content": _STREAM_SYSTEM_PROMPT},
-                    {"role": "user", "content": f"Question: {question}\n\nEvidence:\n{evidence}"},
-                ],
-            )
-            got_any = False
-            for chunk in stream:
-                text = chunk.choices[0].delta.content
-                if text:
-                    got_any = True
-                    yield text
-            if got_any:
-                return
+        provider = resolve_provider()
+        client = get_llm_client()
+        kwargs = {"extra_body": {"reasoning_effort": "low"}} if provider == "ollama" else {}
+        stream = client.chat.completions.create(
+            model=get_llm_model(),
+            temperature=0,
+            stream=True,
+            messages=[
+                {"role": "system", "content": _STREAM_SYSTEM_PROMPT},
+                {"role": "user", "content": f"Question: {question}\n\nEvidence:\n{evidence}"},
+            ],
+            **kwargs,
+        )
+        got_any = False
+        for chunk in stream:
+            text = chunk.choices[0].delta.content
+            if text:
+                got_any = True
+                yield text
+        if got_any:
+            return
     except Exception as e:
-        print(f"[research_assistant] Ollama streaming failed, trying next provider: {e}")
-
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if api_key:
-        try:
-            import anthropic
-
-            client = anthropic.Anthropic()
-            with client.messages.stream(
-                model="claude-sonnet-4-6",
-                max_tokens=400,
-                system=_STREAM_SYSTEM_PROMPT,
-                messages=[{"role": "user", "content": f"Question: {question}\n\nEvidence:\n{evidence}"}],
-            ) as stream:
-                got_any = False
-                for text in stream.text_stream:
-                    got_any = True
-                    yield text
-                if got_any:
-                    return
-        except Exception as e:
-            print(f"[research_assistant] Anthropic streaming failed, using fallback text: {e}")
+        print(f"[research_assistant] LLM streaming failed, using fallback text: {e}")
 
     yield fallback
 
@@ -998,14 +973,8 @@ def _synthesize(question: str, hits: list[dict]) -> dict:
 
     evidence = build_evidence_text(hits)
 
-    provider_used = None
-    answer, points = _synthesize_ollama(question, evidence)
-    if answer is not None and points is not None:
-        provider_used = "Ollama (gpt-oss:20b)"
-    else:
-        answer, points = _synthesize_anthropic(question, evidence)
-        if answer is not None and points is not None:
-            provider_used = "Anthropic Claude"
+    answer, points = _synthesize_llm(question, evidence)
+    provider_used = _describe_provider() if answer is not None and points is not None else None
 
     if answer is None or points is None:
         answer, points = _extractive_summary(hits)
@@ -1205,34 +1174,20 @@ def _plan_tool_call(question: str, study_id: str | None) -> tuple[str, dict] | N
     try:
         from utils.llm_provider import resolve_provider, get_llm_client, get_llm_model
 
-        if resolve_provider() == "ollama":
-            client = get_llm_client()
-            resp = client.chat.completions.create(
-                model=get_llm_model(), temperature=0,
-                extra_body={"reasoning_effort": "low"},  # tool selection is a quick classification, not deep reasoning
-                messages=[{"role": "system", "content": system}, {"role": "user", "content": question}],
-            )
-            plan = _parse_plan(resp.choices[0].message.content)
-            if plan:
-                return plan
+        provider = resolve_provider()
+        client = get_llm_client()
+        # tool selection is a quick classification, not deep reasoning
+        kwargs = {"extra_body": {"reasoning_effort": "low"}} if provider == "ollama" else {}
+        resp = client.chat.completions.create(
+            model=get_llm_model(), temperature=0,
+            messages=[{"role": "system", "content": system}, {"role": "user", "content": question}],
+            **kwargs,
+        )
+        plan = _parse_plan(resp.choices[0].message.content)
+        if plan:
+            return plan
     except Exception as e:
-        print(f"[research_assistant] Ollama tool planning failed, trying next provider: {e}")
-
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if api_key:
-        try:
-            import anthropic
-
-            client = anthropic.Anthropic()
-            resp = client.messages.create(
-                model="claude-sonnet-4-6", max_tokens=200, system=system,
-                messages=[{"role": "user", "content": question}],
-            )
-            plan = _parse_plan(resp.content[0].text)
-            if plan:
-                return plan
-        except Exception as e:
-            print(f"[research_assistant] Anthropic tool planning failed: {e}")
+        print(f"[research_assistant] LLM tool planning failed: {e}")
 
     return None
 
@@ -1311,39 +1266,23 @@ def _generate_follow_ups(question: str, answer: str) -> list[str]:
     try:
         from utils.llm_provider import resolve_provider, get_llm_client, get_llm_model
 
-        if resolve_provider() == "ollama":
-            client = get_llm_client()
-            resp = client.chat.completions.create(
-                model=get_llm_model(), temperature=0.4,
-                extra_body={"reasoning_effort": "low"},
-                messages=[
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user},
-                ],
-            )
-            raw = re.sub(r"^```(json)?|```$", "", resp.choices[0].message.content.strip(), flags=re.MULTILINE).strip()
-            follow_ups = json.loads(raw).get("follow_ups")
-            if follow_ups:
-                return [str(f) for f in follow_ups][:3]
+        provider = resolve_provider()
+        client = get_llm_client()
+        kwargs = {"extra_body": {"reasoning_effort": "low"}} if provider == "ollama" else {}
+        resp = client.chat.completions.create(
+            model=get_llm_model(), temperature=0.4,
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user},
+            ],
+            **kwargs,
+        )
+        raw = re.sub(r"^```(json)?|```$", "", resp.choices[0].message.content.strip(), flags=re.MULTILINE).strip()
+        follow_ups = json.loads(raw).get("follow_ups")
+        if follow_ups:
+            return [str(f) for f in follow_ups][:3]
     except Exception as e:
-        print(f"[research_assistant] follow-up generation failed, trying next provider: {e}")
-
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if api_key:
-        try:
-            import anthropic
-
-            client = anthropic.Anthropic()
-            resp = client.messages.create(
-                model="claude-sonnet-4-6", max_tokens=150, system=system_prompt,
-                messages=[{"role": "user", "content": user}],
-            )
-            raw = re.sub(r"^```(json)?|```$", "", resp.content[0].text.strip(), flags=re.MULTILINE).strip()
-            follow_ups = json.loads(raw).get("follow_ups")
-            if follow_ups:
-                return [str(f) for f in follow_ups][:3]
-        except Exception as e:
-            print(f"[research_assistant] follow-up generation failed: {e}")
+        print(f"[research_assistant] follow-up generation failed: {e}")
 
     return []
 
@@ -1367,9 +1306,7 @@ def _compute_answer(question: str, study_id: str | None) -> dict:
         facts = TOOLS[tool_name]["fn"](args, study_id)
         if facts is not None:
             evidence = _facts_to_evidence(facts)
-            answer, points = _synthesize_ollama(question, evidence)
-            if answer is None:
-                answer, points = _synthesize_anthropic(question, evidence)
+            answer, points = _synthesize_llm(question, evidence)
             if answer is None or points is None:
                 answer, points = facts["answer"], facts["points"]
             return {"answer": answer, "points": points, "basedOn": facts["basedOn"], "sources": facts["sources"]}

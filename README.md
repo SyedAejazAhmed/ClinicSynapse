@@ -134,7 +134,7 @@ FastAPI service layer, extraction pipeline, deterministic matching engine, and t
 | **Backend API** | FastAPI, Pydantic v2, Uvicorn |
 | **OCR** | RapidOCR (ONNX Runtime) + pypdfium2, Pillow |
 | **Local LLM (extraction + RAG synthesis)** | **Ollama running `gpt-oss:20b` locally**, via an OpenAI-compatible client |
-| **LLM fallbacks** | Groq (`llama-3.3-70b-versatile`), LM Studio, Anthropic API |
+| **LLM fallbacks** | Groq (`llama-3.3-70b-versatile`), LM Studio |
 | **Retrieval** | `sentence-transformers` (`all-MiniLM-L6-v2`) + FAISS, with a keyword-overlap fallback when offline |
 | **Frontend** | React 19, TypeScript, Vite, React Router, lucide-react |
 | **Linting** | oxlint |
@@ -154,13 +154,12 @@ ollama serve
 
 The provider-resolution order (see `app/utils/llm_provider.py` and `.env.example`) is:
 
-1. **Ollama** (`gpt-oss:20b` by default) — used automatically if reachable at `OLLAMA_BASE_URL` with the model pulled.
-2. **Groq API** — if `GROQ_API_KEY` is set and Ollama isn't reachable.
+1. **Ollama** (`gpt-oss:20b` by default) — used automatically if reachable at `OLLAMA_BASE_URL` with the model pulled. This is what the primary author runs locally — no key needed.
+2. **Groq API** — if `GROQ_API_KEY` is set and Ollama isn't reachable. This is the path for anyone cloning the repo without a local Ollama install: set one env var and everything (criteria extraction, OCR cleaning, research-assistant synthesis) works the same way, no local model required.
 3. **LM Studio** — legacy local fallback via `LLM_BASE_URL` / `LLM_API_KEY` / `LLM_MODEL`.
-4. **Anthropic API** — used by the research-assistant synthesis step if `ANTHROPIC_API_KEY` is set and nothing local is available.
-5. **Extractive fallback** — if no LLM backend is reachable at all, the app degrades gracefully to deterministic/extractive answers instead of erroring. It never crashes for lack of a key.
+4. **Extractive fallback** — if no LLM backend is reachable at all, the app degrades gracefully to deterministic/extractive answers instead of erroring. It never crashes for lack of a key.
 
-You can force a specific backend with `LLM_PROVIDER=ollama|groq|lm_studio`.
+`.env` at the repo root is loaded automatically on backend startup (via `python-dotenv`), so `cp .env.example .env` and filling in `GROQ_API_KEY` is all a fresh clone needs. You can also force a specific backend with `LLM_PROVIDER=ollama|groq|lm_studio`.
 
 ---
 
@@ -210,7 +209,7 @@ ClinicSynapse/
 
 - Python 3.11+
 - Node.js 18+ and npm
-- [Ollama](https://ollama.com) (recommended, for a fully local/offline run) with `gpt-oss:20b` pulled — or a `GROQ_API_KEY` / `ANTHROPIC_API_KEY` as an alternative
+- [Ollama](https://ollama.com) (recommended, for a fully local/offline run) with `gpt-oss:20b` pulled — or a `GROQ_API_KEY` ([free tier](https://console.groq.com/keys)) as an alternative if you don't want to run a local model
 
 ### 1. Backend
 
@@ -220,8 +219,9 @@ cd ClinicSynapse
 
 pip install -r requirements.txt        # add --break-system-packages on Debian/Ubuntu
 
-cp .env.example .env                   # configure Ollama / Groq / Anthropic as you prefer
-# Default .env already points at a local Ollama instance — no key required
+cp .env.example .env                   # configure Ollama / Groq as you prefer
+# Default .env already points at a local Ollama instance — no key required.
+# No Ollama? Just set GROQ_API_KEY in .env instead — everything else works the same.
 
 cd app
 uvicorn main:app --reload --port 8000

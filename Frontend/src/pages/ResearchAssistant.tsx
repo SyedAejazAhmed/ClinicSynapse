@@ -38,7 +38,7 @@ export default function ResearchAssistant() {
 
       {selectedStudy && (
         <div>
-          <div className="card card-sm mb-4" style={{ marginBottom: 16, background: 'var(--accent-light)', border: '1px solid #bfdbfe' }}>
+          <div className="card card-sm mb-4" style={{ marginBottom: 16, background: 'var(--accent-light)', border: '1px solid var(--accent-border)' }}>
             <div style={{ fontSize: 12, color: 'var(--accent)', fontWeight: 600 }}>Active Study Context</div>
             <div style={{ fontSize: 13.5, fontWeight: 600, marginTop: 2 }}>{selectedStudy.id}</div>
             <div style={{ fontSize: 12.5, color: 'var(--text-secondary)', marginTop: 1 }}>

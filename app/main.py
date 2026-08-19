@@ -28,6 +28,10 @@ Endpoints:
 import json
 from pathlib import Path
 
+from dotenv import load_dotenv
+
+load_dotenv()  # picks up the repo-root .env (Ollama/Groq/LM Studio config) before any provider is resolved
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
