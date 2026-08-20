@@ -26,7 +26,6 @@ const ADMIN_NAV = [
   { to: '/studies', label: 'Studies', icon: BookOpen },
   { to: '/reports', label: 'Reports', icon: BarChart2 },
   { to: '/research', label: 'Research AI', icon: Sparkles },
-  { to: '/audit', label: 'Audit', icon: Shield },
 ];
 
 // A doctor account only sees the trials assigned to them (enforced by the
