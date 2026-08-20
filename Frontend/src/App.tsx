@@ -15,7 +15,6 @@ import StudyDetails from './pages/StudyDetails';
 import ReportsOverview from './pages/ReportsOverview';
 import Reports from './pages/Reports';
 import ResearchAssistant from './pages/ResearchAssistant';
-import Audit from './pages/Audit';
 import Login from './pages/Login';
 import { useAuth } from './context/AuthContext';
 
