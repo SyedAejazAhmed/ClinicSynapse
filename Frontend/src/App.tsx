@@ -118,7 +118,6 @@ export default function App() {
             {isAdmin && <Route path="/reports" element={<ReportsOverview />} />}
             {isAdmin && <Route path="/reports/:studyId/:subjectId" element={<Reports />} />}
             <Route path="/research" element={<ResearchAssistant />} />
-            {isAdmin && <Route path="/audit" element={<Audit />} />}
             <Route path="/login" element={<Navigate to="/" replace />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
