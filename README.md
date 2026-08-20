@@ -74,24 +74,24 @@ And for a navigable, AI-generated explanation of every module and how it fits to
 ### High-level data flow
 
 ```
-                    ┌──────────────────────────┐
+                    ┌───────────────────────────┐
                     │  Trial Protocol (PDF)     │
                     └────────────┬──────────────┘
                                  │  OCR (RapidOCR + pypdfium2)
                                  ▼
-                    ┌──────────────────────────┐
+                    ┌───────────────────────────┐
                     │  Local LLM Extraction     │   Ollama gpt-oss:20b (local)
                     │  (extract_rules.py)       │   → Groq → LM Studio → fallback
                     └────────────┬──────────────┘
                                  │  structured TrialCriteria (JSON)
                                  ▼
 ┌───────────────────┐   ┌──────────────────────────┐   ┌────────────────────┐
-│  Patient Record    │──▶│  Deterministic Matching   │──▶│  Evidence-backed    │
-│  (EMR-shaped JSON) │   │  Engine (matching_engine) │   │  MatchResult        │
+│  Patient Record   │──>│  Deterministic Matching  │──>│  Evidence-backed   │
+│ (EMR-shaped JSON) │   │ Engine (matching_engine) │   │    MatchResult     │
 └───────────────────┘   └──────────────────────────┘   └────────────────────┘
                                                                    │
-                    ┌──────────────────────────┐                  │
-                    │  Hybrid RAG Research      │◀─────────────────┘
+                    ┌───────────────────────────┐                  │
+                    │  Hybrid RAG Research      │<─────────────────┘
                     │  Assistant (FAISS +       │   cohort Q&A, cited
                     │  sentence-transformers)   │   sources, computed stats
                     └────────────┬──────────────┘
