@@ -19,9 +19,9 @@ echo "$PROJECT_DIR"
 echo
 
 # Check if virtual environment exists
-if [ ! -f ".venv/bin/python" ]; then
+if [ ! -f "synapse/bin/python" ]; then
     echo "ERROR: Python virtual environment not found."
-    echo "Expected: $PROJECT_DIR/.venv/bin/python"
+    echo "Expected: $PROJECT_DIR/synapse/bin/python"
     exit 1
 fi
 
@@ -39,7 +39,7 @@ echo "Starting ClinicSynapse Backend..."
 
 cd "$PROJECT_DIR/app"
 
-"$PROJECT_DIR/.venv/bin/python" -m uvicorn main:app --reload --port 8000 &
+"$PROJECT_DIR/synapse/bin/python" -m uvicorn main:app --reload --port 8000 &
 
 BACKEND_PID=$!
 
