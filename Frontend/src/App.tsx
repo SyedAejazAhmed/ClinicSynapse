@@ -1,7 +1,7 @@
 import { NavLink, Routes, Route, Navigate } from 'react-router-dom';
 import {
   LayoutDashboard, FlaskConical, Users, GitMerge,
-  BookOpen, BarChart2, Sparkles, Shield, LogOut,
+  BookOpen, BarChart2, Sparkles, LogOut,
 } from 'lucide-react';
 import Dashboard from './pages/Dashboard';
 import Trials from './pages/Trials';
