@@ -242,7 +242,33 @@ Open the printed Vite URL (typically **http://localhost:5173**).
 
 > No LLM configured? The app still runs end-to-end — extraction and research-assistant answers gracefully fall back to pre-baked structured criteria / extractive summaries instead of erroring.
 
-### 3. Verify the research assistant without the UI
+### 3. Docker (alternative to steps 1 & 2)
+
+Runs the backend (FastAPI + uvicorn) and frontend (Vite build served by nginx) together via `docker-compose.yml`, with the backend healthcheck gating frontend startup.
+
+```bash
+cp .env.example .env                   # configure Ollama / Groq as you prefer
+
+# Build the images and start both services
+docker compose up --build
+
+# Or run detached
+docker compose up --build -d
+
+# Tail logs
+docker compose logs -f
+
+# Stop and remove the containers
+docker compose down
+```
+
+- Backend: **http://localhost:8000** (docs at `/docs`)
+- Frontend: **http://localhost:5173**
+- On Linux, the backend container reaches a host-run Ollama instance via `host.docker.internal` (already wired in `docker-compose.yml`) — set `OLLAMA_BASE_URL=http://host.docker.internal:11434` in `.env`.
+- To point the built frontend at a different backend URL, set `VITE_API_BASE_URL` before building, e.g. `VITE_API_BASE_URL=http://localhost:8000 docker compose up --build`.
+- Rebuild after dependency changes with `docker compose build --no-cache`.
+
+### 4. Verify the research assistant without the UI
 
 ```bash
 curl -s http://localhost:8000/api/research/query \

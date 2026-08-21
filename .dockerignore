@@ -1,0 +1,7 @@
+synapse/
+Frontend/
+dataset/
+.git/
+.env
+**/__pycache__/
+*.pyc
