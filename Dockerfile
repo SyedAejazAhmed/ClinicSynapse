@@ -15,6 +15,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Bake the embedding model into the image so the container never needs
+# network access at runtime (avoids a ~70s DNS-retry storm on startup that
+# can blow past the healthcheck window when the host has no internet).
+RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')"
+ENV HF_HUB_OFFLINE=1
+
 COPY app/ ./app
 
 WORKDIR /code/app
