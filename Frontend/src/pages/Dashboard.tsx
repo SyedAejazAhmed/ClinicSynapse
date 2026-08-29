@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GitMerge, FlaskConical, AlertTriangle } from 'lucide-react';
+import { GitMerge, FlaskConical, AlertTriangle, Users } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { API_BASE } from '../services/apiBase';
+import { getTrials } from '../services/trialApi';
+import { getPatients } from '../services/patientApi';
+import DonutChart from '../components/charts/DonutChart';
+import MiniCalendar from '../components/MiniCalendar';
 
 interface Stats {
   trials: number;
@@ -11,11 +15,24 @@ interface Stats {
   eligibility: { ELIGIBLE: number; NEEDS_REVIEW: number; INELIGIBLE: number };
 }
 
+interface TrialStatusBreakdown {
+  completed: number;
+  undergoing: number;
+}
+
+interface PatientGenderBreakdown {
+  male: number;
+  female: number;
+  other: number;
+}
+
 export default function Dashboard() {
   const nav = useNavigate();
   const { account } = useAuth();
   const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [trialStatus, setTrialStatus] = useState<TrialStatusBreakdown>({ completed: 0, undergoing: 0 });
+  const [patientGender, setPatientGender] = useState<PatientGenderBreakdown>({ male: 0, female: 0, other: 0 });
 
   useEffect(() => {
     const url = new URL(`${API_BASE}/api/stats`);
@@ -24,6 +41,24 @@ export default function Dashboard() {
       .then(res => res.json())
       .then(setStats)
       .finally(() => setLoading(false));
+  }, [account]);
+
+  // Trial status and patient gender breakdowns aren't part of /api/stats,
+  // so they're derived client-side from the existing trials/patients lists —
+  // no backend changes needed for the dashboard's new summary widgets.
+  useEffect(() => {
+    const doctorId = account?.role === 'DOCTOR' ? account.id : undefined;
+    getTrials(doctorId).then(trials => {
+      const completed = trials.filter(t => t.status === 'COMPLETED').length;
+      setTrialStatus({ completed, undergoing: trials.length - completed });
+    });
+    getPatients(doctorId).then(patients => {
+      setPatientGender({
+        male: patients.filter(p => p.sex === 'Male').length,
+        female: patients.filter(p => p.sex === 'Female').length,
+        other: patients.filter(p => p.sex === 'Other').length,
+      });
+    });
   }, [account]);
 
   if (loading || !stats) {
@@ -58,6 +93,54 @@ export default function Dashboard() {
             <div className="stat-label">{s.label}</div>
           </div>
         ))}
+      </div>
+
+      <div className="analytics-grid">
+        {/* Total Trials — dominant center number with status donut */}
+        <div className="card">
+          <div className="section-title" style={{ marginBottom: 12 }}>Total Trials</div>
+          <DonutChart
+            centerValue={stats.trials}
+            centerLabel="Trials"
+            segments={[
+              { label: 'Undergoing', value: trialStatus.undergoing, color: 'var(--accent)' },
+              { label: 'Completed', value: trialStatus.completed, color: 'var(--border)' },
+            ]}
+          />
+        </div>
+
+        {/* Total Patients — smaller companion summary with gender split */}
+        <div className="card">
+          <div className="flex items-center gap-2" style={{ marginBottom: 12 }}>
+            <Users size={14} style={{ color: 'var(--accent)' }} />
+            <span className="section-title" style={{ marginBottom: 0 }}>Total Patients</span>
+          </div>
+          <div style={{ fontSize: 30, fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.8px', marginBottom: 12 }}>
+            {stats.patients.toLocaleString('en-IN')}
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {[
+              { label: 'Male', count: patientGender.male, color: 'var(--accent)' },
+              { label: 'Female', count: patientGender.female, color: 'var(--pink)' },
+            ].map(g => {
+              const pct = stats.patients > 0 ? Math.round((g.count / stats.patients) * 100) : 0;
+              return (
+                <div key={g.label}>
+                  <div className="flex items-center justify-between" style={{ marginBottom: 3 }}>
+                    <span style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{g.label}</span>
+                    <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--text-primary)' }}>{g.count}</span>
+                  </div>
+                  <div className="progress-bar" style={{ height: 5 }}>
+                    <div className="progress-fill" style={{ width: `${pct}%`, background: g.color }} />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Calendar — dates, selection, and important-date markers */}
+        <MiniCalendar />
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: 16, marginBottom: 20 }}>

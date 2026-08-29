@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { getTrials } from '../services/trialApi';
 import type { Trial } from '../types/trial';
 import TrialCard from '../components/TrialCard';
+import TrialEligibilityFunnelPanel from '../components/TrialEligibilityFunnelPanel';
 import { useAuth } from '../context/AuthContext';
 import { Search } from 'lucide-react';
 
@@ -21,6 +22,7 @@ export default function Trials() {
   const [state, setState] = useState('All States');
   const [ageRange, setAgeRange] = useState('All Ages');
   const [sex, setSex] = useState('All');
+  const [selectedTrialId, setSelectedTrialId] = useState<string | null>(null);
 
   useEffect(() => {
     const doctorId = account?.role === 'DOCTOR' ? account.id : undefined;
@@ -48,7 +50,8 @@ export default function Trials() {
   });
 
   return (
-    <div>
+    <div className="trial-explorer-layout">
+      <div className="trial-explorer-main">
       <div className="page-title">Trial Explorer</div>
       <div className="page-subtitle">{trials.length} trials in registry</div>
 
@@ -103,9 +106,21 @@ export default function Trials() {
         <div className="empty-state"><p>No trials match your filters.</p></div>
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(420px, 1fr))', gap: 16 }}>
-          {filtered.map(t => <TrialCard key={t.id} trial={t} />)}
+          {filtered.map(t => (
+            <TrialCard
+              key={t.id}
+              trial={t}
+              selected={t.id === selectedTrialId}
+              onSelect={setSelectedTrialId}
+            />
+          ))}
         </div>
       )}
+      </div>
+
+      <div className="trial-explorer-side">
+        <TrialEligibilityFunnelPanel trials={trials} selectedTrialId={selectedTrialId} />
+      </div>
     </div>
   );
 }
