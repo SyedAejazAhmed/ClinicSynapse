@@ -2548,5 +2548,1322 @@
       "Tertiary Care Cancer Center"
     ],
     "start_date": "2024-12-01"
-  }
+  },
+
+    {
+      "id": "t-a1",
+      "title": "A study to find extent of use of complementary alternative medicine such as Ayurveda, Homoeopathy, Unani, Herbal remedies, Home remedies Panchkarma and Yoga with patients satisfaction in Breast cancer",
+      "phase": "N/A",
+      "condition": [
+        "Breast Cancer",
+        "Complementary and Alternative Medicine Use"
+      ],
+      "intervention": [
+        "Ayurveda",
+        "Homoeopathy",
+        "Unani",
+        "Herbal Remedies",
+        "Home Remedies",
+        "Panchkarma",
+        "Yoga"
+      ],
+      "eligibility": {
+        "inclusion": [
+          {
+            "id": "INC-1",
+            "category": "Age",
+            "text": "Age From 18.00 Year(s) to 70.00 Year(s)",
+            "structured": {
+              "type": "age_range",
+              "min": 18,
+              "max": 70,
+              "unit": "Year(s)"
+            }
+          },
+          {
+            "id": "INC-2",
+            "category": "Gender",
+            "text": "Female",
+            "structured": {
+              "type": "gender",
+              "value": "Female"
+            }
+          },
+          {
+            "id": "INC-3",
+            "category": "Consent",
+            "text": "Willingness to give voluntarily informed consent",
+            "structured": {
+              "type": "consent_required"
+            }
+          },
+          {
+            "id": "INC-4",
+            "category": "Diagnosis",
+            "text": "Participant diagnosed for Breast cancer in outpatient clinic",
+            "structured": {
+              "type": "diagnosis_required",
+              "display": "Breast cancer",
+              "keywords": [
+                "breast cancer"
+              ]
+            }
+          },
+          {
+            "id": "INC-5",
+            "category": "Prior / Current Therapy",
+            "text": "Patient who is taking CAM along with established therapy or who have stopped using CAM within last one year",
+            "structured": {
+              "type": "finding_required",
+              "text_rule": "Current CAM use with established therapy or stopped CAM within previous year"
+            }
+          }
+        ],
+        "exclusion": [
+          {
+            "id": "EXC-1",
+            "category": "Concurrent Trial",
+            "text": "Patient participating in any other IRB approved interventional study at Tata Memorial Hospital",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Participation in another interventional study"
+            }
+          },
+          {
+            "id": "EXC-2",
+            "category": "Pregnancy",
+            "text": "Pregnant and lactating women",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Pregnancy or lactation"
+            }
+          },
+          {
+            "id": "EXC-3",
+            "category": "CAM Use",
+            "text": "Patient using CAM for other reason than Breast cancer",
+            "structured": {
+              "type": "finding_required",
+              "text_rule": "CAM use must relate to Breast cancer"
+            }
+          },
+          {
+            "id": "EXC-4",
+            "category": "Psychiatric",
+            "text": "Patient suffering from psychological disorder",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Psychological disorder"
+            }
+          }
+        ]
+      },
+      "consent_required": true,
+      "source": {
+        "clinicaltrials_gov_id": null,
+        "ctri_id": "CTRI/2011/05/001749",
+        "protocol_pdf_url": "https://ctri.nic.in/Clinicaltrials/pmaindet2.php?EncHid=MzAyNQ==&Enc=&userName="
+      },
+      "status": "Open to Recruitment",
+      "sponsor": "Investigator initiative - Dr U M Thatte",
+      "locations": [
+        "Tata Memorial Hospital, Parel, Mumbai, Maharashtra, India"
+      ],
+      "start_date": "2011-05-11"
+    },
+    {
+      "id": "t-a2",
+      "title": "Spastic Cerebral Palsy and its management by Ayurveda",
+      "phase": "Phase 2/Phase 3",
+      "condition": [
+        "Spastic Cerebral Palsy",
+        "Developmental Disability"
+      ],
+      "intervention": [
+        "Chaturbhadra Kalpa Basti",
+        "Yoga Basti",
+        "Udvartana",
+        "Abhyanga",
+        "Ashtanga Ghrita"
+      ],
+      "eligibility": {
+        "inclusion": [
+          {
+            "id": "INC-1",
+            "category": "Age",
+            "text": "Age From 3.00 Year(s) to 10.00 Year(s)",
+            "structured": {
+              "type": "age_range",
+              "min": 3,
+              "max": 10,
+              "unit": "Year(s)"
+            }
+          },
+          {
+            "id": "INC-2",
+            "category": "Gender",
+            "text": "Both",
+            "structured": {
+              "type": "gender",
+              "value": "Both"
+            }
+          },
+          {
+            "id": "INC-3",
+            "category": "Developmental Status",
+            "text": "Children with developmental disability of both physical and mental",
+            "structured": {
+              "type": "finding_required",
+              "text_rule": "Developmental disability"
+            }
+          },
+          {
+            "id": "INC-4",
+            "category": "Development",
+            "text": "Delayed milestone",
+            "structured": {
+              "type": "finding_required",
+              "text_rule": "Delayed developmental milestones"
+            }
+          }
+        ],
+        "exclusion": [
+          {
+            "id": "EXC-1",
+            "category": "Congenital Disorder",
+            "text": "Children with major congenital disorder and with other types of CP",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Major congenital disorder or other type of cerebral palsy"
+            }
+          },
+          {
+            "id": "EXC-2",
+            "category": "Comorbidity",
+            "text": "Children with other disease status like diabetes, acute infection",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Diabetes or acute infection"
+            }
+          }
+        ]
+      },
+      "consent_required": true,
+      "source": {
+        "clinicaltrials_gov_id": null,
+        "ctri_id": "CTRI/2011/11/002157",
+        "protocol_pdf_url": "https://ctri.nic.in/Clinicaltrials/pmaindet2.php?EncHid=MzY2NA==&Enc=&userName="
+      },
+      "status": "Open to Recruitment",
+      "sponsor": "Institute for Post Graduate Teaching and Research in Ayurveda",
+      "locations": [
+        "Institute for Post Graduate Teaching and Research in Ayurveda, Gujarat Ayurved University, Jamnagar, Gujarat, India"
+      ],
+      "start_date": "2010-11-15"
+    },
+    {
+      "id": "t-a3",
+      "title": "Cerebral palsy and its management with ayurveda",
+      "phase": "Phase 1",
+      "condition": [
+        "Cerebral Palsy"
+      ],
+      "intervention": [
+        "Samvardhan Ghrita",
+        "Yoga Basti",
+        "Udvartana",
+        "Abhyanga"
+      ],
+      "eligibility": {
+        "inclusion": [
+          {
+            "id": "INC-1",
+            "category": "Age",
+            "text": "Age From 1.00 Year(s) to 10.00 Year(s)",
+            "structured": {
+              "type": "age_range",
+              "min": 1,
+              "max": 10,
+              "unit": "Year(s)"
+            }
+          },
+          {
+            "id": "INC-2",
+            "category": "Gender",
+            "text": "Both",
+            "structured": {
+              "type": "gender",
+              "value": "Both"
+            }
+          },
+          {
+            "id": "INC-3",
+            "category": "Severity",
+            "text": "Children with severe type of disability (GMFCS score upto 5)",
+            "structured": {
+              "type": "lab_threshold",
+              "display": "GMFCS Score",
+              "operator": "<=",
+              "value": 5,
+              "unit": "score",
+              "code": "LOCAL-GMFCS"
+            }
+          }
+        ],
+        "exclusion": [
+          {
+            "id": "EXC-1",
+            "category": "Congenital Disorder",
+            "text": "Children with major congenital disorder viz. diabetes, acute infection",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Major congenital disorder, diabetes, or acute infection"
+            }
+          }
+        ]
+      },
+      "consent_required": true,
+      "source": {
+        "clinicaltrials_gov_id": null,
+        "ctri_id": "CTRI/2011/12/002298",
+        "protocol_pdf_url": "https://ctri.nic.in/Clinicaltrials/pmaindet2.php?EncHid=Mzg3OA==&Enc=&userName="
+      },
+      "status": "Completed",
+      "sponsor": "Institute for Post Graduate Teaching and Research in Ayurveda",
+      "locations": [
+        "Department of Kaumarabhritya, Institute for Post Graduate Teaching and Research in Ayurveda, Gujarat Ayurved University, Jamnagar, Gujarat, India"
+      ],
+      "start_date": "2011-11-23"
+    },
+    {
+      "id": "t-a4",
+      "title": "Anaemia in growing girls and its treatment with ayurveda",
+      "phase": "Phase 2/Phase 3",
+      "condition": [
+        "Pandu",
+        "Iron Deficiency Anaemia"
+      ],
+      "intervention": [
+        "Dhatri Lauha",
+        "Dhatri Lauha with Koshtha Shuddhi and Deepana-Pachana",
+        "Iron and Folic Acid"
+      ],
+      "eligibility": {
+        "inclusion": [
+          {
+            "id": "INC-1",
+            "category": "Age",
+            "text": "Age From 10.00 Year(s) to 16.00 Year(s)",
+            "structured": {
+              "type": "age_range",
+              "min": 10,
+              "max": 16,
+              "unit": "Year(s)"
+            }
+          },
+          {
+            "id": "INC-2",
+            "category": "Gender",
+            "text": "Female",
+            "structured": {
+              "type": "gender",
+              "value": "Female"
+            }
+          },
+          {
+            "id": "INC-3",
+            "category": "Diagnosis",
+            "text": "Adolescent girls with clinical features of pandu roga and HB less than 11.5 g/dl",
+            "structured": {
+              "type": "lab_threshold",
+              "display": "Hemoglobin",
+              "operator": "<",
+              "value": 11.5,
+              "unit": "g/dL",
+              "code": "LOINC-718-7"
+            }
+          },
+          {
+            "id": "INC-4",
+            "category": "Symptoms",
+            "text": "Pallor of conjunctiva and palate, fatigue, weakness, anorexia, emaciation and poor performance at school",
+            "structured": {
+              "type": "finding_required",
+              "text_rule": "Clinical features of iron deficiency anaemia"
+            }
+          }
+        ],
+        "exclusion": [
+          {
+            "id": "EXC-1",
+            "category": "Hematologic",
+            "text": "Patients with thalassemia",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Thalassemia"
+            }
+          },
+          {
+            "id": "EXC-2",
+            "category": "Cardiac",
+            "text": "Cardiac complaints",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Cardiac disease"
+            }
+          },
+          {
+            "id": "EXC-3",
+            "category": "Severe Anaemia",
+            "text": "Hb less than 7 g/dl",
+            "structured": {
+              "type": "lab_threshold",
+              "display": "Hemoglobin",
+              "operator": "<",
+              "value": 7,
+              "unit": "g/dL",
+              "code": "LOINC-718-7"
+            }
+          },
+          {
+            "id": "EXC-4",
+            "category": "Chronic Blood Loss",
+            "text": "Condition of chronic blood loss like piles, sprue, worm infestation",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Chronic blood loss or listed gastrointestinal/parasitic conditions"
+            }
+          },
+          {
+            "id": "EXC-5",
+            "category": "Renal",
+            "text": "Renal disorder",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Renal disorder"
+            }
+          },
+          {
+            "id": "EXC-6",
+            "category": "Other Disease",
+            "text": "TB or Juvenile diabetes mellitus",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Tuberculosis or juvenile diabetes mellitus"
+            }
+          }
+        ]
+      },
+      "consent_required": true,
+      "source": {
+        "clinicaltrials_gov_id": null,
+        "ctri_id": "CTRI/2011/12/002299",
+        "protocol_pdf_url": "https://ctri.nic.in/Clinicaltrials/pmaindet2.php?EncHid=Mzg4NA==&Enc=&userName="
+      },
+      "status": "Not Yet Recruiting",
+      "sponsor": "Institute of Postgraduate Teaching and Research in Ayurveda",
+      "locations": [
+        "Institute of Postgraduate Teaching and Research in Ayurveda, Gujarat Ayurved University, Jamnagar, Gujarat, India"
+      ],
+      "start_date": "2012-01-04"
+    },
+    {
+      "id": "t-a5",
+      "title": "Anaemia in growing girls and its treatment with ayurveda",
+      "phase": "Phase 2/Phase 3",
+      "condition": [
+        "Pandu",
+        "Iron Deficiency Anaemia"
+      ],
+      "intervention": [
+        "Dhatri Lauha",
+        "Dhatri Lauha with Koshtha Shuddhi and Deepana-Pachana",
+        "Iron and Folic Acid"
+      ],
+      "eligibility": {
+        "inclusion": [
+          {
+            "id": "INC-1",
+            "category": "Age",
+            "text": "Age From 10.00 Year(s) to 16.00 Year(s)",
+            "structured": {
+              "type": "age_range",
+              "min": 10,
+              "max": 16,
+              "unit": "Year(s)"
+            }
+          },
+          {
+            "id": "INC-2",
+            "category": "Gender",
+            "text": "Female",
+            "structured": {
+              "type": "gender",
+              "value": "Female"
+            }
+          },
+          {
+            "id": "INC-3",
+            "category": "Diagnosis",
+            "text": "Adolescent girls with clinical features of pandu roga and HB less than 11.5g/dl",
+            "structured": {
+              "type": "lab_threshold",
+              "display": "Hemoglobin",
+              "operator": "<",
+              "value": 11.5,
+              "unit": "g/dL",
+              "code": "LOINC-718-7"
+            }
+          }
+        ],
+        "exclusion": [
+          {
+            "id": "EXC-1",
+            "category": "Hematologic",
+            "text": "Patients with thalassemia",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Thalassemia"
+            }
+          },
+          {
+            "id": "EXC-2",
+            "category": "Cardiac",
+            "text": "Cardiac complaints",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Cardiac disease"
+            }
+          },
+          {
+            "id": "EXC-3",
+            "category": "Severe Anaemia",
+            "text": "Hb less than 7g/dl",
+            "structured": {
+              "type": "lab_threshold",
+              "display": "Hemoglobin",
+              "operator": "<",
+              "value": 7,
+              "unit": "g/dL",
+              "code": "LOINC-718-7"
+            }
+          },
+          {
+            "id": "EXC-4",
+            "category": "Chronic Blood Loss",
+            "text": "Condition of chronic blood loss like piles, sprue, worm infestation",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Chronic blood loss or listed gastrointestinal/parasitic conditions"
+            }
+          },
+          {
+            "id": "EXC-5",
+            "category": "Renal",
+            "text": "Renal disorder",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Renal disorder"
+            }
+          },
+          {
+            "id": "EXC-6",
+            "category": "Other Disease",
+            "text": "TB or Juvenile diabetes mellitus",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Tuberculosis or juvenile diabetes mellitus"
+            }
+          }
+        ]
+      },
+      "consent_required": true,
+      "source": {
+        "clinicaltrials_gov_id": null,
+        "ctri_id": "CTRI/2011/12/002299",
+        "protocol_pdf_url": "https://ctri.nic.in/Clinicaltrials/pmaindet2.php?EncHid=Mzg4NA==&Enc=&userName="
+      },
+      "status": "Not Yet Recruiting",
+      "sponsor": "Institute of Postgraduate Teaching and Research in Ayurveda",
+      "locations": [
+        "Institute of Postgraduate Teaching and Research in Ayurveda, Gujarat Ayurved University, Jamnagar, Gujarat, India"
+      ],
+      "start_date": "2012-01-04"
+    },
+    {
+      "id": "t-a6",
+      "title": "White discharge during pregnancy and its treatment with ayurveda",
+      "phase": "Phase 2/Phase 3",
+      "condition": [
+        "Upapluta Yonivyapada",
+        "Vulvovaginitis During Pregnancy",
+        "White Vaginal Discharge"
+      ],
+      "intervention": [
+        "Panchavalkaladi Ointment",
+        "Panchavalkaladi Varti",
+        "Clotrimazole 100 mg",
+        "Clindamycin 100 mg"
+      ],
+      "eligibility": {
+        "inclusion": [
+          {
+            "id": "INC-1",
+            "category": "Age",
+            "text": "Age From 19.00 Year(s) to 40.00 Year(s)",
+            "structured": {
+              "type": "age_range",
+              "min": 19,
+              "max": 40,
+              "unit": "Year(s)"
+            }
+          },
+          {
+            "id": "INC-2",
+            "category": "Gender",
+            "text": "Female",
+            "structured": {
+              "type": "gender",
+              "value": "Female"
+            }
+          },
+          {
+            "id": "INC-3",
+            "category": "Pregnancy",
+            "text": "After completion of first trimester of pregnancy",
+            "structured": {
+              "type": "pregnancy_stage",
+              "display": "Pregnancy after first trimester"
+            }
+          },
+          {
+            "id": "INC-4",
+            "category": "Symptoms",
+            "text": "White discharge present during examination",
+            "structured": {
+              "type": "finding_required",
+              "text_rule": "White vaginal discharge"
+            }
+          },
+          {
+            "id": "INC-5",
+            "category": "Inflammation",
+            "text": "Inflammation present in vulva and vagina",
+            "structured": {
+              "type": "finding_required",
+              "text_rule": "Vulvar and vaginal inflammation"
+            }
+          },
+          {
+            "id": "INC-6",
+            "category": "Microbiology",
+            "text": "Pathogens present in wet slide study and vaginal swab culture",
+            "structured": {
+              "type": "finding_required",
+              "text_rule": "Pathogen detected by wet slide or vaginal swab culture"
+            }
+          }
+        ],
+        "exclusion": [
+          {
+            "id": "EXC-1",
+            "category": "Age",
+            "text": "Age below 19 yrs or above 40 yrs with non specific vulvovaginitis",
+            "structured": {
+              "type": "age_exclusion",
+              "min_exclusive": 19,
+              "max_exclusive": 40
+            }
+          },
+          {
+            "id": "EXC-2",
+            "category": "Hypersensitivity",
+            "text": "Hypersensitivity to drug and inability to conform the protocol",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Drug hypersensitivity or inability to follow protocol"
+            }
+          },
+          {
+            "id": "EXC-3",
+            "category": "Organ Disease",
+            "text": "Severe physical illness, organic pathology, hepatic, cardiac or renal disease, or acute infection",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Severe systemic or organ disease"
+            }
+          },
+          {
+            "id": "EXC-4",
+            "category": "Systemic Disease",
+            "text": "Diabetes, TB, STD or HIV",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Diabetes, tuberculosis, sexually transmitted disease or HIV"
+            }
+          },
+          {
+            "id": "EXC-5",
+            "category": "Pregnancy",
+            "text": "First trimester of pregnancy",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "First trimester pregnancy"
+            }
+          }
+        ]
+      },
+      "consent_required": true,
+      "source": {
+        "clinicaltrials_gov_id": null,
+        "ctri_id": "CTRI/2018/03/012320",
+        "protocol_pdf_url": "https://ctri.nic.in/Clinicaltrials/pmaindet2.php?EncHid=NDczNQ==&Enc=&userName="
+      },
+      "status": "Open to Recruitment",
+      "sponsor": "Institute of Postgraduate Teaching and Research in Ayurveda",
+      "locations": [
+        "Institute of Postgraduate Teaching and Research in Ayurveda, Gujarat Ayurved University, Jamnagar, Gujarat, India"
+      ],
+      "start_date": "2011-11-22"
+    },
+    {
+      "id": "t-a7",
+      "title": "Infertility Management of Tubal Factor in Ayurveda",
+      "phase": "Phase 3",
+      "condition": [
+        "Infertility",
+        "Tubal Factor Infertility",
+        "Fallopian Tube Blockage"
+      ],
+      "intervention": [
+        "Yava Kshara Taila Uttara Basti",
+        "Kumari Taila Uttara Basti"
+      ],
+      "eligibility": {
+        "inclusion": [
+          {
+            "id": "INC-1",
+            "category": "Age",
+            "text": "Age From 19.00 Year(s) to 40.00 Year(s)",
+            "structured": {
+              "type": "age_range",
+              "min": 19,
+              "max": 40,
+              "unit": "Year(s)"
+            }
+          },
+          {
+            "id": "INC-2",
+            "category": "Gender",
+            "text": "Female",
+            "structured": {
+              "type": "gender",
+              "value": "Female"
+            }
+          },
+          {
+            "id": "INC-3",
+            "category": "Reproductive Status",
+            "text": "Patients of child bearing age with active marital life of 1 year or more having complaint of failure to conceive",
+            "structured": {
+              "type": "finding_required",
+              "text_rule": "Failure to conceive with active marital life >= 1 year"
+            }
+          },
+          {
+            "id": "INC-4",
+            "category": "Tubal Patency",
+            "text": "At least one fallopian tube blocked diagnosed by H.S.G. or SSG",
+            "structured": {
+              "type": "finding_required",
+              "text_rule": "At least one fallopian tube blocked by HSG or SSG"
+            }
+          }
+        ],
+        "exclusion": [
+          {
+            "id": "EXC-1",
+            "category": "Infection",
+            "text": "Active pelvic infection",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Active pelvic infection"
+            }
+          },
+          {
+            "id": "EXC-2",
+            "category": "Sexually Transmitted Disease",
+            "text": "Sexually transmitted diseases",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Sexually transmitted disease"
+            }
+          },
+          {
+            "id": "EXC-3",
+            "category": "Systemic Disease",
+            "text": "Any debilitating disease like T.B.",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Debilitating disease such as tuberculosis"
+            }
+          }
+        ]
+      },
+      "consent_required": true,
+      "source": {
+        "clinicaltrials_gov_id": null,
+        "ctri_id": "CTRI/2013/03/003500",
+        "protocol_pdf_url": "https://ctri.nic.in/Clinicaltrials/pmaindet2.php?EncHid=NTExNg==&Enc=&userName="
+      },
+      "status": "Open to Recruitment",
+      "sponsor": "Institute of Postgraduate Teaching and Research in Ayurveda",
+      "locations": [
+        "Institute of Postgraduate Teaching and Research in Ayurveda, Gujarat Ayurved University, Jamnagar, Gujarat, India"
+      ],
+      "start_date": "2011-12-15"
+    },
+    {
+      "id": "t-a8",
+      "title": "Study of principles of six Philosophies in Ayurveda and application of cause and effect theory in the management of Discoloration on face",
+      "phase": "Phase 2",
+      "condition": [
+        "Vyanga",
+        "Facial Discoloration"
+      ],
+      "intervention": [
+        "Badara Ointment",
+        "Ingudi Ointment"
+      ],
+      "eligibility": {
+        "inclusion": [
+          {
+            "id": "INC-1",
+            "category": "Age",
+            "text": "Age From 18.00 Year(s) to 45.00 Year(s)",
+            "structured": {
+              "type": "age_range",
+              "min": 18,
+              "max": 45,
+              "unit": "Year(s)"
+            }
+          },
+          {
+            "id": "INC-2",
+            "category": "Gender",
+            "text": "Both",
+            "structured": {
+              "type": "gender",
+              "value": "Both"
+            }
+          },
+          {
+            "id": "INC-3",
+            "category": "Diagnosis",
+            "text": "Patients selected on the basis of classical signs and symptoms of Vyanga like Prasruta Rupa, Shyama Varna and Mandala",
+            "structured": {
+              "type": "diagnosis_required",
+              "display": "Vyanga with classical signs and symptoms",
+              "keywords": [
+                "vyanga",
+                "facial discoloration"
+              ]
+            }
+          }
+        ],
+        "exclusion": [
+          {
+            "id": "EXC-1",
+            "category": "Age",
+            "text": "Age of patient less than 18 years and more than 45 years",
+            "structured": {
+              "type": "age_exclusion",
+              "min": 18,
+              "max": 45
+            }
+          },
+          {
+            "id": "EXC-2",
+            "category": "Congenital Condition",
+            "text": "Vyanga since birth",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Congenital Vyanga"
+            }
+          },
+          {
+            "id": "EXC-3",
+            "category": "Major Illness",
+            "text": "Major illness like cardiac diseases, diabetes or other chronic skin disorders",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Major systemic or chronic skin disease"
+            }
+          },
+          {
+            "id": "EXC-4",
+            "category": "Pregnancy",
+            "text": "Vyanga in pregnancy",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Pregnancy"
+            }
+          }
+        ]
+      },
+      "consent_required": true,
+      "source": {
+        "clinicaltrials_gov_id": null,
+        "ctri_id": "CTRI/2013/09/003990",
+        "protocol_pdf_url": "https://ctri.nic.in/Clinicaltrials/pmaindet2.php?EncHid=NjQ3OA==&Enc=&userName="
+      },
+      "status": "Open to Recruitment",
+      "sponsor": "Institute for Postgraduate Teaching and Research",
+      "locations": [
+        "Department of Basic Principles, Institute for Post Graduate Teaching and Research in Ayurveda, Gujarat Ayurved University, Jamnagar, Gujarat, India"
+      ],
+      "start_date": "2012-05-25"
+    },
+    {
+      "id": "t-a9",
+      "title": "Treatment of Asthma using holistic principles of Ayurveda",
+      "phase": "Phase 2",
+      "condition": [
+        "Bronchial Asthma",
+        "Chronic Stable Asthma"
+      ],
+      "intervention": [
+        "Ayurveda Treatment",
+        "Pachan Yoga",
+        "Shaman Yoga",
+        "Vyaghriharitaki",
+        "Rasayana Yoga"
+      ],
+      "eligibility": {
+        "inclusion": [
+          {
+            "id": "INC-1",
+            "category": "Age",
+            "text": "Age From 20.00 Year(s) to 60.00 Year(s)",
+            "structured": {
+              "type": "age_range",
+              "min": 20,
+              "max": 60,
+              "unit": "Year(s)"
+            }
+          },
+          {
+            "id": "INC-2",
+            "category": "Gender",
+            "text": "Both",
+            "structured": {
+              "type": "gender",
+              "value": "Both"
+            }
+          },
+          {
+            "id": "INC-3",
+            "category": "Disease Severity",
+            "text": "Mild to moderate chronic stable asthma",
+            "structured": {
+              "type": "finding_required",
+              "text_rule": "Mild to moderate chronic stable asthma"
+            }
+          }
+        ],
+        "exclusion": [
+          {
+            "id": "EXC-1",
+            "category": "Age",
+            "text": "Age less than 20 years and more than 60 years",
+            "structured": {
+              "type": "age_exclusion",
+              "min": 20,
+              "max": 60
+            }
+          }
+        ]
+      },
+      "consent_required": true,
+      "source": {
+        "clinicaltrials_gov_id": null,
+        "ctri_id": "CTRI/2014/12/005322",
+        "protocol_pdf_url": "https://ctri.nic.in/Clinicaltrials/pmaindet2.php?EncHid=Nzk3Mw==&Enc=&userName="
+      },
+      "status": "Completed",
+      "sponsor": "Principal Scientific Adviser to Government of India",
+      "locations": [
+        "Research Wing, Tilak Ayurveda Mahavidyalaya, Pune, Maharashtra, India"
+      ],
+      "start_date": "2011-04-25"
+    },
+    {
+      "id": "t-a10",
+      "title": "Dry eye syndrome and Ayurveda management",
+      "phase": "Phase 1/Phase 2",
+      "condition": [
+        "Dry Eye Syndrome",
+        "Shushkakshipaka"
+      ],
+      "intervention": [
+        "Triphaladi Yoga",
+        "Anu Tail Pratimarsha Nasya",
+        "Shunthyadi Eye Drops"
+      ],
+      "eligibility": {
+        "inclusion": [
+          {
+            "id": "INC-1",
+            "category": "Age",
+            "text": "Age From 16.00 Year(s) to 60.00 Year(s)",
+            "structured": {
+              "type": "age_range",
+              "min": 16,
+              "max": 60,
+              "unit": "Year(s)"
+            }
+          },
+          {
+            "id": "INC-2",
+            "category": "Gender",
+            "text": "Both",
+            "structured": {
+              "type": "gender",
+              "value": "Both"
+            }
+          },
+          {
+            "id": "INC-3",
+            "category": "Diagnosis",
+            "text": "Patients presenting with signs and symptoms of Dry eye syndrome",
+            "structured": {
+              "type": "diagnosis_required",
+              "display": "Dry eye syndrome",
+              "keywords": [
+                "dry eye syndrome",
+                "shushkakshipaka"
+              ]
+            }
+          },
+          {
+            "id": "INC-4",
+            "category": "Consent",
+            "text": "Willing and able to participate in the study",
+            "structured": {
+              "type": "consent_required"
+            }
+          }
+        ],
+        "exclusion": [
+          {
+            "id": "EXC-1",
+            "category": "Age",
+            "text": "Age below 16 and more than 60 years",
+            "structured": {
+              "type": "age_exclusion",
+              "min": 16,
+              "max": 60
+            }
+          },
+          {
+            "id": "EXC-2",
+            "category": "Severity",
+            "text": "Severe cases of dry eye syndrome with complications like perforated corneal ulcer, Uveitis, Glaucoma",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Severe dry eye with listed complications"
+            }
+          },
+          {
+            "id": "EXC-3",
+            "category": "Allergic Eye Disease",
+            "text": "Allergic eye disease including vernal keratoconjunctivitis and Giant papillary conjunctivitis",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Specified allergic eye disease"
+            }
+          },
+          {
+            "id": "EXC-4",
+            "category": "Medication",
+            "text": "Non specific topical beta blocker users",
+            "structured": {
+              "type": "medication_forbidden",
+              "display": "Topical beta blocker use"
+            }
+          },
+          {
+            "id": "EXC-5",
+            "category": "Inflammation",
+            "text": "Inflammatory conditions like acute conjunctivitis",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Acute inflammatory eye condition"
+            }
+          },
+          {
+            "id": "EXC-6",
+            "category": "Medication",
+            "text": "Patients on steroids, oral contraceptive pills, estrogen replacement therapy or any medication that may adversely affect the outcome",
+            "structured": {
+              "type": "medication_forbidden",
+              "display": "Specified medications affecting study outcome"
+            }
+          },
+          {
+            "id": "EXC-7",
+            "category": "Malignancy",
+            "text": "Patients with evidence of malignancy",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Malignancy"
+            }
+          },
+          {
+            "id": "EXC-8",
+            "category": "Systemic Illness",
+            "text": "Patients suffering from major systemic illness necessitating long term drug treatment",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Major systemic illness requiring long-term medication"
+            }
+          },
+          {
+            "id": "EXC-9",
+            "category": "Hypersensitivity",
+            "text": "History of hypersensitivity to trial drug or any of its ingredients",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Hypersensitivity to trial treatment"
+            }
+          }
+        ]
+      },
+      "consent_required": true,
+      "source": {
+        "clinicaltrials_gov_id": null,
+        "ctri_id": "CTRI/2015/08/006068",
+        "protocol_pdf_url": "https://ctri.nic.in/Clinicaltrials/pmaindet2.php?EncHid=MTIxMzQ=&Enc=&userName="
+      },
+      "status": "Open to Recruitment",
+      "sponsor": "IPGT AND RA GAU",
+      "locations": [
+        "IPGT AND RA, Gujarat Ayurved University, Jamnagar, Gujarat, India"
+      ],
+      "start_date": "2015-04-01"
+    },
+    {
+      "id": "t-a11",
+      "title": "Treatment of painful menstruation - ayurveda",
+      "phase": "Phase 2/Phase 3",
+      "condition": [
+        "Dysmenorrhoea",
+        "Kashtartava"
+      ],
+      "intervention": [
+        "Hingvashtaka Churna",
+        "Erand Bhrushta Haritaki Churna with Shunthi Churna"
+      ],
+      "eligibility": {
+        "inclusion": [
+          {
+            "id": "INC-1",
+            "category": "Age",
+            "text": "Age From 16.00 Year(s) to 25.00 Year(s)",
+            "structured": {
+              "type": "age_range",
+              "min": 16,
+              "max": 25,
+              "unit": "Year(s)"
+            }
+          },
+          {
+            "id": "INC-2",
+            "category": "Gender",
+            "text": "Female",
+            "structured": {
+              "type": "gender",
+              "value": "Female"
+            }
+          },
+          {
+            "id": "INC-3",
+            "category": "Symptoms",
+            "text": "Patients coming with chief complaint of painful menses",
+            "structured": {
+              "type": "finding_required",
+              "text_rule": "Painful menstruation"
+            }
+          },
+          {
+            "id": "INC-4",
+            "category": "Disease Duration",
+            "text": "Patients suffering from dysmenorrhoea more than 3 cycles",
+            "structured": {
+              "type": "finding_required",
+              "text_rule": "Dysmenorrhoea for more than 3 cycles"
+            }
+          }
+        ],
+        "exclusion": [
+          {
+            "id": "EXC-1",
+            "category": "Age",
+            "text": "Patients below 15yrs and above 25yrs",
+            "structured": {
+              "type": "age_exclusion",
+              "min": 16,
+              "max": 25
+            }
+          },
+          {
+            "id": "EXC-2",
+            "category": "Congenital Anomaly",
+            "text": "Patients having congenital anomalies leading to dysmenorrhoea",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Congenital anomaly causing dysmenorrhoea"
+            }
+          },
+          {
+            "id": "EXC-3",
+            "category": "Hormonal Therapy",
+            "text": "Patients on hormonal therapy and Oral Contraceptive pills",
+            "structured": {
+              "type": "medication_forbidden",
+              "display": "Hormonal therapy or oral contraceptive pills"
+            }
+          },
+          {
+            "id": "EXC-4",
+            "category": "Uterine Pathology",
+            "text": "Patients having any uterine pathology like fibroid, adenomyosis, endometriosis",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Uterine pathology"
+            }
+          },
+          {
+            "id": "EXC-5",
+            "category": "Acute Disease",
+            "text": "Patients suffering from acute infections or menorrhagia",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Acute infection or menorrhagia"
+            }
+          }
+        ]
+      },
+      "consent_required": true,
+      "source": {
+        "clinicaltrials_gov_id": null,
+        "ctri_id": "CTRI/2017/04/008296",
+        "protocol_pdf_url": "https://ctri.nic.in/Clinicaltrials/pmaindet2.php?EncHid=MTQ3MDk=&Enc=&userName="
+      },
+      "status": "Open to Recruitment",
+      "sponsor": "Parul Institute Of Ayurveda",
+      "locations": [
+        "Parul Ayurveda Hospital, Parul Institute of Ayurveda, Vadodara, Gujarat, India"
+      ],
+      "start_date": "2016-01-15"
+    },
+    {
+      "id": "t-a12",
+      "title": "Management of Hyperactivity in children using an integrated Ayurveda treatment protocol",
+      "phase": "N/A",
+      "condition": [
+        "Hyperactivity",
+        "Scholastic Backwardness",
+        "Other Developmental Disorders of Scholastic Skills"
+      ],
+      "intervention": [
+        "Integrated Ayurveda Treatment Protocol",
+        "Yoga Therapy",
+        "Music Therapy"
+      ],
+      "eligibility": {
+        "inclusion": [
+          {
+            "id": "INC-1",
+            "category": "Age",
+            "text": "Age From 5.00 Year(s) to 12.00 Year(s)",
+            "structured": {
+              "type": "age_range",
+              "min": 5,
+              "max": 12,
+              "unit": "Year(s)"
+            }
+          },
+          {
+            "id": "INC-2",
+            "category": "Gender",
+            "text": "Both",
+            "structured": {
+              "type": "gender",
+              "value": "Both"
+            }
+          },
+          {
+            "id": "INC-3",
+            "category": "Academic Performance",
+            "text": "Students aged 5-12 years with poor academic performance and hyperactivity",
+            "structured": {
+              "type": "finding_required",
+              "text_rule": "Poor academic performance and hyperactivity"
+            }
+          },
+          {
+            "id": "INC-4",
+            "category": "School Attendance",
+            "text": "Regularly attending classes in normal schools",
+            "structured": {
+              "type": "finding_required",
+              "text_rule": "Regular school attendance"
+            }
+          }
+        ],
+        "exclusion": [
+          {
+            "id": "EXC-1",
+            "category": "Developmental Disorder",
+            "text": "Students with severe global developmental disorders",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Severe global developmental disorder"
+            }
+          },
+          {
+            "id": "EXC-2",
+            "category": "Psychiatric",
+            "text": "Students with psychiatric illness like depression, anxiety etc.",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Psychiatric illness"
+            }
+          },
+          {
+            "id": "EXC-3",
+            "category": "Systemic Disease",
+            "text": "Students with chronic systemic illness",
+            "structured": {
+              "type": "condition_forbidden",
+              "display": "Chronic systemic illness"
+            }
+          }
+        ]
+      },
+      "consent_required": true,
+      "source": {
+        "clinicaltrials_gov_id": null,
+        "ctri_id": "CTRI/2018/10/016114",
+        "protocol_pdf_url": "https://ctri.nic.in/Clinicaltrials/pmaindet2.php?EncHid=MTU0Mzk=&Enc=&userName="
+      },
+      "status": "Completed",
+      "sponsor": "Centre for Disability Studies, LBS Centre for Science and Technology",
+      "locations": [
+        "Jeevaniyam Ayurveda Hospital and Research Centre, Ernakulam, Kerala, India"
+      ],
+      "start_date": "2016-08-01"
+    }
+
 ]
