@@ -111,7 +111,7 @@ The dataset layer models patients and trials in an FHIR-inspired shape (demograp
   Local asset — add this repo's `db scheme.jpeg` to a docs/assets folder
   (e.g. docs/assets/db-scheme.jpeg) and this will render on GitHub.
 -->
-![Database schema](/DB%20scheme.jpeg)
+![Database schema](/DB%20Scheme.png)
 
 ### Backend architecture
 
