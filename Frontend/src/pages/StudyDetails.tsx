@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getStudyById } from '../services/studyApi';
 import type { Study } from '../types/study';
 import StatusBadge from '../components/StatusBadge';
+import StudyReportChart from '../components/StudyReportChart';
 import { ArrowLeft, ClipboardList, AlertTriangle, Users, Activity } from 'lucide-react';
 
 export default function StudyDetails() {
@@ -22,7 +23,7 @@ export default function StudyDetails() {
   const completed = study.participants.filter(p => p.status === 'Completed').length;
 
   return (
-    <div style={{ maxWidth: 760 }}>
+    <div style={{ maxWidth: 920 }}>
       <button className="btn btn-ghost btn-sm" onClick={() => nav('/studies')} style={{ marginBottom: 16 }}>
         <ArrowLeft size={13} /> Back to Studies
       </button>
@@ -70,6 +71,10 @@ export default function StudyDetails() {
           ))}
         </div>
       </div>
+
+      {/* Study Report — interactive daily clinical measurements chart */}
+      <div className="section-title" style={{ marginBottom: 12 }}>Study Report</div>
+      <StudyReportChart study={study} />
 
       {/* Participants table */}
       <div className="card" style={{ padding: 0, overflow: 'hidden' }}>

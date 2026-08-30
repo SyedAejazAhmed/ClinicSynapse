@@ -4,6 +4,7 @@ import { getStudyById } from '../services/studyApi';
 import type { Study, StudyParticipant } from '../types/study';
 import ReportTimeline from '../components/ReportTimeline';
 import StatusBadge from '../components/StatusBadge';
+import StudyReportChart, { OVERALL_SCOPE } from '../components/StudyReportChart';
 import { ArrowLeft } from 'lucide-react';
 
 export default function Reports() {
@@ -36,13 +37,15 @@ export default function Reports() {
 
       <div className="flex items-center justify-between mb-4" style={{ marginBottom: 20 }}>
         <div>
-          <div className="page-title">{participant.researchSubjectId}</div>
-          <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>{study.id} · Daily Reports</div>
+          <div className="page-title">Study Report</div>
+          <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>{study.id} · Daily clinical measurements</div>
         </div>
         <StatusBadge status={participant.status} />
       </div>
 
-      <div className="section-title" style={{ marginBottom: 4 }}>Timeline</div>
+      <StudyReportChart study={study} defaultScope={OVERALL_SCOPE} />
+
+      <div className="section-title" style={{ marginBottom: 4 }}>Timeline — {participant.researchSubjectId}</div>
       <ReportTimeline reports={participant.reports} />
     </div>
   );
