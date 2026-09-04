@@ -5,6 +5,7 @@ import TrialCard from '../components/TrialCard';
 import TrialEligibilityFunnelPanel from '../components/TrialEligibilityFunnelPanel';
 import { useAuth } from '../context/AuthContext';
 import { Search } from 'lucide-react';
+import ErrorState from '../components/ErrorState';
 
 const PHASES = ['All Phases', 'Phase 1', 'Phase 2', 'Phase 3', 'Phase 4'];
 const STATUSES = ['All Statuses', 'RECRUITING', 'NOT_YET_RECRUITING', 'COMPLETED', 'SUSPENDED'];
@@ -15,6 +16,8 @@ export default function Trials() {
   const { account } = useAuth();
   const [trials, setTrials] = useState<Trial[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
   const [search, setSearch] = useState('');
   const [condition, setCondition] = useState('All Conditions');
   const [phase, setPhase] = useState('All Phases');
@@ -25,9 +28,18 @@ export default function Trials() {
   const [selectedTrialId, setSelectedTrialId] = useState<string | null>(null);
 
   useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
     const doctorId = account?.role === 'DOCTOR' ? account.id : undefined;
-    getTrials(doctorId).then(t => { setTrials(t); setLoading(false); });
-  }, [account]);
+    getTrials(doctorId)
+      .then(t => { if (!cancelled) setTrials(t); })
+      .catch(err => {
+        if (!cancelled) setError(err instanceof Error ? err.message : 'Failed to load trials.');
+      })
+      .finally(() => { if (!cancelled) setLoading(false); });
+    return () => { cancelled = true; };
+  }, [account, refreshKey]);
 
   // Derived from the actual dataset rather than hardcoded, so filters never
   // drift from what trials.json actually contains.
@@ -102,6 +114,8 @@ export default function Trials() {
 
       {loading ? (
         <div className="loading-state"><div className="spinner" /> Loading trials...</div>
+      ) : error ? (
+        <ErrorState message={error} onRetry={() => setRefreshKey(k => k + 1)} />
       ) : filtered.length === 0 ? (
         <div className="empty-state"><p>No trials match your filters.</p></div>
       ) : (

@@ -5,18 +5,32 @@ import type { Study } from '../types/study';
 import StatusBadge from '../components/StatusBadge';
 import StudyReportChart from '../components/StudyReportChart';
 import { ArrowLeft, ClipboardList, AlertTriangle, Users, Activity } from 'lucide-react';
+import ErrorState from '../components/ErrorState';
 
 export default function StudyDetails() {
   const { id } = useParams<{ id: string }>();
   const nav = useNavigate();
   const [study, setStudy] = useState<Study | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
-    if (id) getStudyById(id).then(s => { setStudy(s ?? null); setLoading(false); });
-  }, [id]);
+    if (!id) return;
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
+    getStudyById(id)
+      .then(s => { if (!cancelled) setStudy(s ?? null); })
+      .catch(err => {
+        if (!cancelled) setError(err instanceof Error ? err.message : 'Failed to load study.');
+      })
+      .finally(() => { if (!cancelled) setLoading(false); });
+    return () => { cancelled = true; };
+  }, [id, refreshKey]);
 
   if (loading) return <div className="loading-state"><div className="spinner" /> Loading study...</div>;
+  if (error) return <ErrorState message={error} onRetry={() => setRefreshKey(k => k + 1)} />;
   if (!study) return <div className="empty-state"><p>Study not found.</p></div>;
 
   const active = study.participants.filter(p => p.status === 'Active').length;

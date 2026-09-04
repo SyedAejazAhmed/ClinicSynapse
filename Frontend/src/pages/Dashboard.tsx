@@ -7,6 +7,9 @@ import { getTrials } from '../services/trialApi';
 import { getPatients } from '../services/patientApi';
 import DonutChart from '../components/charts/DonutChart';
 import MiniCalendar from '../components/MiniCalendar';
+import TrialGrowthChart from '../components/TrialGrowthChart';
+import ErrorState from '../components/ErrorState';
+import type { Trial } from '../types/trial';
 
 interface Stats {
   trials: number;
@@ -31,46 +34,97 @@ export default function Dashboard() {
   const { account } = useAuth();
   const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [trialStatus, setTrialStatus] = useState<TrialStatusBreakdown>({ completed: 0, undergoing: 0 });
   const [patientGender, setPatientGender] = useState<PatientGenderBreakdown>({ male: 0, female: 0, other: 0 });
+  const [trials, setTrials] = useState<Trial[]>([]);
+  const [refreshKey, setRefreshKey] = useState(0);
 
+  // Primary stats — this alone gates the page's loading spinner, exactly
+  // like the original dashboard, so the page doesn't wait on trials/patients.
   useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
+
     const url = new URL(`${API_BASE}/api/stats`);
     if (account?.role === 'DOCTOR') url.searchParams.set('doctor_id', account.id);
+
     fetch(url)
-      .then(res => res.json())
-      .then(setStats)
-      .finally(() => setLoading(false));
-  }, [account]);
-
-  // Trial status and patient gender breakdowns aren't part of /api/stats,
-  // so they're derived client-side from the existing trials/patients lists —
-  // no backend changes needed for the dashboard's new summary widgets.
-  useEffect(() => {
-    const doctorId = account?.role === 'DOCTOR' ? account.id : undefined;
-    getTrials(doctorId).then(trials => {
-      const completed = trials.filter(t => t.status === 'COMPLETED').length;
-      setTrialStatus({ completed, undergoing: trials.length - completed });
-    });
-    getPatients(doctorId).then(patients => {
-      setPatientGender({
-        male: patients.filter(p => p.sex === 'Male').length,
-        female: patients.filter(p => p.sex === 'Female').length,
-        other: patients.filter(p => p.sex === 'Other').length,
+      .then(res => {
+        if (!res.ok) throw new Error(`Failed to load dashboard stats (${res.status})`);
+        return res.json();
+      })
+      .then(statsData => {
+        if (!cancelled) setStats(statsData);
+      })
+      .catch(err => {
+        if (cancelled) return;
+        // Surfaces backend outages (server down, 5xx, network errors) with a
+        // clear message + retry instead of leaving the dashboard spinning.
+        setError(err instanceof Error ? err.message : 'Something went wrong while loading the dashboard.');
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
       });
-    });
-  }, [account]);
 
-  if (loading || !stats) {
+    return () => {
+      cancelled = true;
+    };
+  }, [account, refreshKey]);
+
+  // Trial status, patient gender, and the Trial Growth chart's data are all
+  // derived client-side from the existing trials/patients lists. These run
+  // independently in the background and populate their widgets whenever
+  // they resolve — they never block the main dashboard spinner above, so a
+  // slow trials/patients response doesn't hold up the whole page.
+  useEffect(() => {
+    let cancelled = false;
+    const doctorId = account?.role === 'DOCTOR' ? account.id : undefined;
+
+    getTrials(doctorId)
+      .then(trialsData => {
+        if (cancelled) return;
+        const completed = trialsData.filter(t => t.status === 'COMPLETED').length;
+        setTrialStatus({ completed, undergoing: trialsData.length - completed });
+        setTrials(trialsData);
+      })
+      .catch(() => {
+        // Non-blocking widget: fail quietly and leave it at its zeroed
+        // default rather than surfacing a second error state on the page.
+      });
+
+    getPatients(doctorId)
+      .then(patientsData => {
+        if (cancelled) return;
+        setPatientGender({
+          male: patientsData.filter(p => p.sex === 'Male').length,
+          female: patientsData.filter(p => p.sex === 'Female').length,
+          other: patientsData.filter(p => p.sex === 'Other').length,
+        });
+      })
+      .catch(() => {
+        // Same as above — non-blocking, fails quietly.
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [account, refreshKey]);
+
+  if (loading) {
     return <div className="loading-state"><div className="spinner" /> Loading dashboard...</div>;
   }
 
-  const total = stats.matches || 1;
-  const ELIGIBILITY = [
-    { label: 'Eligible', count: stats.eligibility.ELIGIBLE, color: 'var(--green)', bg: 'var(--green-bg)', pct: Math.round((stats.eligibility.ELIGIBLE / total) * 100) },
-    { label: 'Needs Review', count: stats.eligibility.NEEDS_REVIEW, color: 'var(--amber)', bg: 'var(--amber-bg)', pct: Math.round((stats.eligibility.NEEDS_REVIEW / total) * 100) },
-    { label: 'Ineligible', count: stats.eligibility.INELIGIBLE, color: 'var(--red)', bg: 'var(--red-bg)', pct: Math.round((stats.eligibility.INELIGIBLE / total) * 100) },
-  ];
+  if (error || !stats) {
+    return (
+      <ErrorState
+        message={error ?? "Couldn't reach the server. Please check your connection and try again."}
+        onRetry={() => setRefreshKey(k => k + 1)}
+      />
+    );
+  }
+
   const STAT_CARDS = [
     { value: String(stats.trials), label: account?.role === 'DOCTOR' ? 'My Trials' : 'Trials' },
     { value: stats.patients.toLocaleString('en-IN'), label: 'Patients' },
@@ -144,35 +198,8 @@ export default function Dashboard() {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: 16, marginBottom: 20 }}>
-        <div className="card">
-          <div className="section-title" style={{ marginBottom: 14 }}>Match Status</div>
-          {ELIGIBILITY.map(e => (
-            <div
-              key={e.label}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '10px 12px',
-                borderRadius: 'var(--radius-sm)',
-                background: e.bg,
-                marginBottom: 8,
-              }}
-            >
-              <span style={{ fontSize: 13, color: 'var(--text-secondary)', fontWeight: 500 }}>{e.label}</span>
-              <span style={{ fontWeight: 700, fontSize: 16, color: e.color, letterSpacing: '-0.3px' }}>{e.count}</span>
-            </div>
-          ))}
-          <div style={{ marginTop: 14 }}>
-            {ELIGIBILITY.map(e => (
-              <div key={e.label} style={{ marginBottom: 6 }}>
-                <div className="progress-bar" style={{ height: 5 }}>
-                  <div className="progress-fill" style={{ width: `${e.pct}%`, background: e.color }} />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* Trial Growth — cumulative monthly trial count, derived from real trial start dates */}
+        <TrialGrowthChart trials={trials} />
 
         <div className="card">
           <div className="section-title" style={{ marginBottom: 14 }}>How These Numbers Are Computed</div>

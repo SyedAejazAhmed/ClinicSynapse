@@ -7,6 +7,7 @@ import type { MatchResult } from '../types/matching';
 import StatusBadge from '../components/StatusBadge';
 import CriteriaTable from '../components/CriteriaTable';
 import { ArrowLeft, Users } from 'lucide-react';
+import ErrorState from '../components/ErrorState';
 
 export default function TrialPatients() {
   const { id } = useParams<{ id: string }>();
@@ -14,18 +15,30 @@ export default function TrialPatients() {
   const [trial, setTrial] = useState<Trial | null>(null);
   const [results, setResults] = useState<MatchResult[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
   const [expanded, setExpanded] = useState<string | null>(null);
 
   useEffect(() => {
     if (!id) return;
-    Promise.all([getTrialById(id), getTrialPatients(id)]).then(([t, r]) => {
-      setTrial(t ?? null);
-      setResults(r);
-      setLoading(false);
-    });
-  }, [id]);
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
+    Promise.all([getTrialById(id), getTrialPatients(id)])
+      .then(([t, r]) => {
+        if (cancelled) return;
+        setTrial(t ?? null);
+        setResults(r);
+      })
+      .catch(err => {
+        if (!cancelled) setError(err instanceof Error ? err.message : 'Failed to load trial patients.');
+      })
+      .finally(() => { if (!cancelled) setLoading(false); });
+    return () => { cancelled = true; };
+  }, [id, refreshKey]);
 
   if (loading) return <div className="loading-state"><div className="spinner" /> Loading trial patients...</div>;
+  if (error) return <ErrorState message={error} onRetry={() => setRefreshKey(k => k + 1)} />;
   if (!trial) return <div className="empty-state"><p>Trial not found.</p></div>;
 
   const counts = {

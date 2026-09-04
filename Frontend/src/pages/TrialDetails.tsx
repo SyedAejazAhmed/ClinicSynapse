@@ -10,19 +10,32 @@ import { ArrowLeft, MapPin, Building2, Users, FileText, Loader2, Filter, Activit
 import { exportTrialDocumentation } from '../utils/exportTrialDocumentation';
 import FunnelChart from '../components/charts/FunnelChart';
 import DonutChart from '../components/charts/DonutChart';
+import ErrorState from '../components/ErrorState';
 
 export default function TrialDetails() {
   const { id } = useParams<{ id: string }>();
   const nav = useNavigate();
   const [trial, setTrial] = useState<Trial | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
   const [exporting, setExporting] = useState(false);
   const [screeningResults, setScreeningResults] = useState<MatchResult[]>([]);
   const [participantStatus, setParticipantStatus] = useState<{ active: number; withdrawn: number; completed: number } | null>(null);
 
   useEffect(() => {
-    if (id) getTrialById(id).then(t => { setTrial(t ?? null); setLoading(false); });
-  }, [id]);
+    if (!id) return;
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
+    getTrialById(id)
+      .then(t => { if (!cancelled) setTrial(t ?? null); })
+      .catch(err => {
+        if (!cancelled) setError(err instanceof Error ? err.message : 'Failed to load trial.');
+      })
+      .finally(() => { if (!cancelled) setLoading(false); });
+    return () => { cancelled = true; };
+  }, [id, refreshKey]);
 
   // Eligibility funnel data — reuses the same screening results the
   // "Tested Patients" view is built from.
@@ -57,6 +70,7 @@ export default function TrialDetails() {
   }
 
   if (loading) return <div className="loading-state"><div className="spinner" /> Loading trial...</div>;
+  if (error) return <ErrorState message={error} onRetry={() => setRefreshKey(k => k + 1)} />;
   if (!trial) return <div className="empty-state"><p>Trial not found.</p></div>;
 
   // Patient eligibility funnel — five sequential screening stages, clamped

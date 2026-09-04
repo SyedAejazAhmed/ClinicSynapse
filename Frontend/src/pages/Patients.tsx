@@ -4,18 +4,29 @@ import type { Patient } from '../types/patient';
 import PatientCard from '../components/PatientCard';
 import { useAuth } from '../context/AuthContext';
 import { Search } from 'lucide-react';
+import ErrorState from '../components/ErrorState';
 
 export default function Patients() {
   const { account } = useAuth();
   const [patients, setPatients] = useState<Patient[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
   const [search, setSearch] = useState('');
 
   useEffect(() => {
+    let cancelled = false;
     const doctorId = account?.role === 'DOCTOR' ? account.id : undefined;
     setLoading(true);
-    getPatients(doctorId).then(p => { setPatients(p); setLoading(false); });
-  }, [account]);
+    setError(null);
+    getPatients(doctorId)
+      .then(p => { if (!cancelled) setPatients(p); })
+      .catch(err => {
+        if (!cancelled) setError(err instanceof Error ? err.message : 'Failed to load patients.');
+      })
+      .finally(() => { if (!cancelled) setLoading(false); });
+    return () => { cancelled = true; };
+  }, [account, refreshKey]);
 
   const filtered = patients.filter(p => {
     const q = search.toLowerCase();
@@ -46,6 +57,8 @@ export default function Patients() {
 
       {loading ? (
         <div className="loading-state"><div className="spinner" /> Loading patients...</div>
+      ) : error ? (
+        <ErrorState message={error} onRetry={() => setRefreshKey(k => k + 1)} />
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(420px, 1fr))', gap: 10 }}>
           {filtered.map(p => <PatientCard key={p.id} patient={p} />)}

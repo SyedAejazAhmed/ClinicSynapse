@@ -2,17 +2,51 @@ import { useEffect, useState } from 'react';
 import { getStudies } from '../services/studyApi';
 import type { Study } from '../types/study';
 import ResearchChat from '../components/ResearchChat';
+import ErrorState from '../components/ErrorState';
 
 export default function ResearchAssistant() {
   const [studies, setStudies] = useState<Study[]>([]);
   const [selectedStudy, setSelectedStudy] = useState<Study | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
-    getStudies().then(s => {
-      setStudies(s);
-      if (s.length > 0) setSelectedStudy(s[0]);
-    });
-  }, []);
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
+    getStudies()
+      .then(s => {
+        if (cancelled) return;
+        setStudies(s);
+        if (s.length > 0) setSelectedStudy(s[0]);
+      })
+      .catch(err => {
+        if (!cancelled) setError(err instanceof Error ? err.message : 'Failed to load study context.');
+      })
+      .finally(() => { if (!cancelled) setLoading(false); });
+    return () => { cancelled = true; };
+  }, [refreshKey]);
+
+  if (loading) {
+    return (
+      <div>
+        <div className="page-title">Research Assistant</div>
+        <div className="page-subtitle">Ask questions grounded in study data and participant records</div>
+        <div className="loading-state"><div className="spinner" /> Loading study context...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div>
+        <div className="page-title">Research Assistant</div>
+        <div className="page-subtitle">Ask questions grounded in study data and participant records</div>
+        <ErrorState message={error} onRetry={() => setRefreshKey(k => k + 1)} />
+      </div>
+    );
+  }
 
   return (
     <div>

@@ -10,6 +10,7 @@ import EligibilityCard from '../components/EligibilityCard';
 import CriteriaTable from '../components/CriteriaTable';
 import { useAuth } from '../context/AuthContext';
 import { ArrowDown, Search } from 'lucide-react';
+import ErrorState from '../components/ErrorState';
 
 type Step = 'idle' | 'analyzing' | 'done';
 
@@ -23,18 +24,32 @@ export default function Matching() {
   const [selectedTrial, setSelectedTrial] = useState<Trial | null>(null);
   const [step, setStep] = useState<Step>('idle');
   const [result, setResult] = useState<MatchResult | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [matchError, setMatchError] = useState<string | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    setLoadError(null);
     const doctorId = account?.role === 'DOCTOR' ? account.id : undefined;
-    Promise.all([getPatients(), getTrials(doctorId)]).then(([p, t]) => {
-      setPatients(p);
-      setTrials(t);
-      const pid = params.get('patientId');
-      const tid = params.get('trialId');
-      if (pid) setSelectedPatient(p.find(x => x.id === pid) ?? null);
-      if (tid) setSelectedTrial(t.find(x => x.id === tid) ?? null);
-    });
-  }, [account]);
+    Promise.all([getPatients(), getTrials(doctorId)])
+      .then(([p, t]) => {
+        if (cancelled) return;
+        setPatients(p);
+        setTrials(t);
+        const pid = params.get('patientId');
+        const tid = params.get('trialId');
+        if (pid) setSelectedPatient(p.find(x => x.id === pid) ?? null);
+        if (tid) setSelectedTrial(t.find(x => x.id === tid) ?? null);
+      })
+      .catch(err => {
+        if (!cancelled) setLoadError(err instanceof Error ? err.message : 'Failed to load patients or trials.');
+      })
+      .finally(() => { if (!cancelled) setLoading(false); });
+    return () => { cancelled = true; };
+  }, [account, refreshKey]);
 
   const handleSearch = () => {
     const found = patients.find(p => p.researchId.toLowerCase() === patientSearch.toLowerCase());
@@ -45,10 +60,36 @@ export default function Matching() {
     if (!selectedPatient || !selectedTrial) return;
     setStep('analyzing');
     setResult(null);
-    const r = await runMatching(selectedPatient.id, selectedTrial.id);
-    setResult(r);
-    setStep('done');
+    setMatchError(null);
+    try {
+      const r = await runMatching(selectedPatient.id, selectedTrial.id);
+      setResult(r);
+      setStep('done');
+    } catch (err) {
+      setMatchError(err instanceof Error ? err.message : 'Eligibility check failed. Please try again.');
+      setStep('idle');
+    }
   };
+
+  if (loading) {
+    return (
+      <div>
+        <div className="page-title">Patient → Trial Matching</div>
+        <div className="page-subtitle">Select a patient and trial to run eligibility analysis</div>
+        <div className="loading-state"><div className="spinner" /> Loading patients and trials...</div>
+      </div>
+    );
+  }
+
+  if (loadError) {
+    return (
+      <div>
+        <div className="page-title">Patient → Trial Matching</div>
+        <div className="page-subtitle">Select a patient and trial to run eligibility analysis</div>
+        <ErrorState message={loadError} onRetry={() => setRefreshKey(k => k + 1)} />
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -136,7 +177,13 @@ export default function Matching() {
 
         {/* Right: results */}
         <div>
-          {step === 'idle' && (
+          {matchError && (
+            <div style={{ marginBottom: 14 }}>
+              <ErrorState message={matchError} onRetry={handleMatch} />
+            </div>
+          )}
+
+          {step === 'idle' && !matchError && (
             <div
               style={{
                 border: '2px dashed var(--border)',
