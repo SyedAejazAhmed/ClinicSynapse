@@ -6,6 +6,7 @@ import ReportTimeline from '../components/ReportTimeline';
 import StatusBadge from '../components/StatusBadge';
 import StudyReportChart, { OVERALL_SCOPE } from '../components/StudyReportChart';
 import { ArrowLeft } from 'lucide-react';
+import ErrorState from '../components/ErrorState';
 
 export default function Reports() {
   const { studyId, subjectId } = useParams<{ studyId: string; subjectId: string }>();
@@ -13,20 +14,31 @@ export default function Reports() {
   const [study, setStudy] = useState<Study | null>(null);
   const [participant, setParticipant] = useState<StudyParticipant | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
-    if (studyId) {
-      getStudyById(studyId).then(s => {
+    if (!studyId) return;
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
+    getStudyById(studyId)
+      .then(s => {
+        if (cancelled) return;
         setStudy(s ?? null);
         if (s && subjectId) {
           setParticipant(s.participants.find(p => p.researchSubjectId === subjectId) ?? null);
         }
-        setLoading(false);
-      });
-    }
-  }, [studyId, subjectId]);
+      })
+      .catch(err => {
+        if (!cancelled) setError(err instanceof Error ? err.message : 'Failed to load study report.');
+      })
+      .finally(() => { if (!cancelled) setLoading(false); });
+    return () => { cancelled = true; };
+  }, [studyId, subjectId, refreshKey]);
 
   if (loading) return <div className="loading-state"><div className="spinner" /> Loading reports...</div>;
+  if (error) return <ErrorState message={error} onRetry={() => setRefreshKey(k => k + 1)} />;
   if (!study || !participant) return <div className="empty-state"><p>Participant not found.</p></div>;
 
   return (

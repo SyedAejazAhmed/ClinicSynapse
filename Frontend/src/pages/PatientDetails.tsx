@@ -3,18 +3,32 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getPatientById } from '../services/patientApi';
 import type { Patient } from '../types/patient';
 import { ArrowLeft, FlaskConical } from 'lucide-react';
+import ErrorState from '../components/ErrorState';
 
 export default function PatientDetails() {
   const { id } = useParams<{ id: string }>();
   const nav = useNavigate();
   const [patient, setPatient] = useState<Patient | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
-    if (id) getPatientById(id).then(p => { setPatient(p ?? null); setLoading(false); });
-  }, [id]);
+    if (!id) return;
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
+    getPatientById(id)
+      .then(p => { if (!cancelled) setPatient(p ?? null); })
+      .catch(err => {
+        if (!cancelled) setError(err instanceof Error ? err.message : 'Failed to load patient.');
+      })
+      .finally(() => { if (!cancelled) setLoading(false); });
+    return () => { cancelled = true; };
+  }, [id, refreshKey]);
 
   if (loading) return <div className="loading-state"><div className="spinner" /> Loading patient...</div>;
+  if (error) return <ErrorState message={error} onRetry={() => setRefreshKey(k => k + 1)} />;
   if (!patient) return <div className="empty-state"><p>Patient not found.</p></div>;
 
   const completenessColor = patient.dataCompleteness >= 90 ? 'var(--green)' : patient.dataCompleteness >= 70 ? 'var(--amber)' : 'var(--red)';

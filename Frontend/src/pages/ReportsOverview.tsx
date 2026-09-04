@@ -4,17 +4,29 @@ import { getStudies } from '../services/studyApi';
 import type { Study } from '../types/study';
 import StatusBadge from '../components/StatusBadge';
 import { Search, ClipboardList } from 'lucide-react';
+import ErrorState from '../components/ErrorState';
 
 export default function ReportsOverview() {
   const [studies, setStudies] = useState<Study[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
   const nav = useNavigate();
 
   useEffect(() => {
-    getStudies().then(s => { setStudies(s); setLoading(false); });
-  }, []);
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
+    getStudies()
+      .then(s => { if (!cancelled) setStudies(s); })
+      .catch(err => {
+        if (!cancelled) setError(err instanceof Error ? err.message : 'Failed to load studies.');
+      })
+      .finally(() => { if (!cancelled) setLoading(false); });
+    return () => { cancelled = true; };
+  }, [refreshKey]);
 
   // Flatten all participants across all studies for the overview
   const allParticipants = studies.flatMap(study =>
@@ -29,6 +41,7 @@ export default function ReportsOverview() {
   });
 
   if (loading) return <div className="loading-state"><div className="spinner" /> Loading reports...</div>;
+  if (error) return <ErrorState message={error} onRetry={() => setRefreshKey(k => k + 1)} />;
 
   return (
     <div>
